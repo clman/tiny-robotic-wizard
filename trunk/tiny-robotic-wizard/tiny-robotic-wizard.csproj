@@ -62,11 +62,12 @@
     <Compile Include="DistanceSensor.Designer.cs">
       <DependentUpon>DistanceSensor.cs</DependentUpon>
     </Compile>
-    <Compile Include="FullColorLED.cs">
+    <Compile Include="EventCollection.cs" />
+    <Compile Include="LED.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="FullColorLED.Designer.cs">
-      <DependentUpon>FullColorLED.cs</DependentUpon>
+    <Compile Include="LED.Designer.cs">
+      <DependentUpon>LED.cs</DependentUpon>
     </Compile>
     <Compile Include="LineSensor.cs">
       <SubType>UserControl</SubType>
@@ -80,19 +81,28 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Move.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Move.Designer.cs">
+      <DependentUpon>Move.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DistanceSensor.resx">
       <DependentUpon>DistanceSensor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FullColorLED.resx">
-      <DependentUpon>FullColorLED.cs</DependentUpon>
+    <EmbeddedResource Include="LED.resx">
+      <DependentUpon>LED.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LineSensor.resx">
       <DependentUpon>LineSensor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Move.resx">
+      <DependentUpon>Move.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

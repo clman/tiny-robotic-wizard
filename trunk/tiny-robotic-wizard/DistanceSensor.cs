@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace tiny_robotic_wizard
 {
+    /// <summary>
+    /// 測距センサの状態を表示するコントロール
+    /// </summary>
     public partial class DistanceSensor : UserControl
     {
         public DistanceSensor()
@@ -28,15 +31,15 @@ namespace tiny_robotic_wizard
                 }
                 switch (Resolution)
                 {
-                    case ResolutionLevel.notUse:
+                    case ResolutionList.notUse:
                         throw new ArgumentOutOfRangeException();
-                    case ResolutionLevel.two:
+                    case ResolutionList.two:
                         if (1 < value)
                         {
                             throw new ArgumentOutOfRangeException();
                         }
                         break;
-                    case ResolutionLevel.three:
+                    case ResolutionList.three:
                         if (2 < value)
                         {
                             throw new ArgumentOutOfRangeException();
@@ -46,22 +49,18 @@ namespace tiny_robotic_wizard
                 DistanceLevel.Value = value;
             }
         }
-        public enum ResolutionLevel
-        {
-            notUse, two, three
-        }
-        public ResolutionLevel Resolution
+        public ResolutionList Resolution
         {
             get
             {
                 switch(DistanceLevel.Maximum)
                 {
                     case 0:
-                        return ResolutionLevel.notUse;
+                        return ResolutionList.notUse;
                     case 1:
-                        return ResolutionLevel.two;
+                        return ResolutionList.two;
                     case 2:
-                        return ResolutionLevel.three;
+                        return ResolutionList.three;
                     default:
                         throw new Exception();
                 }
@@ -70,17 +69,26 @@ namespace tiny_robotic_wizard
             {
                 switch (value)
                 {
-                    case ResolutionLevel.notUse:
+                    case ResolutionList.notUse:
                         DistanceLevel.Maximum = 0;
                         break;
-                    case ResolutionLevel.two:
+                    case ResolutionList.two:
                         DistanceLevel.Maximum = 1;
                         break;
-                    case ResolutionLevel.three:
+                    case ResolutionList.three:
                         DistanceLevel.Maximum = 2;
                         break;
                 }
             }
         }
+    }
+    /// <summary>
+    /// 測距センサの分解能
+    /// </summary>
+    public enum ResolutionList : int
+    {
+        notUse = 0, 
+        two = 1,
+        three = 2
     }
 }

@@ -18,7 +18,9 @@ namespace tiny_robotic_wizard
             InitializeComponent();
             this.BackgroundImage = lineSensorStatusList.Images[0];
         }
+
         private bool rightLineSensor = false;
+        
         public bool RightLineSensor
         {
             get
@@ -32,7 +34,9 @@ namespace tiny_robotic_wizard
                 this.BackgroundImage = lineSensorStatusList.Images[statusNumber];
             }
         }
+        
         private bool leftLineSensor = false;
+        
         public bool LeftLineSensor
         {
             get
@@ -46,7 +50,9 @@ namespace tiny_robotic_wizard
                 this.BackgroundImage = lineSensorStatusList.Images[statusNumber];
             }
         }
+        
         private int statusNumber = 0;
+        
         public int StatusNumber
         {
             get
@@ -62,11 +68,19 @@ namespace tiny_robotic_wizard
                 else
                 {
                     statusNumber = value;
+                    RightLineSensor = (((byte)value & (1 << 0)) != 0);
+                    LeftLineSensor = (((byte)value & (1 << 1)) != 0);
                     this.BackgroundImage = lineSensorStatusList.Images[statusNumber];
-                    RightLineSensor = (((byte)statusNumber & (1 << 0)) != 0);
-                    LeftLineSensor = (((byte)statusNumber & (1 << 1)) != 0);
                 }
             }
         }
+    }
+    /// <summary>
+    /// 使用するラインセンサの数
+    /// </summary>
+    public enum LineSensorNumberList : int
+    {
+        one = 0,
+        two = 1
     }
 }

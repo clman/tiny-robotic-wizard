@@ -13,6 +13,7 @@ namespace tiny_robotic_wizard
         public MainForm()
         {
             InitializeComponent();
+            EventCollection hoge = new EventCollection(this.canvas, ResolutionList.two, LineSensorNumberList.one);
         }
     }
 }

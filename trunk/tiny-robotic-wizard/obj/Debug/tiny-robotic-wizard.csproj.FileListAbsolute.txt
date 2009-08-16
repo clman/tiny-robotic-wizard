@@ -9,4 +9,5 @@ C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\
 C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.exe
 C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.pdb
 C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.DistanceSensor.resources
-C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.FullColorLED.resources
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.LED.resources
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.Move.resources
