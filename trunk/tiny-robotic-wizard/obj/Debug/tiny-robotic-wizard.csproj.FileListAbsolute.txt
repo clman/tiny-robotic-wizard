@@ -10,3 +10,6 @@ C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debu
 G:\ROBOKEN\Monodukuri 2009\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe.config
 G:\ROBOKEN\Monodukuri 2009\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.exe
 G:\ROBOKEN\Monodukuri 2009\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.pdb
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe.config
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.exe
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.pdb

@@ -12,7 +12,8 @@ namespace tiny_robotic_wizard
 {
     class ProgramTemplate
     {
-        public readonly Status[] Context;
+        public readonly List<Status> Context = new List<Status>();
+        public readonly List<Action> Actions = new List<Action>();
         public ProgramTemplate(string filePath)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -27,35 +28,70 @@ namespace tiny_robotic_wizard
 
             System.Diagnostics.Debug.WriteLine("デバッグ＞" + document.ChildNodes[1].Name);
 
-            
+            foreach(XmlNode rootChild in document.ChildNodes)
+            {
+                if (rootChild.Name == "ProgramTemplate")
+                {
+                    foreach (XmlNode programTemplateChild in rootChild)
+                    {
+                        if (programTemplateChild.Name == "context")
+                        {
+                            foreach (XmlNode contextChild in programTemplateChild)
+                            {
+                                if (contextChild.Name == "case")
+                                {
+                                    int count;
+                                    string caption;
+                                    Bitmap image;
+                                    string code;
+                                    foreach (XmlAttribute caseAttribute in contextChild.Attributes)
+                                    {
+                                    }
+                                }
+                            }
+                        }
+                        if (programTemplateChild.Name == "actions")
+                        {
+                            foreach (XmlNode actionsChild in programTemplateChild)
+                            {
+                            }
+                        }
+                    }
+                }
+            }
 
         }
         public class Status
         {
-            public readonly int Count;
-            public readonly string Caption;
-            public readonly Bitmap Image;
-            public readonly string Code;
+            public readonly int count;
+            public readonly string caption;
+            public readonly Bitmap image;
+            public readonly string code;
             public Status(int count, string caption, Bitmap image, string code)
             {
-                Count = count;
-                Caption = caption;
-                Image = image;
-                Code = code;
+                this.count = count;
+                this.caption = caption;
+                this.image = image;
+                this.code = code;
             }
+        }
+        public class Case
+        {
+            public readonly string name;
+            public readonly string caption;
         }
         public class Action
         {
-            public readonly int Count;
-            public readonly string Caption;
-            public readonly Bitmap Image;
-            public readonly string Code;
+            public readonly int count;
+            public readonly string caption;
+            public readonly Bitmap image;
+            public readonly string code;
             public Action(int count, string caption, Bitmap image, string code)
             {
-                Count = count;
-                Caption = caption;
-                Image = image;
-                Code = code;
+                this.count = count;
+                this.caption = caption;
+                this.image = image;
+                this.code = code;
             } 
         }
     }
