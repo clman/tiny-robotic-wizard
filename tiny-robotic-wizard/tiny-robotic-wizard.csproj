@@ -49,8 +49,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProgramData.cs" />
+    <Compile Include="ProgramEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ProgramEditor.Designer.cs">
+      <DependentUpon>ProgramEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProgramTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ProgramEditor.resx">
+      <DependentUpon>ProgramEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
