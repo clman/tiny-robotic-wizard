@@ -1,0 +1,12 @@
+C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe.config
+C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.Properties.Resources.resources
+C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.csproj.GenerateResource.Cache
+C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe
+C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.pdb
+C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.exe
+C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.pdb
+C:\Users\Hideki SHIRO\Documents\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\ProgramTemplate.xsd
+G:\ROBOKEN\Monodukuri 2009\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe.config
+G:\ROBOKEN\Monodukuri 2009\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.exe
+G:\ROBOKEN\Monodukuri 2009\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.pdb
