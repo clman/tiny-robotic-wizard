@@ -12,8 +12,8 @@ namespace tiny_robotic_wizard
 {
     class ProgramTemplate
     {
-        public readonly List<Status> Context = new List<Status>();
-        public readonly List<Action> Actions = new List<Action>();
+        public readonly Status[] Context;
+        public readonly Action[] Actions;
         public ProgramTemplate(string filePath)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -38,15 +38,9 @@ namespace tiny_robotic_wizard
                         {
                             foreach (XmlNode contextChild in programTemplateChild)
                             {
-                                if (contextChild.Name == "case")
+                                if (contextChild.Name == "matter")
                                 {
-                                    int count;
-                                    string caption;
-                                    Bitmap image;
-                                    string code;
-                                    foreach (XmlAttribute caseAttribute in contextChild.Attributes)
-                                    {
-                                    }
+
                                 }
                             }
                         }
@@ -63,36 +57,55 @@ namespace tiny_robotic_wizard
         }
         public class Status
         {
-            public readonly int count;
+            public readonly string name;
             public readonly string caption;
             public readonly Bitmap image;
             public readonly string code;
-            public Status(int count, string caption, Bitmap image, string code)
+            public readonly Matter[] matter;
+            public Status(string name, int count, string caption, Bitmap image, string code, Matter[] matter)
             {
-                this.count = count;
+                this.name = name;
                 this.caption = caption;
                 this.image = image;
                 this.code = code;
+                this.matter = matter;
             }
         }
-        public class Case
+        public class Matter
         {
             public readonly string name;
             public readonly string caption;
+            public Matter(string name, string caption)
+            {
+                this.name = name;
+                this.caption = caption;
+            }
         }
         public class Action
         {
-            public readonly int count;
+            public readonly string name;
             public readonly string caption;
             public readonly Bitmap image;
             public readonly string code;
-            public Action(int count, string caption, Bitmap image, string code)
+            public readonly Procedure[] procedure;
+            public Action(string name, string caption, Bitmap image, string code, Procedure[] procedure)
             {
-                this.count = count;
+                this.name = name;
                 this.caption = caption;
                 this.image = image;
                 this.code = code;
+                this.procedure = procedure;
             } 
+        }
+        public class Procedure
+        {
+            public readonly string name;
+            public readonly string caption;
+            public Procedure(string name, string caption)
+            {
+                this.name = name;
+                this.caption = caption;
+            }
         }
     }
 }

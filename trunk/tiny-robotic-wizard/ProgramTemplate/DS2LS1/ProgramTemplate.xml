@@ -2,13 +2,13 @@
 <ProgramTemplate name="DS2LS1" xmlns="http://tiny-robotic-wizard.googlecode.com/">
 	<context>
 		<status name="DistanceSensor" caption="測距センサ" image="./DistanceSensor2.png" code="./DistanceSensor.c">
-			<case name="missing" caption="見あたらない" />
-			<case name="near" caption="近い" />
-			<case name="far" caption="遠い" />
+			<matter name="missing" caption="見あたらない" />
+			<matter name="near" caption="近い" />
+			<matter name="far" caption="遠い" />
 		</status>
 		<status name="LineSensor" caption="ラインセンサ" image="./LineSensor1.png" code="./LineSensor.c">
-			<case name="0" caption="" />
-			<case name="1" caption="" />
+			<matter name="0" caption="" />
+			<matter name="1" caption="" />
 		</status>
 	</context>
 	<actions>

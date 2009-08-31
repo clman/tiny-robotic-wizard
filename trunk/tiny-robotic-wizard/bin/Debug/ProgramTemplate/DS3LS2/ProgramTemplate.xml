@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProgramTemplate name="DS3LS2" xmlns="http://tiny-robotic-wizard.googlecode.com/">
-	<event>
+	<context>
 		<status name="DistanceSensor" caption="測距センサ" image="./DistanceSensor3.png" code="./DistanceSensor.c">
-			<case name="missing" caption="見あたらない" />
-			<case name="near" caption="近い" />
-			<case name="middle" capiton="中間" />
-			<case name="far" caption="遠い" />
+			<matter name="missing" caption="見あたらない" />
+			<matter name="near" caption="近い" />
+			<matter name="middle" capiton="中間" />
+			<matter name="far" caption="遠い" />
 		</status>
 		<status name="LineSensor" caption="ラインセンサ" image="./LineSensor2.png" code="./LineSensor.c">
-			<case name="0" caption="" />
-			<case name="1" caption="" />
-			<case name="2" caption="" />
-			<case name="3" caption="" />
+			<matter name="0" caption="" />
+			<matter name="1" caption="" />
+			<matter name="2" caption="" />
+			<matter name="3" caption="" />
 		</status>
-	</event>
+	</context>
 	<actions>
 		<action name="LED" caption="LED" image="./LED.png" code="./LED.c">
 			<procedure name="black" caption="非点灯" />
