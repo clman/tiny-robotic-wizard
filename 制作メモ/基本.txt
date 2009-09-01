@@ -41,32 +41,21 @@
 	
 	ユーザプログラムの保存形式はxml
 
-	<ここから編集中>
-		[xmlの書式]
-
-		<status name count caption image>
-			<case name caption />
-		</status>
-		<action name count caption image code>
-			<procedure name caption />
-		</action>
-
-		[xmlからコードをはき出すまでの手順]
-
-		(1) xmlファイルの整合性をチェック
-		(2) status*imageから画像を取得
-		(3) 画像を分割してimagelistにする．
-		    コンテキストメニューにstatus>case*captionを並べて，
-		    状態（画像）を切り替えられるタイルを作る．
-		    コンテキストメニューを出せるか否かのプロパティを用意する
-		(4) action*imageから画像を取得
-		    コンテキストメニューにaction>procedure*captionを並べて，
-		    状態（画像）を切り替えられるタイルを作る．
-		    コンテキストメニューを出せるか否かのプロパティを用意する
-		(5)
-	<ここまで編集中>
+	ProgramTemplate, ProgramData, ProgramEditor, Wizard
 
 ●日記
+	2009年9月1日
+		一から作り直した．
+		8月31日の話し合いで，9月18日に完成させると宣言してしまったのでがんばろう．
+		
+		VAIO type Zを購入してからは，どこでも開発できるから良い感じ．
+		そして，Dream SparkのVisual Studio 2008 Professionalを導入！
+		でも，Express Editionとの違いはまだ実感できてない．
+		
+		とりあえず，ProgramTemplateXMLのパースができた．
+		ProgramTemplateクラスをもう少し調整して，
+		今度はProgramDataクラスの実装に取りかかろう．
+	
 	2009年8月20日
 		久しぶりにいじる時間ができた．
 		
@@ -75,7 +64,6 @@
 		早くも破綻しそう．先輩からも苦言をいただく始末．
 		
 		そういうことで，全体的に構造を見直すことにした．
-		
 	
 	2009年8月16日
 		メインウィンドウのUIはだいたいできた．

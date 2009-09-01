@@ -23,7 +23,7 @@ namespace tiny_robotic_wizard
             for (int i = 0; i <= programTemplatePath.Length - 1; i++)
             {
                 programTemplate[i] = new ProgramTemplate(programTemplatePath[i]);
-                System.Diagnostics.Debug.WriteLine("デバッグ＞");
+                System.Diagnostics.Debug.WriteLine(programTemplate[i].context.status[0].caption);
             }
         }
     }

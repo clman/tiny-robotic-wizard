@@ -13,3 +13,11 @@ G:\ROBOKEN\Monodukuri 2009\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tin
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe.config
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.exe
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.pdb
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.ProgramEditor.resources
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.Properties.Resources.resources
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.csproj.GenerateResource.Cache
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.MainForm.resources
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\ProgramTemplate.xsd
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.pdb
