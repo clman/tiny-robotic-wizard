@@ -14,6 +14,7 @@ namespace tiny_robotic_wizard
     {
         public readonly Status[] Context;
         public readonly Action[] Actions;
+
         public ProgramTemplate(string filePath)
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -28,84 +29,203 @@ namespace tiny_robotic_wizard
 
             System.Diagnostics.Debug.WriteLine("デバッグ＞" + document.ChildNodes[1].Name);
 
-            foreach(XmlNode rootChild in document.ChildNodes)
+            foreach(XmlNode rootChildNode in document.ChildNodes)
             {
-                if (rootChild.Name == "ProgramTemplate")
+                if (rootChildNode.Name == "ProgramTemplate")
                 {
-                    foreach (XmlNode programTemplateChild in rootChild)
+                    foreach (XmlNode programTemplateChildNode in rootChildNode)
                     {
-                        if (programTemplateChild.Name == "context")
+                        if (programTemplateChildNode.Name == "context")
                         {
-                            foreach (XmlNode contextChild in programTemplateChild)
-                            {
-                                if (contextChild.Name == "matter")
-                                {
-
-                                }
-                            }
+                            Context = getContext(programTemplateChildNode.ChildNodes);
                         }
-                        if (programTemplateChild.Name == "actions")
+                        if (programTemplateChildNode.Name == "actions")
                         {
-                            foreach (XmlNode actionsChild in programTemplateChild)
-                            {
-                            }
+                            Actions = getActions(programTemplateChildNode.ChildNodes);
                         }
                     }
                 }
             }
+        }
 
-        }
-        public class Status
+        private Status[] getContext(XmlNodeList statusNodeList)
         {
-            public readonly string name;
-            public readonly string caption;
-            public readonly Bitmap image;
-            public readonly string code;
-            public readonly Matter[] matter;
-            public Status(string name, int count, string caption, Bitmap image, string code, Matter[] matter)
+            List<Status> context = new List<Status>();
+            foreach (XmlNode statusNode in statusNodeList)
             {
-                this.name = name;
-                this.caption = caption;
-                this.image = image;
-                this.code = code;
-                this.matter = matter;
+                if (statusNode.Name == "status")
+                {
+                    string name = "";
+                    string caption = "";
+                    string image = "";
+                    string code = "";
+                    Matter[] matterList;
+                    foreach (XmlAttribute statusAttribute in statusNode.Attributes)
+                    {
+                        switch (statusAttribute.Name)
+                        {
+                            case "name":
+                                name = statusAttribute.Value;
+                                break;
+                            case "caption":
+                                caption = statusAttribute.Value;
+                                break;
+                            case "image":
+                                image = statusAttribute.Value;
+                                break;
+                            case "code":
+                                code = statusAttribute.Value;
+                                break;
+                        }
+                    }
+                    matterList = getMatterList(statusNode.ChildNodes);
+                    context.Add(new Status(name, caption, image, code, matterList));
+                }
             }
+            return context.ToArray();
         }
-        public class Matter
+
+        private Matter[] getMatterList(XmlNodeList matterNodeList)
         {
-            public readonly string name;
-            public readonly string caption;
-            public Matter(string name, string caption)
+            List<Matter> matterList = new List<Matter>();
+            foreach (XmlNode matterNode in matterNodeList)
             {
-                this.name = name;
-                this.caption = caption;
+                if (matterNode.Name == "matter")
+                {
+                    string name = "";
+                    string caption = "";
+                    foreach (XmlAttribute matterAttribute in matterNode.Attributes)
+                    {
+                        switch (matterAttribute.Name)
+                        {
+                            case "name":
+                                name = matterAttribute.Value;
+                                break;
+                            case "caption":
+                                caption = matterAttribute.Value;
+                                break;
+                        }
+                    }
+                    matterList.Add(new Matter(name, caption));
+                }
             }
+            return matterList.ToArray();
         }
-        public class Action
+
+        private Action[] getActions(XmlNodeList actionNodeList)
         {
-            public readonly string name;
-            public readonly string caption;
-            public readonly Bitmap image;
-            public readonly string code;
-            public readonly Procedure[] procedure;
-            public Action(string name, string caption, Bitmap image, string code, Procedure[] procedure)
+            List<Action> actions = new List<Action>();
+            foreach (XmlNode actionNode in actionNodeList)
             {
-                this.name = name;
-                this.caption = caption;
-                this.image = image;
-                this.code = code;
-                this.procedure = procedure;
-            } 
-        }
-        public class Procedure
-        {
-            public readonly string name;
-            public readonly string caption;
-            public Procedure(string name, string caption)
-            {
-                this.name = name;
-                this.caption = caption;
+                if (actionNode.Name == "action")
+                {
+                    string name = "";
+                    string caption = "";
+                    string image = "";
+                    string code = "";
+                    Procedure[] procedureList;
+                    foreach (XmlAttribute actionAttribute in actionNode.Attributes)
+                    {
+                        switch (actionAttribute.Name)
+                        {
+                            case "name":
+                                name = actionAttribute.Value;
+                                break;
+                            case "caption":
+                                caption = actionAttribute.Value;
+                                break;
+                            case "image":
+                                image = actionAttribute.Value;
+                                break;
+                            case "code":
+                                code = actionAttribute.Value;
+                                break;
+                        }
+                    }
+                    procedureList = getProcedureList(actionNode.ChildNodes);
+                    actions.Add(new Action(name, caption, image, code, procedureList));
+                }
             }
+            return actions.ToArray();
+        }
+
+        public Procedure[] getProcedureList(XmlNodeList procedureNodeList)
+        {
+            List<Procedure> procedureList = new List<Procedure>();
+            foreach (XmlNode procedureNode in procedureNodeList)
+            {
+                if (procedureNode.Name == "procedure")
+                {
+                    string name = "";
+                    string caption = "";
+                    foreach (XmlAttribute procedureAttribute in procedureNode.Attributes)
+                    {
+                        switch (procedureAttribute.Name)
+                        {
+                            case "name":
+                                name = procedureAttribute.Value;
+                                break;
+                            case "caption":
+                                caption = procedureAttribute.Value;
+                                break;
+                        }
+                    }
+                    procedureList.Add(new Procedure(name, caption));
+                }
+            }
+            return procedureList.ToArray();
+        }
+    }
+    public class Status
+    {
+        public readonly string name;
+        public readonly string caption;
+        public readonly string image;
+        public readonly string code;
+        public readonly Matter[] matter;
+        public Status(string name, string caption, string image, string code, Matter[] matter)
+        {
+            this.name = name;
+            this.caption = caption;
+            this.image = image;
+            this.code = code;
+            this.matter = matter;
+        }
+    }
+    public class Matter
+    {
+        public readonly string name;
+        public readonly string caption;
+        public Matter(string name, string caption)
+        {
+            this.name = name;
+            this.caption = caption;
+        }
+    }
+    public class Action
+    {
+        public readonly string name;
+        public readonly string caption;
+        public readonly string image;
+        public readonly string code;
+        public readonly Procedure[] procedure;
+        public Action(string name, string caption, string image, string code, Procedure[] procedure)
+        {
+            this.name = name;
+            this.caption = caption;
+            this.image = image;
+            this.code = code;
+            this.procedure = procedure;
+        }
+    }
+    public class Procedure
+    {
+        public readonly string name;
+        public readonly string caption;
+        public Procedure(string name, string caption)
+        {
+            this.name = name;
+            this.caption = caption;
         }
     }
 }
