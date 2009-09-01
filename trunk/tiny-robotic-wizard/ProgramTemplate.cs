@@ -12,8 +12,8 @@ namespace tiny_robotic_wizard
 {
     class ProgramTemplate
     {
-        public readonly Status[] Context;
-        public readonly Action[] Actions;
+        public readonly Context context;
+        public readonly Actions actions;
 
         public ProgramTemplate(string filePath)
         {
@@ -37,20 +37,20 @@ namespace tiny_robotic_wizard
                     {
                         if (programTemplateChildNode.Name == "context")
                         {
-                            Context = getContext(programTemplateChildNode.ChildNodes);
+                            context = new Context(getStatusList(programTemplateChildNode.ChildNodes));
                         }
                         if (programTemplateChildNode.Name == "actions")
                         {
-                            Actions = getActions(programTemplateChildNode.ChildNodes);
+                            actions = new Actions(getActionList(programTemplateChildNode.ChildNodes));
                         }
                     }
                 }
             }
         }
 
-        private Status[] getContext(XmlNodeList statusNodeList)
+        private Status[] getStatusList(XmlNodeList statusNodeList)
         {
-            List<Status> context = new List<Status>();
+            List<Status> statusList = new List<Status>();
             foreach (XmlNode statusNode in statusNodeList)
             {
                 if (statusNode.Name == "status")
@@ -79,10 +79,10 @@ namespace tiny_robotic_wizard
                         }
                     }
                     matterList = getMatterList(statusNode.ChildNodes);
-                    context.Add(new Status(name, caption, image, code, matterList));
+                    statusList.Add(new Status(name, caption, image, code, matterList));
                 }
             }
-            return context.ToArray();
+            return statusList.ToArray();
         }
 
         private Matter[] getMatterList(XmlNodeList matterNodeList)
@@ -112,9 +112,9 @@ namespace tiny_robotic_wizard
             return matterList.ToArray();
         }
 
-        private Action[] getActions(XmlNodeList actionNodeList)
+        private Action[] getActionList(XmlNodeList actionNodeList)
         {
-            List<Action> actions = new List<Action>();
+            List<Action> actionList = new List<Action>();
             foreach (XmlNode actionNode in actionNodeList)
             {
                 if (actionNode.Name == "action")
@@ -143,10 +143,10 @@ namespace tiny_robotic_wizard
                         }
                     }
                     procedureList = getProcedureList(actionNode.ChildNodes);
-                    actions.Add(new Action(name, caption, image, code, procedureList));
+                    actionList.Add(new Action(name, caption, image, code, procedureList));
                 }
             }
-            return actions.ToArray();
+            return actionList.ToArray();
         }
 
         public Procedure[] getProcedureList(XmlNodeList procedureNodeList)
@@ -176,7 +176,15 @@ namespace tiny_robotic_wizard
             return procedureList.ToArray();
         }
     }
-    public class Status
+    class Context
+    {
+        public readonly Status[] status;
+        public Context(Status[] status)
+        {
+            this.status = status;
+        }
+    }
+    class Status
     {
         public readonly string name;
         public readonly string caption;
@@ -192,7 +200,7 @@ namespace tiny_robotic_wizard
             this.matter = matter;
         }
     }
-    public class Matter
+    class Matter
     {
         public readonly string name;
         public readonly string caption;
@@ -202,7 +210,15 @@ namespace tiny_robotic_wizard
             this.caption = caption;
         }
     }
-    public class Action
+    class Actions
+    {
+        public readonly Action[] action;
+        public Actions(Action[] action)
+        {
+            this.action = action;
+        }
+    }
+    class Action
     {
         public readonly string name;
         public readonly string caption;
@@ -218,7 +234,7 @@ namespace tiny_robotic_wizard
             this.procedure = procedure;
         }
     }
-    public class Procedure
+    class Procedure
     {
         public readonly string name;
         public readonly string caption;
