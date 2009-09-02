@@ -15,12 +15,19 @@ namespace tiny_robotic_wizard
     /// </summary>
     class ProgramTemplate
     {
-        public readonly Context context;
-        public readonly Actions actions;
+        /// <summary>
+        /// Context
+        /// </summary>
+        public Context Context{get; private set;}
+        /// <summary>
+        /// Actions
+        /// </summary>
+        public Actions Actions{get; private set;}
+
         /// <summary>
         /// ProgramTemplateXMLファイルがあるディレクトリのURI
         /// </summary>
-        private readonly Uri BaseUri;
+        private Uri baseUri{get; set;}
 
         /// <summary>
         /// ProgramTemplate.xmlからProgramTemplateのインスタンスを生成
@@ -29,7 +36,7 @@ namespace tiny_robotic_wizard
         public ProgramTemplate(string filePath)
         {
             // XMLファイルのURIから，親ディレクトリのURIを取得，BaseUriに納める
-            BaseUri = new Uri(filePath);
+            baseUri = new Uri(filePath);
             // 実行ファイルのURIを取得するためにAssemblyクラスをインスタンス化
             Assembly assembly = Assembly.GetExecutingAssembly();
             // ProgramTemplateのXML Schema(ProgramTemplate.xsd)を取ってくる．
@@ -45,6 +52,8 @@ namespace tiny_robotic_wizard
             XmlDocument document = new XmlDocument();
             // XMLファイルを読み込む
             document.Load(reader);
+            // XMLファイルを閉じる
+            reader.Close();
 
             // XMLファイルをパースする
             foreach(XmlNode rootChildNode in document.ChildNodes)
@@ -58,13 +67,13 @@ namespace tiny_robotic_wizard
                         if (programTemplateChildNode.Name == "context")
                         {
                             // context要素の子ノードからContextクラスのインスタンスを生成
-                            context = new Context(getStatusList(programTemplateChildNode.ChildNodes));
+                            Context = new Context(getStatusList(programTemplateChildNode.ChildNodes));
                         }
                         // actions要素を探す
                         if (programTemplateChildNode.Name == "actions")
                         {
                             // actions要素の子ノードからActionsクラスのインスタンスを生成
-                            actions = new Actions(getActionList(programTemplateChildNode.ChildNodes));
+                            Actions = new Actions(getActionList(programTemplateChildNode.ChildNodes));
                         }
                     }
                 }
@@ -98,9 +107,12 @@ namespace tiny_robotic_wizard
                     // image属性で指定された画像を分割したリスト
                     List<Image> image = new List<Image>();
                     // code属性
+                    string codePath = "";
+                    // code属性で指定されたファイルの中身
                     string code = "";
                     // matter要素の配列
                     Matter[] matterList;
+
                     // status要素の属性を解析
                     foreach (XmlAttribute statusAttribute in statusNode.Attributes)
                     {
@@ -116,23 +128,32 @@ namespace tiny_robotic_wizard
                                 imagePath = statusAttribute.Value;
                                 break;
                             case "code":
-                                code = statusAttribute.Value;
+                                codePath = statusAttribute.Value;
                                 break;
                         }
                     }
+
                     // status要素の子ノードからmatter要素の配列を取得
                     matterList = getMatterList(statusNode.ChildNodes);
+
                     // image属性で指定された画像を取ってくる
-                    baseImage = Image.FromFile((new Uri(BaseUri, imagePath)).LocalPath);
+                    baseImage = Image.FromFile((new Uri(baseUri, imagePath)).LocalPath);
                     // image属性で指定された画像を分割
                     for (int i = 0; i <= matterList.Length - 1; i++)
                     {
                         image.Add(((Bitmap)baseImage).Clone(new Rectangle(new Point(0, 99*i), new Size(180, 100)), baseImage.PixelFormat));
                     }
+
+                    // code属性で指定されたファイルからプログラムコードを取ってくる
+                    StreamReader codeFile = new StreamReader(new Uri(baseUri, codePath).LocalPath);
+                    code = codeFile.ReadToEnd();
+                    codeFile.Close();
+
                     // 解析結果からStatusクラスのインスタンスを生成し，status要素のリストに追加
                     statusList.Add(new Status(name, caption, image.ToArray(), code, matterList));
                 }
             }
+
             // status要素のリストを配列化して返す
             return statusList.ToArray();
         }
@@ -146,6 +167,7 @@ namespace tiny_robotic_wizard
         {
             // matter要素の配列を作るためのリスト
             List<Matter> matterList = new List<Matter>();
+
             // status要素の子ノードを解析
             foreach (XmlNode matterNode in matterNodeList)
             {
@@ -157,6 +179,7 @@ namespace tiny_robotic_wizard
                     string name = "";
                     // caption属性
                     string caption = "";
+
                     // matter要素の属性を解析
                     foreach (XmlAttribute matterAttribute in matterNode.Attributes)
                     {
@@ -170,10 +193,12 @@ namespace tiny_robotic_wizard
                                 break;
                         }
                     }
+
                     // 解析結果からMatterクラスのインスタンスを生成し，matter要素のリストに追加
                     matterList.Add(new Matter(name, caption));
                 }
             }
+
             // matter要素のリストを配列化して返す
             return matterList.ToArray();
         }
@@ -187,6 +212,7 @@ namespace tiny_robotic_wizard
         {
             // action要素の配列を作るためのリスト
             List<Action> actionList = new List<Action>();
+
             // actions要素の子ノードを解析
             foreach (XmlNode actionNode in actionNodeList)
             {
@@ -205,9 +231,12 @@ namespace tiny_robotic_wizard
                     // image属性で指定された画像を分割したリスト
                     List<Image> image = new List<Image>();
                     // code属性
-                    string code = "";
+                    string codePath = "";
+                    // code属性で指定されたファイルの中身
+                    string code ="";
                     // procedure要素の配列
                     Procedure[] procedureList;
+
                     // action要素の属性を解析
                     foreach (XmlAttribute actionAttribute in actionNode.Attributes)
                     {
@@ -223,23 +252,32 @@ namespace tiny_robotic_wizard
                                 imagePath = actionAttribute.Value;
                                 break;
                             case "code":
-                                code = actionAttribute.Value;
+                                codePath = actionAttribute.Value;
                                 break;
                         }
                     }
+
                     // action要素の子ノードからprocedure要素の配列を生成
                     procedureList = getProcedureList(actionNode.ChildNodes);
+
                     // image属性で指定された画像を取ってくる
-                    baseImage = Image.FromFile((new Uri(BaseUri, imagePath)).LocalPath);
+                    baseImage = Image.FromFile((new Uri(baseUri, imagePath)).LocalPath);
                     // image属性で指定された画像を分割
                     for (int i = 0; i <= procedureList.Length - 1; i++)
                     {
                         image.Add(((Bitmap)baseImage).Clone(new Rectangle(new Point(0, 99 * i), new Size(180, 100)), baseImage.PixelFormat));
                     }
+
+                    // code属性で指定されたファイルからプログラムコードを取ってくる
+                    StreamReader codeFile = new StreamReader(new Uri(baseUri, codePath).LocalPath);
+                    code = codeFile.ReadToEnd();
+                    codeFile.Close();
+
                     // 解析結果からActionクラスのインスタンスを生成し，action要素のリストに追加
                     actionList.Add(new Action(name, caption, image.ToArray(), code, procedureList));
                 }
             }
+
             // action要素のリストを配列化して返す
             return actionList.ToArray();
         }
@@ -253,6 +291,7 @@ namespace tiny_robotic_wizard
         {
             // procedure要素の配列を作るためのリスト
             List<Procedure> procedureList = new List<Procedure>();
+
             // action要素の子ノードを解析
             foreach (XmlNode procedureNode in procedureNodeList)
             {
@@ -264,6 +303,7 @@ namespace tiny_robotic_wizard
                     string name = "";
                     // caption属性
                     string caption = "";
+
                     // procedure要素の属性を解析
                     foreach (XmlAttribute procedureAttribute in procedureNode.Attributes)
                     {
@@ -277,10 +317,12 @@ namespace tiny_robotic_wizard
                                 break;
                         }
                     }
+
                     // 解析結果からProcedureクラスのインスタンスを生成し，procedure要素のリストに追加
                     procedureList.Add(new Procedure(name, caption));
                 }
             }
+
             // procedure要素のリストを配列化して返す
             return procedureList.ToArray();
         }
@@ -294,14 +336,15 @@ namespace tiny_robotic_wizard
         /// <summary>
         /// status要素の配列
         /// </summary>
-        public readonly Status[] status;
+        public Status[] Status{get; private set;}
+
         /// <summary>
         /// status要素の配列からContextのインスタンスを生成
         /// </summary>
         /// <param name="status">status要素の配列</param>
         public Context(Status[] status)
         {
-            this.status = status;
+            this.Status = status;
         }
     }
 
@@ -313,23 +356,24 @@ namespace tiny_robotic_wizard
         /// <summary>
         /// name属性
         /// </summary>
-        public readonly string name;
+        public string Name{get; private set;}
         /// <summary>
         /// caption属性
         /// </summary>
-        public readonly string caption;
+        public string Caption{get; private set;}
         /// <summary>
         /// image属性で指定された画像を分割した配列
         /// </summary>
-        public readonly Image[] image;
+        public Image[] Image{get; private set;}
         /// <summary>
         /// code属性で指定されたファイルの中身
         /// </summary>
-        public readonly string code;
+        public string Code{get; private set;}
         /// <summary>
         /// matter要素の配列
         /// </summary>
-        public readonly Matter[] matter;
+        public Matter[] Matter{get; private set;}
+
         /// <summary>
         /// status要素の属性とmatter要素の配列からStatusのインスタンスを生成
         /// </summary>
@@ -340,11 +384,11 @@ namespace tiny_robotic_wizard
         /// <param name="matter">matter要素の配列</param>
         public Status(string name, string caption, Image[] image, string code, Matter[] matter)
         {
-            this.name = name;
-            this.caption = caption;
-            this.image = image;
-            this.code = code;
-            this.matter = matter;
+            this.Name = name;
+            this.Caption = caption;
+            this.Image = image;
+            this.Code = code;
+            this.Matter = matter;
         }
     }
 
@@ -356,11 +400,12 @@ namespace tiny_robotic_wizard
         /// <summary>
         /// name属性
         /// </summary>
-        public readonly string name;
+        public string Name{get; private set;}
         /// <summary>
         /// caption属性
         /// </summary>
-        public readonly string caption;
+        public string Caption{get; private set;}
+
         /// <summary>
         /// matter要素の属性からMatterのインスタンスを生成
         /// </summary>
@@ -368,8 +413,8 @@ namespace tiny_robotic_wizard
         /// <param name="caption">caption属性</param>
         public Matter(string name, string caption)
         {
-            this.name = name;
-            this.caption = caption;
+            this.Name = name;
+            this.Caption = caption;
         }
     }
 
@@ -381,14 +426,15 @@ namespace tiny_robotic_wizard
         /// <summary>
         /// action要素の配列
         /// </summary>
-        public readonly Action[] action;
+        public Action[] Action{get; private set;}
+
         /// <summary>
         /// action要素の配列からActionsのインスタンスを生成
         /// </summary>
         /// <param name="action">action要素の配列</param>
         public Actions(Action[] action)
         {
-            this.action = action;
+            this.Action = action;
         }
     }
 
@@ -400,23 +446,24 @@ namespace tiny_robotic_wizard
         /// <summary>
         /// name属性
         /// </summary>
-        public readonly string name;
+        public string Name{get; private set;}
         /// <summary>
         /// caption属性
         /// </summary>
-        public readonly string caption;
+        public string Caption{get; private set;}
         /// <summary>
         /// image属性で指定された画像を分割した配列
         /// </summary>
-        public readonly Image[] image;
+        public Image[] Image{get; private set;}
         /// <summary>
         /// code属性で指定されたファイルの中身
         /// </summary>
-        public readonly string code;
+        public string Code{get; private set;}
         /// <summary>
         /// procedure要素の配列
         /// </summary>
-        public readonly Procedure[] procedure;
+        public Procedure[] Procedure{get; private set;}
+
         /// <summary>
         /// action要素の属性とprocedure要素の配列からActionのインスタンスを生成
         /// </summary>
@@ -427,11 +474,11 @@ namespace tiny_robotic_wizard
         /// <param name="procedure">procedure要素の配列</param>
         public Action(string name, string caption, Image[] image, string code, Procedure[] procedure)
         {
-            this.name = name;
-            this.caption = caption;
-            this.image = image;
-            this.code = code;
-            this.procedure = procedure;
+            this.Name = name;
+            this.Caption = caption;
+            this.Image = image;
+            this.Code = code;
+            this.Procedure = procedure;
         }
     }
 
@@ -443,11 +490,12 @@ namespace tiny_robotic_wizard
         /// <summary>
         /// name属性
         /// </summary>
-        public readonly string name;
+        public string Name{get; private set;}
         /// <summary>
         /// caption属性
         /// </summary>
-        public readonly string caption;
+        public string Caption{get; private set;}
+
         /// <summary>
         /// procedure要素の属性からProcedureのインスタンスを生成
         /// </summary>
@@ -455,8 +503,8 @@ namespace tiny_robotic_wizard
         /// <param name="caption">caption属性</param>
         public Procedure(string name, string caption)
         {
-            this.name = name;
-            this.caption = caption;
+            this.Name = name;
+            this.Caption = caption;
         }
     }
 }

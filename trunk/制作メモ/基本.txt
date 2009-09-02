@@ -44,6 +44,9 @@
 	ProgramTemplate, ProgramData, ProgramEditor, Wizard
 
 ●日記
+	2009年9月2日
+		ProgramTemplateクラス完成．たぶん．
+	
 	2009年9月1日
 		一から作り直した．
 		8月31日の話し合いで，9月18日に完成させると宣言してしまったのでがんばろう．

@@ -22,7 +22,7 @@
 			<procedure name="yellow" caption="黄" />
 			<procedure name="white" caption="白" />
 		</action>
-		<action name="Amubulation" caption="移動" image=".\Ambulation.png" code=".\Amublation.c">
+		<action name="Ambulation" caption="移動" image=".\Ambulation.png" code=".\Ambulation.c">
 			<procedure name="nop" caption="何もしない" />
 			<procedure name="forward" caption="前進" />
 			<procedure name="back" caption="後進" />
