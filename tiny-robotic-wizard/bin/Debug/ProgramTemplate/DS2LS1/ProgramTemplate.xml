@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ProgramTemplate name="DS2LS1" xmlns="http://tiny-robotic-wizard.googlecode.com/">
 	<context>
-		<status name="DistanceSensor" caption="測距センサ" image="./DistanceSensor2.png" code="./DistanceSensor.c">
+		<status name="DistanceSensor" caption="測距センサ" image=".\DistanceSensor2.png" code=".\DistanceSensor.c">
 			<matter name="missing" caption="見あたらない" />
 			<matter name="near" caption="近い" />
 			<matter name="far" caption="遠い" />
 		</status>
-		<status name="LineSensor" caption="ラインセンサ" image="./LineSensor1.png" code="./LineSensor.c">
+		<status name="LineSensor" caption="ラインセンサ" image=".\LineSensor1.png" code=".\LineSensor.c">
 			<matter name="0" caption="" />
 			<matter name="1" caption="" />
 		</status>
 	</context>
 	<actions>
-		<action name="LED" caption="LED" image="./LED.png" code="./LED.c">
+		<action name="LED" caption="LED" image=".\LED.png" code=".\LED.c">
 			<procedure name="black" caption="非点灯" />
 			<procedure name="blue" caption="青" />
 			<procedure name="green" caption="緑" />
@@ -22,7 +22,7 @@
 			<procedure name="yellow" caption="黄" />
 			<procedure name="white" caption="白" />
 		</action>
-		<action name="Amubulation" caption="移動" image="./Ambulation.png" code="./Amublation.c">
+		<action name="Amubulation" caption="移動" image=".\Ambulation.png" code=".\Amublation.c">
 			<procedure name="nop" caption="何もしない" />
 			<procedure name="forward" caption="前進" />
 			<procedure name="back" caption="後進" />
