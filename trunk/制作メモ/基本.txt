@@ -44,6 +44,10 @@
 	ProgramTemplate, ProgramData, ProgramEditor, Wizard
 
 ●日記
+	2009年9月7日
+		ProgramDataクラスがだいたいできてきた．
+		あとIEnumerableを実装しよう．
+	
 	2009年9月2日
 		ProgramTemplateクラス完成．たぶん．
 	

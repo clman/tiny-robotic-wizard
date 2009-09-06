@@ -36,7 +36,7 @@ namespace tiny_robotic_wizard
         public ProgramTemplate(string filePath)
         {
             // XMLファイルのURIから，親ディレクトリのURIを取得，BaseUriに納める
-            baseUri = new Uri(filePath);
+            this.baseUri = new Uri(filePath);
             // 実行ファイルのURIを取得するためにAssemblyクラスをインスタンス化
             Assembly assembly = Assembly.GetExecutingAssembly();
             // ProgramTemplateのXML Schema(ProgramTemplate.xsd)を取ってくる．
@@ -67,13 +67,13 @@ namespace tiny_robotic_wizard
                         if (programTemplateChildNode.Name == "context")
                         {
                             // context要素の子ノードからContextクラスのインスタンスを生成
-                            Context = new Context(getStatusList(programTemplateChildNode.ChildNodes));
+                            this.Context = new Context(getStatusList(programTemplateChildNode.ChildNodes));
                         }
                         // actions要素を探す
                         if (programTemplateChildNode.Name == "actions")
                         {
                             // actions要素の子ノードからActionsクラスのインスタンスを生成
-                            Actions = new Actions(getActionList(programTemplateChildNode.ChildNodes));
+                            this.Actions = new Actions(getActionList(programTemplateChildNode.ChildNodes));
                         }
                     }
                 }
@@ -137,7 +137,7 @@ namespace tiny_robotic_wizard
                     matterList = getMatterList(statusNode.ChildNodes);
 
                     // image属性で指定された画像を取ってくる
-                    baseImage = Image.FromFile((new Uri(baseUri, imagePath)).LocalPath);
+                    baseImage = Image.FromFile((new Uri(this.baseUri, imagePath)).LocalPath);
                     // image属性で指定された画像を分割
                     for (int i = 0; i <= matterList.Length - 1; i++)
                     {
@@ -145,7 +145,7 @@ namespace tiny_robotic_wizard
                     }
 
                     // code属性で指定されたファイルからプログラムコードを取ってくる
-                    StreamReader codeFile = new StreamReader(new Uri(baseUri, codePath).LocalPath);
+                    StreamReader codeFile = new StreamReader(new Uri(this.baseUri, codePath).LocalPath);
                     code = codeFile.ReadToEnd();
                     codeFile.Close();
 
@@ -261,7 +261,7 @@ namespace tiny_robotic_wizard
                     procedureList = getProcedureList(actionNode.ChildNodes);
 
                     // image属性で指定された画像を取ってくる
-                    baseImage = Image.FromFile((new Uri(baseUri, imagePath)).LocalPath);
+                    baseImage = Image.FromFile((new Uri(this.baseUri, imagePath)).LocalPath);
                     // image属性で指定された画像を分割
                     for (int i = 0; i <= procedureList.Length - 1; i++)
                     {
@@ -269,7 +269,7 @@ namespace tiny_robotic_wizard
                     }
 
                     // code属性で指定されたファイルからプログラムコードを取ってくる
-                    StreamReader codeFile = new StreamReader(new Uri(baseUri, codePath).LocalPath);
+                    StreamReader codeFile = new StreamReader(new Uri(this.baseUri, codePath).LocalPath);
                     code = codeFile.ReadToEnd();
                     codeFile.Close();
 
