@@ -24,6 +24,7 @@ namespace tiny_robotic_wizard
             {
                 programTemplate[i] = new ProgramTemplate(programTemplatePath[i]);
             }
+            ProgramData hoge = new ProgramData(programTemplate[0]);
         }
     }
 }
