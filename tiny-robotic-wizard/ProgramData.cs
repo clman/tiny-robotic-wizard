@@ -4,7 +4,7 @@ using System.Text;
 
 namespace tiny_robotic_wizard
 {
-    class ProgramData
+    class ProgramData : IEnumerable<KeyValuePair<List<int>, int[]>>
     {
         /// <summary>
         /// ProgramTemplate
@@ -72,7 +72,7 @@ namespace tiny_robotic_wizard
             }
 
             // すべてのContextについて初期化されたActionsを設定
-            for (bool flag = true; flag; )
+            for (bool flag = false; !flag; )
             {
                 List<int> temp = new List<int>();
                 foreach (int status in context)
@@ -99,12 +99,30 @@ namespace tiny_robotic_wizard
                         }
                         else
                         {
-                            flag = false;
+                            flag = true;
                             break;
                         }
                     }
                 }
             }
         }
+
+        #region IEnumerable<KeyValuePair<List<int>,int[]>> メンバ
+
+        IEnumerator<KeyValuePair<List<int>, int[]>> IEnumerable<KeyValuePair<List<int>, int[]>>.GetEnumerator()
+        {
+            return contextAndActions.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEnumerable メンバ
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return contextAndActions.GetEnumerator();
+        }
+
+        #endregion
     }
 }
