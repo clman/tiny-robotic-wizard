@@ -136,13 +136,13 @@ namespace tiny_robotic_wizard
                     // status要素の子ノードからmatter要素の配列を取得
                     matterList = getMatterList(statusNode.ChildNodes);
 
-                    // image属性で指定された画像を取ってくる
-                    baseImage = Image.FromFile((new Uri(this.baseUri, imagePath)).LocalPath);
                     // image属性で指定された画像を分割
+                    baseImage = Image.FromFile((new Uri(this.baseUri, imagePath)).LocalPath);
                     for (int i = 0; i <= matterList.Length - 1; i++)
                     {
-                        image.Add(((Bitmap)baseImage).Clone(new Rectangle(new Point(0, 99*i), new Size(180, 100)), baseImage.PixelFormat));
+                        image.Add(((Bitmap)baseImage).Clone(new Rectangle(new Point(0, 100*i), new Size(180, 100)), baseImage.PixelFormat));
                     }
+                    baseImage.Dispose();
 
                     // code属性で指定されたファイルからプログラムコードを取ってくる
                     StreamReader codeFile = new StreamReader(new Uri(this.baseUri, codePath).LocalPath);
@@ -260,13 +260,13 @@ namespace tiny_robotic_wizard
                     // action要素の子ノードからprocedure要素の配列を生成
                     procedureList = getProcedureList(actionNode.ChildNodes);
 
-                    // image属性で指定された画像を取ってくる
-                    baseImage = Image.FromFile((new Uri(this.baseUri, imagePath)).LocalPath);
                     // image属性で指定された画像を分割
+                    baseImage = Image.FromFile((new Uri(this.baseUri, imagePath)).LocalPath);
                     for (int i = 0; i <= procedureList.Length - 1; i++)
                     {
-                        image.Add(((Bitmap)baseImage).Clone(new Rectangle(new Point(0, 99 * i), new Size(180, 100)), baseImage.PixelFormat));
+                        image.Add(((Bitmap)baseImage).Clone(new Rectangle(new Point(0, 100 * i), new Size(180, 100)), baseImage.PixelFormat));
                     }
+                    baseImage.Dispose();
 
                     // code属性で指定されたファイルからプログラムコードを取ってくる
                     StreamReader codeFile = new StreamReader(new Uri(this.baseUri, codePath).LocalPath);
