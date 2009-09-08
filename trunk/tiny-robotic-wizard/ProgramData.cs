@@ -38,7 +38,17 @@ namespace tiny_robotic_wizard
                 {
                     temp.Add(status);
                 }
-                contextAndActions.Add(temp, value);
+                contextAndActions[temp] = value;
+            }
+        }
+
+        /// <summary>
+        /// contextとactionsのペアの数
+        /// </summary>
+        public int Length {
+            get
+            {
+                return contextAndActions.Count;
             }
         }
 

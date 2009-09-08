@@ -24,7 +24,12 @@ namespace tiny_robotic_wizard
             {
                 programTemplate[i] = new ProgramTemplate(programTemplatePath[i]);
             }
-            ProgramData hoge = new ProgramData(programTemplate[0]);
+
+            this.AutoScroll = true;
+
+            ProgramData hoge = new ProgramData(programTemplate[3]);
+            ProgramEditor fuga = new ProgramEditor(hoge);
+            this.Controls.Add(fuga);
         }
     }
 }
