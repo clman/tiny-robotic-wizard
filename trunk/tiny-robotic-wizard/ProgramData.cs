@@ -4,7 +4,7 @@ using System.Text;
 
 namespace tiny_robotic_wizard
 {
-    class ProgramData : IEnumerable<KeyValuePair<List<int>, int[]>>
+    class ProgramData : IEnumerable<KeyValuePair<List<int>, List<int>>>
     {
         /// <summary>
         /// ProgramTemplate
@@ -13,32 +13,22 @@ namespace tiny_robotic_wizard
         /// <summary>
         /// プログラムデータを格納しておくクラス
         /// </summary>
-        private Dictionary<List<int>, int[]>contextAndActions = new Dictionary<List<int>, int[]>();
+        private Dictionary<List<int>, List<int>>contextAndActions = new Dictionary<List<int>, List<int>>();
 
         /// <summary>
         /// matter[statusの番号]に対応するprocedure[actionの番号]を返す
         /// </summary>
         /// <param name="context">matter値の配列</param>
         /// <returns>procedure値の配列</returns>
-        public int[] this[int[] context]
+        public List<int> this[List<int> context]
         {
             get
             {
-                List<int> temp = new List<int>();
-                foreach (int status in context)
-                {
-                    temp.Add(status);
-                }
-                return contextAndActions[temp];
+                return contextAndActions[context];
             }
             private set
             {
-                List<int> temp = new List<int>();
-                foreach (int status in context)
-                {
-                    temp.Add(status);
-                }
-                contextAndActions[temp] = value;
+                contextAndActions[context] = value;
             }
         }
 
@@ -61,39 +51,39 @@ namespace tiny_robotic_wizard
             this.ProgramTemplate = programTemplate;
 
             // デフォルト値のActionsを作る
-            int[] actions = new int[this.ProgramTemplate.Actions.Action.Length];
-            for (int i = 0; i <= actions.Length - 1; i++)
+            List<int> actions = new List<int>();
+            for (int i = 0; i <= this.ProgramTemplate.Actions.Action.Length - 1; i++)
             {
-                actions[i] = 0;
+                actions.Add(0);
             }
 
             // 初期化用の各Statusの最大値を納めた配列を作る
-            int[] max = new int[this.ProgramTemplate.Context.Status.Length];
-            for (int i = 0; i <= max.Length - 1; i++)
+            List<int> max = new List<int>();
+            for (int i = 0; i <= this.ProgramTemplate.Context.Status.Length - 1; i++)
             {
-                max[i] = programTemplate.Context.Status[i].Matter.Length - 1;
+                max.Add(programTemplate.Context.Status[i].Matter.Length - 1);
             }
 
             // 初期化用のContextを作る
-            int[] context = new int[this.ProgramTemplate.Context.Status.Length];
-            for (int i = 0; i <= context.Length - 1; i++)
+            List<int> context = new List<int>();
+            for (int i = 0; i <= this.ProgramTemplate.Context.Status.Length - 1; i++)
             {
-                context[i] = 0;
+                context.Add(0);
             }
 
             // すべてのContextについて初期化されたActionsを設定
             for (bool flag = false; !flag; )
             {
-                List<int> temp = new List<int>();
-                foreach (int status in context)
                 {
-                    temp.Add(status);
+                    // contextは操作し続けるので，Dictionaryのキーに参照渡しするのはだめ．
+                    // クローンをつくる．
+                    List<int> contextClone = new List<int>(context);
+                    // Dictionaryに追加する
+                    contextAndActions.Add(contextClone, actions);
                 }
 
-                contextAndActions.Add(temp, actions);
-
                 int index = 0;
-                while(true)
+                while (true)
                 {
                     if (context[index] != max[index])
                     {
@@ -102,7 +92,7 @@ namespace tiny_robotic_wizard
                     }
                     else
                     {
-                        if (index != context.Length - 1)
+                        if (index != context.ToArray().Length - 1)
                         {
                             context[index] = 0;
                             index++;
@@ -119,7 +109,7 @@ namespace tiny_robotic_wizard
 
         #region IEnumerable<KeyValuePair<List<int>,int[]>> メンバ
 
-        IEnumerator<KeyValuePair<List<int>, int[]>> IEnumerable<KeyValuePair<List<int>, int[]>>.GetEnumerator()
+        IEnumerator<KeyValuePair<List<int>, List<int>>> IEnumerable<KeyValuePair<List<int>, List<int>>>.GetEnumerator()
         {
             return contextAndActions.GetEnumerator();
         }

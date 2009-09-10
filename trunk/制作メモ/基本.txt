@@ -41,9 +41,19 @@
 	
 	ユーザプログラムの保存形式はxml
 
-	ProgramTemplate, ProgramData, ProgramEditor, Wizard
+	ProgramTemplate, ProgramData, ProgramEditor, Program Generator, Wizard
 
 ●日記
+	2009年9日10日
+		こんなにコツコツプログラムを作ったのは初めてではないだろうか．
+		
+		ProgramEditorクラスの完成度が60%くらい．
+		コンテキストメニューを出すところまでいった．
+		結構制作が遅れている．急がなければ＞＜
+		
+		さっさProgramGeneratorクラスの実装に移ろう．
+		実装って言っても，細かい設計なんてしていないけど．
+	
 	2009年9月7日
 		ProgramDataクラスがだいたいできてきた．
 		あとIEnumerableを実装しよう．

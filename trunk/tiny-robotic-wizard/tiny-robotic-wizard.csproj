@@ -82,6 +82,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="definition.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="ProgramTemplate\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
