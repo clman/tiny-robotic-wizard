@@ -20,3 +20,4 @@ C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-rob
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\ProgramTemplate.xsd
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.pdb
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\definition.png
