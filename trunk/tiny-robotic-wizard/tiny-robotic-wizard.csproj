@@ -52,6 +52,7 @@
     <Compile Include="ProgramEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="ProgramGenerator.cs" />
     <Compile Include="ProgramTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
