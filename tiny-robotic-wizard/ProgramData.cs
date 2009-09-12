@@ -16,6 +16,21 @@ namespace tiny_robotic_wizard
         private Dictionary<List<int>, List<int>>contextAndActions = new Dictionary<List<int>, List<int>>();
 
         /// <summary>
+        /// 行番号とcontextの対応を保持
+        /// </summary>
+        private List<List<int>> contextInRowIndex = new List<List<int>>();
+
+        /// <summary>
+        /// 行番号に対応するcontextを返す
+        /// </summary>
+        /// <param name="rowIndex">行番号</param>
+        /// <returns>行番号に対応するcontext</returns>
+        public List<int> GetContextByRowIndex(int rowIndex)
+        {
+            return contextInRowIndex[rowIndex];
+        }
+
+        /// <summary>
         /// matter[statusの番号]に対応するprocedure[actionの番号]を返す
         /// </summary>
         /// <param name="context">matter値の配列</param>
@@ -26,7 +41,7 @@ namespace tiny_robotic_wizard
             {
                 return contextAndActions[context];
             }
-            private set
+            set
             {
                 contextAndActions[context] = value;
             }
@@ -61,7 +76,7 @@ namespace tiny_robotic_wizard
             List<int> max = new List<int>();
             for (int i = 0; i <= this.ProgramTemplate.Context.Status.Length - 1; i++)
             {
-                max.Add(programTemplate.Context.Status[i].Matter.Length - 1);
+                max.Add(this.ProgramTemplate.Context.Status[i].Matter.Length - 1);
             }
 
             // 初期化用のContextを作る
@@ -78,8 +93,12 @@ namespace tiny_robotic_wizard
                     // contextは操作し続けるので，Dictionaryのキーに参照渡しするのはだめ．
                     // クローンをつくる．
                     List<int> contextClone = new List<int>(context);
+                    
                     // Dictionaryに追加する
                     contextAndActions.Add(contextClone, actions);
+
+                    // contextと行番号の対応もついでに初期化
+                    contextInRowIndex.Add(contextClone);
                 }
 
                 int index = 0;
