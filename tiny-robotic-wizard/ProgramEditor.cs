@@ -201,7 +201,7 @@ namespace tiny_robotic_wizard
 
                 // actionの判別
                 {
-                    int pointXOfFirstActionTile = (this.imageSize.Width + this.padding.Width) * this.ProgramData.ProgramTemplate.Context.Status.Length + this.definitionImage.Width;
+                    int pointXOfFirstActionTile = (this.imageSize.Width + this.padding.Width) * this.ProgramData.ProgramTemplate.Context.Status.Length + this.padding.Width + this.definitionImage.Width;
                     // 最初のactionタイルの位置を左端までシフト
                     point.X -= pointXOfFirstActionTile;
                     // action番号を収める
@@ -232,7 +232,7 @@ namespace tiny_robotic_wizard
             bool column;
             {
                 // pointが定義画像より右側だったら
-                if ((this.imageSize.Width + this.padding.Width) * this.ProgramData.ProgramTemplate.Context.Status.Length + this.definitionImage.Width <= point.X)
+                if ((this.imageSize.Width + this.padding.Width) * this.ProgramData.ProgramTemplate.Context.Status.Length + this.padding.Width + this.definitionImage.Width <= point.X)
                 {
                     // 定義画像とそのPaddingの分だけ左にシフト(計算の簡単化のため)
                     point.X += -this.definitionImage.Width - this.padding.Width;
@@ -240,7 +240,6 @@ namespace tiny_robotic_wizard
                     int x = point.X % (this.imageSize.Width + this.padding.Width);
 
                     column = !(x <= this.padding.Width);
-
                 }
                 else
                 {

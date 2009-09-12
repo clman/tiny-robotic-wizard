@@ -27,9 +27,10 @@ namespace tiny_robotic_wizard
 
             this.AutoScroll = true;
 
-            ProgramData hoge = new ProgramData(programTemplate[3]);
-            ProgramEditor fuga = new ProgramEditor(hoge);
-            this.Controls.Add(fuga);
+            ProgramData programData = new ProgramData(programTemplate[3]);
+            ProgramEditor programEditor = new ProgramEditor(programData);
+            this.Controls.Add(programEditor);
+            ProgramGenerator programGenerator = new ProgramGenerator(programData);
         }
     }
 }
