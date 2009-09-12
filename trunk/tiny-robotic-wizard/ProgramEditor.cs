@@ -19,6 +19,10 @@ namespace tiny_robotic_wizard
         // 画像のMargin
         private Size margin = new Size(5, 20);
 
+        // クリックされたcontextとそのaction番号
+        private List<int> currentContext;
+        private int currentAction;
+
         // Action選択コンテキストメニュー
         private ContextMenu[] actionSelectMenu;
 
@@ -60,49 +64,52 @@ namespace tiny_robotic_wizard
                     this.actionSelectMenu[i] = new ContextMenu();
                     foreach (Procedure procedure in this.ProgramData.ProgramTemplate.Actions.Action[i].Procedure)
                     {
-                        this.actionSelectMenu[i].MenuItems.Add(new MenuItem(procedure.Caption, new EventHandler(onClick)));
+                        this.actionSelectMenu[i].MenuItems.Add(new MenuItem(procedure.Caption, new EventHandler(onActionSelectMenuItemClick)));
                     }
                 }
             }
 
             // タイル描画関数をPaintイベントに追加
-            this.Paint += new PaintEventHandler(drawItems);
+            this.Paint += new PaintEventHandler(drawContextAndActions);
 
             // マウス移動イベント
             this.MouseMove += delegate(object sender, MouseEventArgs e)
             {
                 if (onAction(new Point(e.X, e.Y)))
                 {
-                    ((ProgramEditor)sender).Parent.Text = "○";
                     Cursor.Current = Cursors.Hand;
                 }
                 else
                 {
-                    ((ProgramEditor)sender).Parent.Text = "×";
                     Cursor.Current = Cursors.Arrow;
                 }
-                ((ProgramEditor)sender).Parent.Text += " " + Convert.ToString(e.X) + ", " + Convert.ToString(e.Y);
-
             };
 
             // マウスクリックイベント
             this.MouseClick += delegate(object sender, MouseEventArgs e)
             {
-                // 左クリック かつ アクションタイル上なら
-                if (e.Button == MouseButtons.Left && onAction(new Point(e.X, e.Y)))
-                {
-                    actionSelectMenu[1].Show((Control)sender, new Point(e.X, e.Y));
-                }
-                else
-                {
+                Point point = new Point(e.X, e.Y);
+                List<int> context;
+                int action;
+                bool onAction_ = onAction(point, out context, out action);
 
+                // 左クリック かつ アクションタイル上なら
+                if (e.Button == MouseButtons.Left && onAction_)
+                {
+                    currentContext = context;
+                    currentAction = action;
+                    actionSelectMenu[action].Show((Control)sender, point);
                 }
             };
         }
 
         // actionSelectMenuのクリックイベント
-        private void onClick(object sender, EventArgs e)
+        private void onActionSelectMenuItemClick(object sender, EventArgs e)
         {
+            List<int> temporaryActions = new List<int>(this.ProgramData[currentContext]);
+            temporaryActions[currentAction] = ((MenuItem)sender).Index;
+            this.ProgramData[currentContext] = temporaryActions;
+            this.Refresh();
         }
 
         /// <summary>
@@ -110,7 +117,7 @@ namespace tiny_robotic_wizard
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void drawItems(object sender, PaintEventArgs e)
+        private void drawContextAndActions(object sender, PaintEventArgs e)
         {
             // 1行ずつ描画
             Point point = new Point(0, 0) + margin;
@@ -166,6 +173,56 @@ namespace tiny_robotic_wizard
             }
         }
 
+        /// <summary>
+        /// pointにactionタイルが存在するかを判別し，
+        /// 存在するなら，そのcontextとactionの番号を参照に収める．
+        /// </summary>
+        /// <param name="point">任意のPoint</param>
+        /// <param name="context">actionタイルが存在する場合はそのcontextが収められる</param>
+        /// <param name="action">actionsタイルが存在する場合はそのaction番号が収められる</param>
+        /// <returns>actionタイルが存在するならtrue．しないならfalse．</returns>
+        private bool onAction(Point point, out List<int> context, out int action)
+        {
+            if (onAction(point))
+            {
+                // Marginを消してPaddingを足す(先頭に足したことにする)(計算の簡単化のため)
+                point -= this.margin;
+                point += this.padding;
+
+                // contextの判別
+                {
+                    context = new List<int>();
+
+                    // 行番号
+                    int rowIndex = point.Y / (this.imageSize.Height + this.padding.Height);
+
+                    context = this.ProgramData.GetContextByRowIndex(rowIndex);
+                }
+
+                // actionの判別
+                {
+                    int pointXOfFirstActionTile = (this.imageSize.Width + this.padding.Width) * this.ProgramData.ProgramTemplate.Context.Status.Length + this.definitionImage.Width;
+                    // 最初のactionタイルの位置を左端までシフト
+                    point.X -= pointXOfFirstActionTile;
+                    // action番号を収める
+                    action = point.X / (this.imageSize.Width + this.padding.Width);
+                }
+
+                return true;
+            }
+            else
+            {
+                context = null;
+                action = 0;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// pointにactionタイルが存在するかを判別
+        /// </summary>
+        /// <param name="point">任意のPoint</param>
+        /// <returns>actionタイルが存在するならtrue．しないならfalse．</returns>
         private bool onAction(Point point)
         {
             // Marginを消してPaddingを足す(先頭に足したことにする)(計算の簡単化のため)
@@ -181,14 +238,9 @@ namespace tiny_robotic_wizard
                     point.X += -this.definitionImage.Width - this.padding.Width;
 
                     int x = point.X % (this.imageSize.Width + this.padding.Width);
-                    if (x <= this.padding.Width)
-                    {
-                        column = false;
-                    }
-                    else
-                    {
-                        column = true;
-                    }
+
+                    column = !(x <= this.padding.Width);
+
                 }
                 else
                 {
@@ -199,14 +251,7 @@ namespace tiny_robotic_wizard
             bool row;
             {
                 int y = point.Y % (this.imageSize.Height + this.padding.Height);
-                if (y <= this.padding.Height)
-                {
-                    row = false;
-                }
-                else
-                {
-                    row = true;
-                }
+                row = !(y <= this.padding.Height);
             }
             return (column && row);
         }
