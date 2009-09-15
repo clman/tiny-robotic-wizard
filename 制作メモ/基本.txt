@@ -41,9 +41,15 @@
 	
 	ユーザプログラムの保存形式はxml
 
-	ProgramTemplate, ProgramData, ProgramEditor, Program Generator, Wizard
+	主なclass:
+	ProgramTemplate, ProgramData, ProgramEditor,
+	Program Generator, ProgramTransmitter, FileManager, Wizard
 
 ●日記
+	2009年9月15日
+		WinAVRと井田先輩のブートローダライブラリの組み込み完了！
+		次はプログラムの保存管理部分を作ろう
+	
 	2009年9日10日
 		こんなにコツコツプログラムを作ったのは初めてではないだろうか．
 		
