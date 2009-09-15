@@ -42,7 +42,7 @@ namespace tiny_robotic_wizard
                 // 作業用変数wの宣言・初期化
                 ProgramCode += "int w = 0;\r\n";
 
-                // actionsの関数ポインタを収める変数の宣言
+                // actionの関数ポインタを収める変数の宣言
                 this.ProgramCode += "void (*action";
                 foreach (Status status in this.ProgramData.ProgramTemplate.Context.Status)
                 {
@@ -58,21 +58,21 @@ namespace tiny_robotic_wizard
                     this.ProgramCode += "initialize_" + status.Name + "();\r\n";
                 }
 
-                // action初期化関数を挿入
+                // actions初期化関数を挿入
                 this.ProgramCode += "/* actionの初期化 */\r\n";
                 foreach (Action action in this.ProgramData.ProgramTemplate.Actions.Action)
                 {
                     this.ProgramCode += "initialize_" + action.Name + "();\r\n";
                 }
 
-                // actionsの関数ポインタの初期化
+                // actionの関数ポインタの初期化
                 this.ProgramCode += "/* actionの関数ポインタの初期化 */\r\n";
                 foreach (KeyValuePair<List<int>, List<int>> contextAndActions in this.ProgramData)
                 {
                     int actionIndex = 0;
                     foreach (int action in contextAndActions.Value)
                     {
-                        ProgramCode += "actions";
+                        ProgramCode += "action";
                         foreach (int status in contextAndActions.Key)
                         {
                             ProgramCode += "[" + Convert.ToString(status) + "]";

@@ -5,6 +5,6 @@ void update_LineSensor(void){
 }
 
 void initialize_LineSensor(void){
-	update_LineSensor
+	update_LineSensor();
 	return;
 }
