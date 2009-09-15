@@ -1,4 +1,4 @@
-void (*Amblation[6])(void);
+void (*Ambulation[6])(void);
 
 void nop(void){
 	return;
@@ -25,11 +25,11 @@ void stop(void){
 }
 
 void initialize_Ambulation(void){
-	Amblation[0] = nop;
-	Amblation[1] = forward;
-	Amblation[2] = back;
-	Amblation[3] = cw;
-	Amblation[4] = ccw;
-	Amblation[5] = stop;
+	Ambulation[0] = nop;
+	Ambulation[1] = forward;
+	Ambulation[2] = back;
+	Ambulation[3] = cw;
+	Ambulation[4] = ccw;
+	Ambulation[5] = stop;
 	return;
 }

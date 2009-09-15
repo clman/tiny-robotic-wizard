@@ -18,7 +18,7 @@ namespace tiny_robotic_wizard
         {
             InitializeComponent();
             Assembly assembly = Assembly.GetExecutingAssembly();
-            programTemplatePath = Directory.GetFiles(Path.GetDirectoryName(assembly.Location) + @"\ProgramTemplate", @"ProgramTemplate.xml", SearchOption.AllDirectories);
+            programTemplatePath = Directory.GetFiles(Application.StartupPath + @"\ProgramTemplate", @"ProgramTemplate.xml", SearchOption.AllDirectories);
             ProgramTemplate[] programTemplate = new ProgramTemplate[programTemplatePath.Length];
             for (int i = 0; i <= programTemplatePath.Length - 1; i++)
             {
@@ -31,6 +31,9 @@ namespace tiny_robotic_wizard
             ProgramEditor programEditor = new ProgramEditor(programData);
             this.Controls.Add(programEditor);
             ProgramGenerator programGenerator = new ProgramGenerator(programData);
+            WinAvrTranslator winAvrTranslator = new WinAvrTranslator();
+            MemoryStream hexStream = new MemoryStream();
+            winAvrTranslator.Translate(programGenerator.ProgramCode, hexStream);
         }
     }
 }
