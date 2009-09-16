@@ -13,6 +13,7 @@ namespace tiny_robotic_wizard
     /// <summary>
     /// プログラムのテンプレートを表現するクラス
     /// </summary>
+    [Serializable()]
     class ProgramTemplate
     {
         /// <summary>
@@ -331,6 +332,7 @@ namespace tiny_robotic_wizard
     /// <summary>
     /// context要素を表現するクラス
     /// </summary>
+    [Serializable()]
     class Context
     {
         /// <summary>
@@ -351,6 +353,7 @@ namespace tiny_robotic_wizard
     /// <summary>
     /// status要素を表現するクラス
     /// </summary>
+    [Serializable()]
     class Status
     {
         /// <summary>
@@ -395,6 +398,7 @@ namespace tiny_robotic_wizard
     /// <summary>
     /// matter要素を表現するクラス
     /// </summary>
+    [Serializable()]
     class Matter
     {
         /// <summary>
@@ -421,6 +425,7 @@ namespace tiny_robotic_wizard
     /// <summary>
     /// actions要素を表現するクラス
     /// </summary>
+    [Serializable()]
     class Actions
     {
         /// <summary>
@@ -441,6 +446,7 @@ namespace tiny_robotic_wizard
     /// <summary>
     /// action要素を表現するクラス
     /// </summary>
+    [Serializable()]
     class Action
     {
         /// <summary>
@@ -485,6 +491,7 @@ namespace tiny_robotic_wizard
     /// <summary>
     /// procedure要素を表現するクラス
     /// </summary>
+    [Serializable()]
     class Procedure
     {
         /// <summary>
