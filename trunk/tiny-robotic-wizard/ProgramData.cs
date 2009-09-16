@@ -4,6 +4,7 @@ using System.Text;
 
 namespace tiny_robotic_wizard
 {
+    [Serializable()]
     class ProgramData : IEnumerable<KeyValuePair<List<int>, List<int>>>
     {
         /// <summary>

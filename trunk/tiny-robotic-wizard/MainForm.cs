@@ -28,9 +28,17 @@ namespace tiny_robotic_wizard
             this.AutoScroll = true;
 
             ProgramData programData = new ProgramData(programTemplate[3]);
+
+            ProgramManager programManager = new ProgramManager(Path.Combine(Application.StartupPath, "program"));
+            programManager.Save(programData, "hoge.tpx");
+
+            programData = programManager.Load("hoge.tpx");
+
             ProgramEditor programEditor = new ProgramEditor(programData);
             this.Controls.Add(programEditor);
+
             ProgramGenerator programGenerator = new ProgramGenerator(programData);
+
             WinAvrTranslator winAvrTranslator = new WinAvrTranslator();
             MemoryStream hexStream = new MemoryStream();
             winAvrTranslator.Translate(programGenerator.ProgramCode, hexStream);
