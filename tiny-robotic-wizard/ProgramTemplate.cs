@@ -17,9 +17,17 @@ namespace tiny_robotic_wizard
     class ProgramTemplate
     {
         /// <summary>
+        /// ProgramTemplateの名前
+        /// </summary>
+        public string Name { get; private set; }
+
+
+
+        /// <summary>
         /// Context
         /// </summary>
         public Context Context{get; private set;}
+
         /// <summary>
         /// Actions
         /// </summary>
@@ -38,10 +46,8 @@ namespace tiny_robotic_wizard
         {
             // XMLファイルのURIから，親ディレクトリのURIを取得，BaseUriに納める
             this.baseUri = new Uri(filePath);
-            // 実行ファイルのURIを取得するためにAssemblyクラスをインスタンス化
-            Assembly assembly = Assembly.GetExecutingAssembly();
             // ProgramTemplateのXML Schema(ProgramTemplate.xsd)を取ってくる．
-            XmlReader programTemplateSchema = new XmlTextReader(Path.GetDirectoryName(assembly.Location) + @"\ProgramTemplate.xsd");
+            XmlReader programTemplateSchema = new XmlTextReader(Path.Combine(Application.StartupPath, "ProgramTemplate.xsd"));
             // XML Validatingに関する設定を作る
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.Schemas.Add("", programTemplateSchema);

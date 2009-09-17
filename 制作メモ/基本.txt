@@ -46,6 +46,10 @@
 	Program Generator, ProgramTransmitter, FileManager, Wizard
 
 ●日記
+	2009年9月18日
+		プログラムの保存管理部分もできて，GUIを作り始める．
+		Aquaっぽいボタンが完成．
+	
 	2009年9月15日
 		WinAVRと井田先輩のブートローダライブラリの組み込み完了！
 		次はプログラムの保存管理部分を作ろう

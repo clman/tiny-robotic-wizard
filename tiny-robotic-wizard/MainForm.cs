@@ -17,31 +17,40 @@ namespace tiny_robotic_wizard
         public MainForm()
         {
             InitializeComponent();
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            programTemplatePath = Directory.GetFiles(Application.StartupPath + @"\ProgramTemplate", @"ProgramTemplate.xml", SearchOption.AllDirectories);
+
+            // キャプションをアセンブリ名に
+            this.Text = Assembly.GetExecutingAssembly().GetName().Name;
+
+            this.AutoScroll = true;
+
+            // ProgramTemplateの一覧を探す
+            string programTemplateDirectory = Path.Combine(Application.StartupPath, "ProgramTemplate");
+            programTemplatePath = Directory.GetFiles(programTemplateDirectory, "ProgramTemplate.xml", SearchOption.AllDirectories);
             ProgramTemplate[] programTemplate = new ProgramTemplate[programTemplatePath.Length];
+
+            // ProgramTemplateをすべて読み込む
             for (int i = 0; i <= programTemplatePath.Length - 1; i++)
             {
                 programTemplate[i] = new ProgramTemplate(programTemplatePath[i]);
             }
 
-            this.AutoScroll = true;
+            /*
+                        ProgramData programData = new ProgramData(programTemplate[3]);
 
-            ProgramData programData = new ProgramData(programTemplate[3]);
+                        ProgramManager programManager = new ProgramManager(Path.Combine(Application.StartupPath, "program"));
+                        programManager.Save(programData, "hoge.tpx");
 
-            ProgramManager programManager = new ProgramManager(Path.Combine(Application.StartupPath, "program"));
-            programManager.Save(programData, "hoge.tpx");
+                        programData = programManager.Load("hoge.tpx");
 
-            programData = programManager.Load("hoge.tpx");
+                        ProgramEditor programEditor = new ProgramEditor(programData);
+                        this.Controls.Add(programEditor);
 
-            ProgramEditor programEditor = new ProgramEditor(programData);
-            this.Controls.Add(programEditor);
+                        ProgramGenerator programGenerator = new ProgramGenerator(programData);
 
-            ProgramGenerator programGenerator = new ProgramGenerator(programData);
-
-            WinAvrTranslator winAvrTranslator = new WinAvrTranslator();
-            MemoryStream hexStream = new MemoryStream();
-            winAvrTranslator.Translate(programGenerator.ProgramCode, hexStream);
+                        WinAvrTranslator winAvrTranslator = new WinAvrTranslator();
+                        MemoryStream hexStream = new MemoryStream();
+                        winAvrTranslator.Translate(programGenerator.ProgramCode, hexStream);
+            */
         }
     }
 }
