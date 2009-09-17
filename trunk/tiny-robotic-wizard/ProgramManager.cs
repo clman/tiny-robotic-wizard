@@ -28,9 +28,18 @@ namespace tiny_robotic_wizard
         /// <returns>プログラムファイルのパスの配列</returns>
         public string[] getFileList()
         {
+            string[] tempPath;
             string extension = Properties.Resources.Extension;
             string searchPattern = Path.ChangeExtension("*", extension);
-            return System.IO.Directory.GetFiles(Directory, searchPattern, SearchOption.TopDirectoryOnly);
+
+            // ディレクトリ中のファイルの一覧を取得
+            tempPath = System.IO.Directory.GetFiles(Directory, searchPattern, SearchOption.TopDirectoryOnly);
+            // フルパスになっているので，ファイル名のみを抽出
+            for (int i = 0; i <= tempPath.Length - 1; i++)
+            {
+                tempPath[i] = Path.GetFileName(tempPath[i]);
+            }
+            return tempPath;
         }
 
         /// <summary>

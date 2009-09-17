@@ -87,6 +87,12 @@
     <EmbeddedResource Include="ProgramTemplate.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\AquaButton.resx">
+      <DependentUpon>AquaButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard\CreateOrOpen.resx">
+      <DependentUpon>CreateOrOpen.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -97,6 +103,18 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="WinAvrTranslator.cs" />
+    <Compile Include="Wizard\AquaButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\AquaButton.Designer.cs">
+      <DependentUpon>AquaButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Wizard\CreateOrOpen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Wizard\CreateOrOpen.Designer.cs">
+      <DependentUpon>CreateOrOpen.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="definition.png">

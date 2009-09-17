@@ -28,19 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.createOrOpen1 = new tiny_robotic_wizard.Wizard.CreateOrOpen();
             this.SuspendLayout();
+            // 
+            // createOrOpen1
+            // 
+            this.createOrOpen1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.createOrOpen1.Location = new System.Drawing.Point(0, 0);
+            this.createOrOpen1.Name = "createOrOpen1";
+            this.createOrOpen1.Size = new System.Drawing.Size(543, 388);
+            this.createOrOpen1.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 263);
+            this.ClientSize = new System.Drawing.Size(543, 388);
+            this.Controls.Add(this.createOrOpen1);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private tiny_robotic_wizard.Wizard.CreateOrOpen createOrOpen1;
+
+
+
     }
 }
 

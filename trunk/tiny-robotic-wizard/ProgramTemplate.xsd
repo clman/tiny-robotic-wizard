@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<xsd:element name="ProgramTemplate">
-		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element name="event" minOccurs="1" maxOccurs="1">
-					<xsd:complexType>
+  <xsd:element name="ProgramTemplate">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="event" minOccurs="1" maxOccurs="1">
+          <xsd:complexType>
               <xsd:sequence>
                 <xsd:element name="status" minOccurs="1">
                   <xsd:complexType>
@@ -23,8 +23,8 @@
                   </xsd:complexType>
                 </xsd:element>
               </xsd:sequence>
-					</xsd:complexType>
-				</xsd:element>
+          </xsd:complexType>
+        </xsd:element>
         <xsd:element name="actions">
           <xsd:complexType>
             <xsd:sequence>
@@ -47,8 +47,9 @@
             </xsd:sequence>
           </xsd:complexType>
         </xsd:element>      
-			</xsd:sequence>
-			<xsd:attribute name="name" type="xsd:string" />
-		</xsd:complexType>
-	</xsd:element>
+      </xsd:sequence>
+      <xsd:attribute name="name" type="xsd:string" />
+      <xsd:attribute name="description" type="xsd:string" />
+    </xsd:complexType>
+  </xsd:element>
 </xsd:schema>
