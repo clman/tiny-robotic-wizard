@@ -7,119 +7,331 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using tiny_robotic_wizard.GUI;
 
 namespace tiny_robotic_wizard
 {
     public partial class MainForm : Form
     {
         // プログラムテンプレート
-        private ProgramTemplate[] programTemplate;
+        private ProgramTemplate[] programTemplates;
 
-        // 編集されたかどうかのフラグ
-        private bool isModified = !false;
+        // 各種データ
+        private string applicationName;
+        private ProgramManager programManager = new ProgramManager(Path.Combine(Application.StartupPath, "program"));
+        private ProgramTemplate programTemplate;
+        private ProgramData programData;
+        private string currentFileName;
 
-        // 基本フォント
-        private readonly Font baseFont = new Font(FontFamily.GenericSansSerif, 18);
+        // 各種GUI
+        private ProgramEditor programEditor;
+        private ClickableList templateSelectBox;
+        private ClickableList fileSelectBox;
+
+        // 各種フラグ
+        /// <summary>
+        /// 編集されたかどうか
+        /// </summary>
+        private bool isModified = false;
+        /// <summary>
+        /// 編集中のファイルが新規ファイルかどうか
+        /// </summary>
+        private bool isNew = false;
 
         public MainForm()
         {
             InitializeComponent();
 
             // キャプションをアセンブリ名に
-            this.Text = Assembly.GetExecutingAssembly().GetName().Name;
-
-            this.AutoScroll = true;
+            this.applicationName = Assembly.GetExecutingAssembly().GetName().Name;
+            this.Text = this.applicationName;
 
             // ProgramTemplateの一覧を探す
             string programTemplateDirectory = Path.Combine(Application.StartupPath, "ProgramTemplate");
             string[] programTemplatePath = Directory.GetFiles(programTemplateDirectory, "ProgramTemplate.xml", SearchOption.AllDirectories);
-            programTemplate = new ProgramTemplate[programTemplatePath.Length];
+            programTemplates = new ProgramTemplate[programTemplatePath.Length];
 
             // ProgramTemplateをすべて読み込む
             for (int i = 0; i <= programTemplatePath.Length - 1; i++)
             {
-                programTemplate[i] = new ProgramTemplate(programTemplatePath[i]);
+                programTemplates[i] = new ProgramTemplate(programTemplatePath[i]);
             }
 
+            // 各種GUIのインスタンスを生成
+            this.programEditor = new ProgramEditor();
+            this.templateSelectBox = new ClickableList();
+            this.fileSelectBox = new ClickableList();
+
+            // 各種GUIの表示設定
+            this.programEditor.Visible = false;
+            this.templateSelectBox.Visible = false;
+            this.fileSelectBox.Visible = false;
+
+            // 各種GUIの初期化
+            this.programEditor.ModifiedChanged += delegate(bool modified)
+            {
+                this.isModified = modified;
+                updateFormState();
+            };
+            this.programEditor.Location = new Point(0, 0);
+            this.programEditor.Font = Program.BaseFont;
+            this.mainPanel.Controls.Add(this.programEditor);
+
+            this.templateSelectBox.Location = new Point(0, 0);
+            this.templateSelectBox.Dock = DockStyle.Fill;
+            this.templateSelectBox.Font = Program.BaseFont;
+            this.mainPanel.Controls.Add(this.templateSelectBox);
+
+            this.fileSelectBox.Location = new Point(0, 0);
+            this.fileSelectBox.Dock = DockStyle.Fill;
+            this.fileSelectBox.Font = Program.BaseFont;
+            this.mainPanel.Controls.Add(this.fileSelectBox);
+
+            // フォームの状態を更新
+            this.updateFormState();
+
+            // ガイドテキストの設定
+            guideText.Font = Program.BaseFont;
+            if (this.open.Enabled)
+                this.guideText.Text = "プログラムを[開く]か[新規作成]できます";
+            else
+                this.guideText.Text = "プログラムを[新規作成]できます";
+
             /*
-                        ProgramData programData = new ProgramData(programTemplate[3]);
+            ProgramData programData = new ProgramData(programTemplate[3]);
 
-                        ProgramManager programManager = new ProgramManager(Path.Combine(Application.StartupPath, "program"));
-                        programManager.Save(programData, "hoge.tpx");
+            ProgramManager programManager = new ProgramManager(this.savedProgramDirectory);
+            programManager.Save(programData, "hoge.tpx");
 
-                        programData = programManager.Load("hoge.tpx");
+            programData = programManager.Load("hoge.tpx");
 
-                        ProgramEditor programEditor = new ProgramEditor(programData);
-                        this.Controls.Add(programEditor);
+            ProgramEditor programEditor = new ProgramEditor(programData);
+            this.Controls.Add(programEditor);
 
-                        ProgramGenerator programGenerator = new ProgramGenerator(programData);
+            ProgramGenerator programGenerator = new ProgramGenerator(programData);
 
-                        WinAvrTranslator winAvrTranslator = new WinAvrTranslator();
-                        MemoryStream hexStream = new MemoryStream();
-                        winAvrTranslator.Translate(programGenerator.ProgramCode, hexStream);
+            WinAvrTranslator winAvrTranslator = new WinAvrTranslator();
+            MemoryStream hexStream = new MemoryStream();
+            winAvrTranslator.Translate(programGenerator.ProgramCode, hexStream);
             */
         }
 
-        private void new__MouseClick(object sender, MouseEventArgs e)
+        private void updateFormState()
         {
-            if (this.isModified)
-            {
-                DialogResult result = MessageBox.Show("現在編集中のプログラムは変更されています．" + Environment.NewLine + "新しいプログラムを作る前に保存しますか？", "新規作成", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-                if (result == DialogResult.Cancel)
-                {
-                    return;
-                }
-                else if (result == DialogResult.Yes)
-                {
-                }
-                else if (result == DialogResult.No)
-                {
-                    ListBox templateSelectBox = new ListBox();
+            this.new_.Enabled = true;
+            this.open.Enabled = (this.programManager.GetFileList().Length != 0);
+            this.saveAs.Enabled = (this.programEditor.Visible);
+            this.save.Enabled = (this.programEditor.Visible && !isNew && isModified);
+            this.transfer.Enabled = (this.programEditor.Visible);
+            if (currentFileName != null)
+                this.Text = this.applicationName + Properties.Resources.FormCaptionSplitter + this.currentFileName + (isModified ? "*" : "");
+            else
+                this.Text = this.applicationName;
+        }
 
-                    foreach (ProgramTemplate hoge in this.programTemplate)
+        private bool saveOrSaveAs(bool saveAs)
+        {
+            if (saveAs)
+            {
+            retry:
+                string inputText = Microsoft.VisualBasic.Interaction.InputBox("保存するプログラムに付ける名前を入力してください", "名前を付けて保存", "", -1, -1);
+                if (inputText != "")
+                {
+                    // ファイル名に使えない文字を取り除いて，拡張子を変更する
+                    inputText = FileNameValidator.ValidFileName(inputText);
+                    inputText = Path.ChangeExtension(inputText, Properties.Resources.Extension);
+
+                    // すでに同じ名前のファイルがあった場合
+                    if (!programManager.IsUnique(inputText))
                     {
-                        templateSelectBox.Items.Add(hoge.Description);
+                        DialogResult result = MessageBox.Show("そのファイルは既に存在します．" + Environment.NewLine + "上書きしますか？", "名前を付けて保存", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+                        if (result == DialogResult.No)
+                            goto retry;
+                        else if (result == DialogResult.Cancel)
+                            return false;
                     }
 
-                    Label description = new Label();
-                    description.AutoSize = true;
-                    description.Location = new Point(0, 0);
-                    description.Font = this.baseFont;
-                    description.Text = "テンプレートを選択してください";
+                    // 指定された名前で保存する
+                    this.programManager.Save(this.programData, inputText);
 
-                    templateSelectBox.Location = new Point(0, description.Height + 10);
-                    templateSelectBox.Size = new Size(this.container.Width, this.container.Height - description.Height);
-                    templateSelectBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right;
-                    templateSelectBox.Font = this.baseFont;
-                    templateSelectBox.BorderStyle = BorderStyle.None;
+                    // 各種データを更新
+                    this.isNew = false;
+                    this.isModified = false;
+                    this.currentFileName = inputText;
 
-                    this.container.Controls.Add(description);
-                    this.container.Controls.Add(templateSelectBox);
+                    this.updateFormState();
 
-                    templateSelectBox.MouseMove += delegate(object sender2, MouseEventArgs e2)
-                    {
-                        templateSelectBox.SelectedIndex = templateSelectBox.IndexFromPoint(e2.X, e2.Y);
-                        if(templateSelectBox.SelectedIndex != -1)
-                            Cursor.Current = Cursors.Hand;
-                    };
-                    templateSelectBox.MouseLeave += delegate(object sender2, EventArgs e2)
-                    {
-                        templateSelectBox.SelectedIndex = -1;
-                    };
-                    templateSelectBox.MouseClick += delegate(object sender2, MouseEventArgs e2)
-                    {
-                        if (templateSelectBox.SelectedIndex != -1)
-                        {
-                            ProgramData programData = new ProgramData(programTemplate[templateSelectBox.SelectedIndex]);
-                            ProgramEditor programEditor = new ProgramEditor(programData);
+                    return true;
+                }
+                else
+                    return false;
+            }
+            else
+            {
+                // 編集中のファイルを保存
+                programManager.Save(this.programData, currentFileName);
 
-                            this.container.Controls.Remove(description);
-                            this.container.Controls.Remove(templateSelectBox);
-                            this.container.Controls.Add(programEditor);
-                        }
-                    };
+                // 各種データを更新
+                isNew = false;
+                isModified = false;
+
+                // フォームの状態を更新
+                this.updateFormState();
+
+                return true;
+            }
+        }
+
+        // [新規作成]がクリックされたとき
+        private void new__MouseClick(object sender, MouseEventArgs e)
+        {
+            // プログラムが変更されている場合
+            if (this.isModified)
+            {
+                // 保存するか破棄するか問い合わせる
+                DialogResult result = MessageBox.Show("現在編集中のプログラムは変更されています．" + Environment.NewLine + "新しいプログラムを作る前に保存しますか？", "新規作成", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+                if (result == DialogResult.Yes)
+                {
+                    // 保存する場合
+                    bool saved = saveOrSaveAs(isNew);
+                    if (!saved)
+                        return;
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    // キャンセルする場合
+                    return;
                 }
             }
+
+            // テンプレートを選択するリストを作る
+            this.templateSelectBox.Items.Clear();
+            foreach (ProgramTemplate hoge in this.programTemplates)
+            {
+                this.templateSelectBox.Items.Add(hoge.Description);
+            }
+            // 選択時のイベント設定
+            this.templateSelectBox.ItemMouseClick += delegate(int selectedIndex)
+            {
+                // 選択されたProgramTemplateでProgramDataを作り，ProgramEditorにセットする．
+                this.programTemplate = this.programTemplates[selectedIndex];
+                this.programData = new ProgramData(programTemplates[selectedIndex]);
+                this.programEditor.ProgramData = this.programData;
+
+                // 各種GUIの表示設定
+                this.programEditor.Visible = true;
+                this.templateSelectBox.Visible = false;
+                this.fileSelectBox.Visible = false;
+
+                // 各種データを更新
+                this.isNew = true;
+                this.isModified = false;
+                this.currentFileName = Properties.Resources.NewFileName;
+
+                // フォームの状態を更新
+                this.updateFormState();
+
+                // ガイドテキストの設定
+                this.guideText.Text = "プログラムを編集できます";
+            };
+
+            // 各種GUIの表示設定
+            this.programEditor.Visible = false;
+            this.templateSelectBox.Visible = true;
+            this.fileSelectBox.Visible = false;
+
+            // 各種データの更新
+            this.isNew = true;
+            this.isModified = false;
+            this.currentFileName = null;
+
+            // フォームの状態を更新
+            this.updateFormState();
+
+            // ガイドテキストの設定
+            this.guideText.Text = "テンプレートを選択してください";
+        }
+
+        // [開く]がクリックされたとき
+        private void open_MouseClick(object sender, MouseEventArgs e)
+        {
+            // プログラムが変更されている場合
+            if (this.isModified)
+            {
+                // 保存するか破棄するか問い合わせる
+                DialogResult result = MessageBox.Show("現在編集中のプログラムは変更されています．" + Environment.NewLine + "新しいプログラムを作る前に保存しますか？", "開く", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+                if (result == DialogResult.Yes)
+                {
+                    bool saved = saveOrSaveAs(isNew);
+                    if (!saved)
+                        return;
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    // キャンセルする場合
+                    return;
+                }
+            }
+
+            // ファイルを選択するリストを作る
+            this.fileSelectBox.Items.Clear();
+            foreach (string fileName in this.programManager.GetFileList())
+            {
+                this.fileSelectBox.Items.Add(fileName);
+            }
+            // 選択時のイベント設定
+            this.fileSelectBox.ItemMouseClick += delegate(int selectedIndex)
+            {
+                // 選択されたファイルからProgramDataを復元し，ProgramEditorにセットする．
+                this.programData = this.programManager.Load(programManager.GetFileList()[selectedIndex]);
+                this.programEditor.ProgramData = this.programData;
+
+                // 各種GUIの表示設定
+                this.programEditor.Visible = true;
+                this.templateSelectBox.Visible = false;
+                this.fileSelectBox.Visible = false;
+
+                // 各種データの更新
+                this.isNew = false;
+                this.isModified = false;
+                currentFileName = programManager.GetFileList()[selectedIndex];
+
+                // フォームの状態を更新
+                this.updateFormState();
+
+                // ガイドテキストの設定
+                this.guideText.Text = "プログラムを編集できます";
+            };
+
+            // 各種GUIの表示設定
+            this.programEditor.Visible = false;
+            this.templateSelectBox.Visible = false;
+            this.fileSelectBox.Visible = true;
+
+            // 各種データの更新
+            this.isNew = false;
+            this.isModified = false;
+            currentFileName = null;
+
+            // フォームの状態を更新
+            this.updateFormState();
+
+            // ガイドテキストの設定
+            this.guideText.Text = "開きたいプログラムを選択してください";
+        }
+
+        // [名前を付けて保存]がクリックされたとき
+        private void saveAs_MouseClick(object sender, MouseEventArgs e)
+        {
+            saveOrSaveAs(true);
+        }
+
+        // [保存]がクリックされたとき
+        private void save_MouseClick(object sender, MouseEventArgs e)
+        {
+            saveOrSaveAs(false);
         }
     }
 }

@@ -45,6 +45,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\Image.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -53,7 +54,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GUI\GuideText.cs">
+    <Compile Include="FileNameValidator.cs" />
+    <Compile Include="GUI\ClickableList.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="HidBoot.cs" />
