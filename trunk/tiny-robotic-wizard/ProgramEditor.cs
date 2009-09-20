@@ -6,10 +6,10 @@ using System.Drawing;
 
 namespace tiny_robotic_wizard
 {
+    delegate void ModifiedChanged(bool modified);
+
     class ProgramEditor:UserControl
     {
-        public ProgramData ProgramData{ get; private set; }
-
         // 定義画像をとってくる
         private Image definitionImage = Image.FromFile(Application.StartupPath + @"\definition.png");
         // タイル画像のサイズ
@@ -17,97 +17,151 @@ namespace tiny_robotic_wizard
         // 画像のPadding
         private Size padding = new Size(20, 20);
         // 画像のMargin
-        private Size margin = new Size(5, 20);
+        private Size margin = new Size(10, 10);
 
         // クリックされたcontextとそのaction番号
         private List<int> currentContext;
         private int currentAction;
 
         // Action選択コンテキストメニュー
-        private ContextMenu[] actionSelectMenu;
+        private ContextMenuStrip[] actionSelectMenu;
+
+        /// <summary>
+        /// ProgramDataが編集されたときのイベント
+        /// </summary>
+        public event ModifiedChanged ModifiedChanged;
+
+        private bool modified = false;
+        /// <summary>
+        /// ProgramDataが編集されたか
+        /// </summary>
+        public bool Modified
+        {
+            get
+            {
+                return this.modified;
+            }
+            set
+            {
+                this.modified = value;
+                if (this.ModifiedChanged != null)
+                    this.ModifiedChanged(this.modified);
+            }
+        }
+
+        // ProgramData
+        private ProgramData programData = null;
+        public ProgramData ProgramData
+        {
+            get
+            {
+                return programData;
+            }
+            set
+            {
+                this.programData = value;
+
+                // 編集フラグを落とす
+                this.modified = false;
+
+                // コントロールのサイズを決定
+                {
+                    int columnCount = this.programData.ProgramTemplate.Context.Status.Length + this.programData.ProgramTemplate.Actions.Action.Length;
+                    int rowCount = this.programData.Length;
+
+                    Size size = new Size(0, 0);
+
+                    // 画像の分を計算
+                    size.Width += columnCount * imageSize.Width;
+                    size.Height += rowCount * imageSize.Height;
+
+                    // 定義画像とそのPadding分を計算
+                    size.Width += definitionImage.Width;
+                    size.Width += padding.Width;
+
+                    // Padding分を計算
+                    size.Width += (columnCount - 1) * padding.Width;
+                    size.Height += (rowCount - 1) * padding.Height;
+
+                    // Margin分を計算
+                    size.Width += margin.Width;
+                    size.Height += margin.Height;
+
+                    this.Size = size;
+                }
+
+                // Action選択コンテキストメニューを生成
+                {
+                    this.actionSelectMenu = new ContextMenuStrip[this.programData.ProgramTemplate.Actions.Action.Length];
+                    for (int i = 0; i <= this.programData.ProgramTemplate.Actions.Action.Length - 1; i++)
+                    {
+                        this.actionSelectMenu[i] = new ContextMenuStrip();
+                        for (int j = 0; j <= this.programData.ProgramTemplate.Actions.Action[i].Procedure.Length - 1; j++)
+                        {
+                            string text = this.programData.ProgramTemplate.Actions.Action[i].Procedure[j].Caption;
+                            Image image = new Bitmap(this.programData.ProgramTemplate.Actions.Action[i].Image[j]);
+                            image = image.GetThumbnailImage(90, 50, delegate() { return false; }, IntPtr.Zero);
+                            this.actionSelectMenu[i].Items.Add(new ToolStripMenuItem(text, image, new EventHandler(onActionSelectMenuItemClick)));
+                            this.actionSelectMenu[i].Items[j].DisplayStyle = ToolStripItemDisplayStyle.ImageAndText;
+                            this.actionSelectMenu[i].Items[j].ImageScaling = ToolStripItemImageScaling.None;
+                            this.actionSelectMenu[i].Items[j].MergeIndex = j;
+                        }
+                    }
+                }
+
+                // タイル描画関数をPaintイベントに追加
+                this.Paint += new PaintEventHandler(drawContextAndActions);
+
+                // マウス移動イベント
+                this.MouseMove += delegate(object sender, MouseEventArgs e)
+                {
+                    if (onAction(new Point(e.X, e.Y)))
+                    {
+                        Cursor.Current = Cursors.Hand;
+                    }
+                    else
+                    {
+                        Cursor.Current = Cursors.Arrow;
+                    }
+                };
+
+                // マウスクリックイベント
+                this.MouseClick += delegate(object sender, MouseEventArgs e)
+                {
+                    Point point = new Point(e.X, e.Y);
+                    List<int> context;
+                    int action;
+                    bool onAction_ = onAction(point, out context, out action);
+
+                    // 左クリック かつ アクションタイル上なら
+                    if (e.Button == MouseButtons.Left && onAction_)
+                    {
+                        currentContext = context;
+                        currentAction = action;
+                        actionSelectMenu[action].Show((Control)sender, point);
+                    }
+                };
+            }
+        }
+
+        public ProgramEditor()
+            : base()
+        {
+        }
 
         public ProgramEditor(ProgramData programData)
         {
             this.ProgramData = programData;
-
-            // コントロールのサイズを決定
-            {
-                int columnCount = this.ProgramData.ProgramTemplate.Context.Status.Length + this.ProgramData.ProgramTemplate.Actions.Action.Length;
-                int rowCount = this.ProgramData.Length;
-
-                Size size = new Size(0, 0);
-
-                // 画像の分を計算
-                size.Width += columnCount * imageSize.Width;
-                size.Height += rowCount * imageSize.Height;
-
-                // 定義画像とそのPadding分を計算
-                size.Width += definitionImage.Width;
-                size.Width += padding.Width;
-
-                // Padding分を計算
-                size.Width += (columnCount - 1) * padding.Width;
-                size.Height += (rowCount - 1) * padding.Height;
-
-                // Margin分を計算
-                size.Width += margin.Width;
-                size.Height += margin.Height;
-
-                this.Size = size;
-            }
-
-            // Action選択コンテキストメニューを生成
-            {
-                this.actionSelectMenu = new ContextMenu[this.ProgramData.ProgramTemplate.Actions.Action.Length];
-                for (int i = 0; i <= this.ProgramData.ProgramTemplate.Actions.Action.Length - 1; i++)
-                {
-                    this.actionSelectMenu[i] = new ContextMenu();
-                    foreach (Procedure procedure in this.ProgramData.ProgramTemplate.Actions.Action[i].Procedure)
-                    {
-                        this.actionSelectMenu[i].MenuItems.Add(new MenuItem(procedure.Caption, new EventHandler(onActionSelectMenuItemClick)));
-                    }
-                }
-            }
-
-            // タイル描画関数をPaintイベントに追加
-            this.Paint += new PaintEventHandler(drawContextAndActions);
-
-            // マウス移動イベント
-            this.MouseMove += delegate(object sender, MouseEventArgs e)
-            {
-                if (onAction(new Point(e.X, e.Y)))
-                {
-                    Cursor.Current = Cursors.Hand;
-                }
-                else
-                {
-                    Cursor.Current = Cursors.Arrow;
-                }
-            };
-
-            // マウスクリックイベント
-            this.MouseClick += delegate(object sender, MouseEventArgs e)
-            {
-                Point point = new Point(e.X, e.Y);
-                List<int> context;
-                int action;
-                bool onAction_ = onAction(point, out context, out action);
-
-                // 左クリック かつ アクションタイル上なら
-                if (e.Button == MouseButtons.Left && onAction_)
-                {
-                    currentContext = context;
-                    currentAction = action;
-                    actionSelectMenu[action].Show((Control)sender, point);
-                }
-            };
         }
 
         // actionSelectMenuのクリックイベント
         private void onActionSelectMenuItemClick(object sender, EventArgs e)
         {
+            // 編集フラグをたてる
+            this.Modified = true;
+
             List<int> temporaryActions = new List<int>(this.ProgramData[currentContext]);
-            temporaryActions[currentAction] = ((MenuItem)sender).Index;
+            temporaryActions[currentAction] = ((ToolStripMenuItem)sender).MergeIndex;
             this.ProgramData[currentContext] = temporaryActions;
             this.Refresh();
         }

@@ -30,12 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.container = new System.Windows.Forms.Panel();
-            this.aquaIcon4 = new tiny_robotic_wizard.Wizard.AquaIcon();
-            this.aquaIcon3 = new tiny_robotic_wizard.Wizard.AquaIcon();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.transfer = new tiny_robotic_wizard.Wizard.AquaIcon();
+            this.save = new tiny_robotic_wizard.Wizard.AquaIcon();
             this.open = new tiny_robotic_wizard.Wizard.AquaIcon();
             this.new_ = new tiny_robotic_wizard.Wizard.AquaIcon();
+            this.saveAs = new tiny_robotic_wizard.Wizard.AquaIcon();
             this.guideText = new System.Windows.Forms.TextBox();
-            this.mainPanel = new System.Windows.Forms.Panel();
             this.container.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,29 +55,39 @@
             this.container.Size = new System.Drawing.Size(727, 462);
             this.container.TabIndex = 7;
             // 
-            // aquaIcon4
+            // mainPanel
             // 
-            this.aquaIcon4.BackColor = System.Drawing.Color.Transparent;
-            this.aquaIcon4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("aquaIcon4.BackgroundImage")));
-            this.aquaIcon4.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.aquaIcon4.Hint = "ロボットに転送";
-            this.aquaIcon4.Image = ((System.Drawing.Image)(resources.GetObject("aquaIcon4.Image")));
-            this.aquaIcon4.Location = new System.Drawing.Point(330, 12);
-            this.aquaIcon4.Name = "aquaIcon4";
-            this.aquaIcon4.Size = new System.Drawing.Size(100, 100);
-            this.aquaIcon4.TabIndex = 6;
+            this.mainPanel.AutoScroll = true;
+            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainPanel.Location = new System.Drawing.Point(0, 19);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(725, 441);
+            this.mainPanel.TabIndex = 1;
             // 
-            // aquaIcon3
+            // transfer
             // 
-            this.aquaIcon3.BackColor = System.Drawing.Color.Transparent;
-            this.aquaIcon3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("aquaIcon3.BackgroundImage")));
-            this.aquaIcon3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.aquaIcon3.Hint = "保存";
-            this.aquaIcon3.Image = ((System.Drawing.Image)(resources.GetObject("aquaIcon3.Image")));
-            this.aquaIcon3.Location = new System.Drawing.Point(224, 12);
-            this.aquaIcon3.Name = "aquaIcon3";
-            this.aquaIcon3.Size = new System.Drawing.Size(100, 100);
-            this.aquaIcon3.TabIndex = 5;
+            this.transfer.BackColor = System.Drawing.Color.Transparent;
+            this.transfer.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("transfer.BackgroundImage")));
+            this.transfer.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.transfer.Hint = "ロボットに転送";
+            this.transfer.Image = ((System.Drawing.Image)(resources.GetObject("transfer.Image")));
+            this.transfer.Location = new System.Drawing.Point(436, 12);
+            this.transfer.Name = "transfer";
+            this.transfer.Size = new System.Drawing.Size(100, 100);
+            this.transfer.TabIndex = 6;
+            // 
+            // save
+            // 
+            this.save.BackColor = System.Drawing.Color.Transparent;
+            this.save.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("save.BackgroundImage")));
+            this.save.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.save.Hint = "保存";
+            this.save.Image = ((System.Drawing.Image)(resources.GetObject("save.Image")));
+            this.save.Location = new System.Drawing.Point(330, 13);
+            this.save.Name = "save";
+            this.save.Size = new System.Drawing.Size(100, 100);
+            this.save.TabIndex = 5;
+            this.save.MouseClick += new System.Windows.Forms.MouseEventHandler(this.save_MouseClick);
             // 
             // open
             // 
@@ -89,6 +100,7 @@
             this.open.Name = "open";
             this.open.Size = new System.Drawing.Size(100, 100);
             this.open.TabIndex = 4;
+            this.open.MouseClick += new System.Windows.Forms.MouseEventHandler(this.open_MouseClick);
             // 
             // new_
             // 
@@ -103,6 +115,18 @@
             this.new_.TabIndex = 3;
             this.new_.MouseClick += new System.Windows.Forms.MouseEventHandler(this.new__MouseClick);
             // 
+            // saveAs
+            // 
+            this.saveAs.BackColor = System.Drawing.Color.Transparent;
+            this.saveAs.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.saveAs.Hint = "名前付けて保存";
+            this.saveAs.Image = ((System.Drawing.Image)(resources.GetObject("saveAs.Image")));
+            this.saveAs.Location = new System.Drawing.Point(224, 12);
+            this.saveAs.Name = "saveAs";
+            this.saveAs.Size = new System.Drawing.Size(100, 100);
+            this.saveAs.TabIndex = 8;
+            this.saveAs.MouseClick += new System.Windows.Forms.MouseEventHandler(this.saveAs_MouseClick);
+            // 
             // guideText
             // 
             this.guideText.BackColor = System.Drawing.SystemColors.Info;
@@ -113,14 +137,6 @@
             this.guideText.Size = new System.Drawing.Size(725, 19);
             this.guideText.TabIndex = 0;
             // 
-            // mainPanel
-            // 
-            this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainPanel.Location = new System.Drawing.Point(0, 19);
-            this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(725, 441);
-            this.mainPanel.TabIndex = 1;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -128,9 +144,10 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(751, 592);
+            this.Controls.Add(this.saveAs);
             this.Controls.Add(this.container);
-            this.Controls.Add(this.aquaIcon4);
-            this.Controls.Add(this.aquaIcon3);
+            this.Controls.Add(this.transfer);
+            this.Controls.Add(this.save);
             this.Controls.Add(this.open);
             this.Controls.Add(this.new_);
             this.Name = "MainForm";
@@ -145,11 +162,12 @@
 
         private tiny_robotic_wizard.Wizard.AquaIcon new_;
         private tiny_robotic_wizard.Wizard.AquaIcon open;
-        private tiny_robotic_wizard.Wizard.AquaIcon aquaIcon3;
-        private tiny_robotic_wizard.Wizard.AquaIcon aquaIcon4;
+        private tiny_robotic_wizard.Wizard.AquaIcon save;
+        private tiny_robotic_wizard.Wizard.AquaIcon transfer;
         private System.Windows.Forms.Panel container;
-        private System.Windows.Forms.TextBox guideText;
         private System.Windows.Forms.Panel mainPanel;
+        private tiny_robotic_wizard.Wizard.AquaIcon saveAs;
+        private System.Windows.Forms.TextBox guideText;
 
 
 

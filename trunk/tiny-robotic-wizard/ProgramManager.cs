@@ -9,6 +9,23 @@ namespace tiny_robotic_wizard
 {
     class ProgramManager
     {
+        /// <summary>
+        /// ファイル名がユニークかどうかを調べる
+        /// </summary>
+        /// <param name="fileName">調べたいファイル名</param>
+        /// <returns>ユニークならtrue</returns>
+        public bool IsUnique(string fileName)
+        {
+            foreach (string existing in this.GetFileList())
+            {
+                if (existing == fileName)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         // プログラムファイルを保存するするディレクトリ
         public string Directory { get; set; }
         public ProgramManager(string directory)
@@ -26,7 +43,7 @@ namespace tiny_robotic_wizard
         /// 指定されたディレクトリの中のプログラムファイルを探す
         /// </summary>
         /// <returns>プログラムファイルのパスの配列</returns>
-        public string[] getFileList()
+        public string[] GetFileList()
         {
             string[] tempPath;
             string extension = Properties.Resources.Extension;

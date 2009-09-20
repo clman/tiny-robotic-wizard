@@ -124,4 +124,10 @@
   <data name="Extension" xml:space="preserve">
     <value>epd</value>
   </data>
+  <data name="FormCaptionSplitter" xml:space="preserve">
+    <value> - </value>
+  </data>
+  <data name="NewFileName" xml:space="preserve">
+    <value>無題ドキュメント</value>
+  </data>
 </root>

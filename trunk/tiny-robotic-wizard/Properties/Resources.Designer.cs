@@ -74,5 +74,23 @@ namespace tiny_robotic_wizard.Properties {
                 return ResourceManager.GetString("Extension", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///    -  に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string FormCaptionSplitter {
+            get {
+                return ResourceManager.GetString("FormCaptionSplitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   無題ドキュメント に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string NewFileName {
+            get {
+                return ResourceManager.GetString("NewFileName", resourceCulture);
+            }
+        }
     }
 }
