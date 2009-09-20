@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GUI\GuideText.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HidBoot.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -87,11 +90,11 @@
     <EmbeddedResource Include="ProgramTemplate.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\AquaButton.resx">
+    <EmbeddedResource Include="GUI\AquaButton.resx">
       <DependentUpon>AquaButton.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Wizard\CreateOrOpen.resx">
-      <DependentUpon>CreateOrOpen.cs</DependentUpon>
+    <EmbeddedResource Include="GUI\AquaIcon.resx">
+      <DependentUpon>AquaIcon.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -103,20 +106,21 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="WinAvrTranslator.cs" />
-    <Compile Include="Wizard\AquaButton.cs">
+    <Compile Include="GUI\AquaButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Wizard\AquaButton.Designer.cs">
+    <Compile Include="GUI\AquaButton.Designer.cs">
       <DependentUpon>AquaButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="Wizard\CreateOrOpen.cs">
+    <Compile Include="GUI\AquaIcon.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Wizard\CreateOrOpen.Designer.cs">
-      <DependentUpon>CreateOrOpen.cs</DependentUpon>
+    <Compile Include="GUI\AquaIcon.Designer.cs">
+      <DependentUpon>AquaIcon.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bgm.wav" />
     <Content Include="definition.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

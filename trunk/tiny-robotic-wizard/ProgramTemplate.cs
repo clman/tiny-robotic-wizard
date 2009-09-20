@@ -21,7 +21,10 @@ namespace tiny_robotic_wizard
         /// </summary>
         public string Name { get; private set; }
 
-
+        /// <summary>
+        /// ProgramTemplateの説明
+        /// </summary>
+        public string Description { get; private set; }
 
         /// <summary>
         /// Context
@@ -68,6 +71,19 @@ namespace tiny_robotic_wizard
                 // ルートノードからProgramTemplate要素を探す
                 if (rootChildNode.Name == "ProgramTemplate")
                 {
+                    // status要素の属性を解析
+                    foreach (XmlAttribute programTemplateAttribute in rootChildNode.Attributes)
+                    {
+                        switch (programTemplateAttribute.Name)
+                        {
+                            case "name":
+                                this.Name = programTemplateAttribute.Value;
+                                break;
+                            case "description":
+                                this.Description = programTemplateAttribute.Value;
+                                break;
+                        }
+                    }
                     foreach (XmlNode programTemplateChildNode in rootChildNode)
                     {
                         // context要素を探す

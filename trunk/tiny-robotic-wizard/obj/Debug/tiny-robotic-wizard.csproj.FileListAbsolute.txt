@@ -24,5 +24,5 @@ C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-rob
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\DeviceIO.dll
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\HidLib.dll
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\bin\Debug\Image.dll
-C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.Wizard.CreateOrOpen.resources
 C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.Wizard.AquaButton.resources
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.Wizard.AquaIcon.resources

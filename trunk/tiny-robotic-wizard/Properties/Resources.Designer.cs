@@ -60,6 +60,12 @@ namespace tiny_robotic_wizard.Properties {
             }
         }
         
+        public static System.IO.UnmanagedMemoryStream bgm {
+            get {
+                return ResourceManager.GetStream("bgm", resourceCulture);
+            }
+        }
+        
         /// <summary>
         ///   epd に類似しているローカライズされた文字列を検索します。
         /// </summary>
