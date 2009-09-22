@@ -95,5 +95,10 @@ namespace tiny_robotic_wizard
             // ストリームを閉じる
             fs.Close();
         }
+
+        public void Delete(string fileName)
+        {
+            File.Delete(Path.Combine(Directory, fileName));
+        }
     }
 }

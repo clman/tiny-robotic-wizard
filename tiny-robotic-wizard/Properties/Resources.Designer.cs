@@ -85,7 +85,7 @@ namespace tiny_robotic_wizard.Properties {
         }
         
         /// <summary>
-        ///   無題ドキュメント に類似しているローカライズされた文字列を検索します。
+        ///   [新規ファイル] に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string NewFileName {
             get {
