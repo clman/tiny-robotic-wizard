@@ -92,10 +92,18 @@ namespace tiny_robotic_wizard
 
                 // Action選択コンテキストメニューを生成
                 {
+                    // 古いメニューを破棄
+                    if(this.actionSelectMenu != null)
+                        foreach (ContextMenuStrip menu in this.actionSelectMenu)
+                        {
+                            menu.Dispose();
+                        }
+
                     this.actionSelectMenu = new ContextMenuStrip[this.programData.ProgramTemplate.Actions.Action.Length];
                     for (int i = 0; i <= this.programData.ProgramTemplate.Actions.Action.Length - 1; i++)
                     {
                         this.actionSelectMenu[i] = new ContextMenuStrip();
+                        this.actionSelectMenu[i].Cursor = Cursors.Hand;
                         for (int j = 0; j <= this.programData.ProgramTemplate.Actions.Action[i].Procedure.Length - 1; j++)
                         {
                             string text = this.programData.ProgramTemplate.Actions.Action[i].Procedure[j].Caption;

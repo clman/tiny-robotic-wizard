@@ -17,17 +17,18 @@ namespace tiny_robotic_wizard
         private ProgramTemplate[] programTemplates;
 
         // 各種データ
-        private string applicationName;
+        private string applicationName = Assembly.GetExecutingAssembly().GetName().Name;
         private ProgramManager programManager = new ProgramManager(Path.Combine(Application.StartupPath, "program"));
         private ProgramTemplate programTemplate;
         private ProgramData programData;
         private string currentFileName;
 
         // 各種GUI
-        private ProgramEditor programEditor;
-        private ClickableList templateSelectBox;
-        private ClickableList fileSelectBox;
-        private ClickableList deleteSelectBox;
+        private ProgramEditor programEditor = new ProgramEditor();
+        private ClickableList templateSelectBox = new ClickableList();
+        private ClickableList fileSelectBox = new ClickableList();
+        private ClickableList deleteSelectBox = new ClickableList();
+        private TransmitDescription transmitDescription = new TransmitDescription();
 
         // 各種フラグ
         /// <summary>
@@ -43,10 +44,6 @@ namespace tiny_robotic_wizard
         {
             InitializeComponent();
 
-            // キャプションをアセンブリ名に
-            this.applicationName = Assembly.GetExecutingAssembly().GetName().Name;
-            this.Text = this.applicationName;
-
             // ProgramTemplateの一覧を探す
             string programTemplateDirectory = Path.Combine(Application.StartupPath, "ProgramTemplate");
             string[] programTemplatePath = Directory.GetFiles(programTemplateDirectory, "ProgramTemplate.xml", SearchOption.AllDirectories);
@@ -58,78 +55,125 @@ namespace tiny_robotic_wizard
                 programTemplates[i] = new ProgramTemplate(programTemplatePath[i]);
             }
 
-            // 各種GUIのインスタンスを生成
-            this.programEditor = new ProgramEditor();
-            this.templateSelectBox = new ClickableList();
-            this.fileSelectBox = new ClickableList();
-            this.deleteSelectBox = new ClickableList();
-
             // 各種GUIの初期化
-            this.programEditor.ModifiedChanged += delegate(bool modified)
+            #region
             {
-                this.isModified = modified;
-                updateFormState();
-            };
-            this.programEditor.Location = new Point(0, 0);
-            this.programEditor.Font = Program.BaseFont;
-            this.mainPanel.Controls.Add(this.programEditor);
+                this.programEditor.ModifiedChanged += delegate(bool modified)
+                {
+                    this.isModified = modified;
+                    updateFormState();
+                };
+                this.programEditor.Location = new Point(0, 0);
+                this.programEditor.Font = Program.BaseFont;
+                this.mainPanel.Controls.Add(this.programEditor);
 
-            this.templateSelectBox.Location = new Point(0, 0);
-            this.templateSelectBox.Dock = DockStyle.Fill;
-            this.templateSelectBox.Font = Program.BaseFont;
-            this.mainPanel.Controls.Add(this.templateSelectBox);
-            // 選択時のイベント設定
-            this.templateSelectBox.ItemMouseClick += delegate(int selectedIndex)
-            {
-                // 選択されたProgramTemplateでProgramDataを作り，ProgramEditorにセットする．
-                this.programTemplate = this.programTemplates[selectedIndex];
-                this.programData = new ProgramData(programTemplates[selectedIndex]);
-                this.programEditor.ProgramData = this.programData;
+                this.templateSelectBox.Location = new Point(0, 0);
+                this.templateSelectBox.Dock = DockStyle.Fill;
+                this.templateSelectBox.Font = Program.BaseFont;
+                this.mainPanel.Controls.Add(this.templateSelectBox);
+                // 選択時のイベント設定
+                this.templateSelectBox.ItemMouseClick += delegate(int selectedIndex)
+                {
+                    // プログラムが変更されている場合
+                    if (this.isModified)
+                    {
+                        // 保存するか破棄するか問い合わせる
+                        DialogResult result = MessageBox.Show("現在編集中のプログラムは変更されています．" + Environment.NewLine + "新しいプログラムを作る前に保存しますか？", "新規作成", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
 
-                // 各種データを更新
-                this.isNew = true;
-                this.isModified = false;
-                this.currentFileName = Properties.Resources.NewFileName;
+                        if (result == DialogResult.Yes)
+                        {
+                            // 保存する場合
+                            bool saved = saveOrSaveAs(isNew);
+                            if (!saved)
+                                return;
+                        }
+                        else if (result == DialogResult.Cancel)
+                        {
+                            // キャンセルする場合
+                            return;
+                        }
+                    }
 
-                // 編集画面に戻る
-                this.functionEdit();
-            };
+                    // 選択されたProgramTemplateでProgramDataを作り，ProgramEditorにセットする．
+                    this.programTemplate = this.programTemplates[selectedIndex];
+                    this.programData = new ProgramData(programTemplates[selectedIndex]);
+                    this.programEditor.ProgramData = this.programData;
 
-            this.fileSelectBox.Location = new Point(0, 0);
-            this.fileSelectBox.Dock = DockStyle.Fill;
-            this.fileSelectBox.Font = Program.BaseFont;
-            this.mainPanel.Controls.Add(this.fileSelectBox);
-            // 選択時のイベント設定
-            this.fileSelectBox.ItemMouseClick += delegate(int selectedIndex)
-            {
-                // 選択されたファイルからProgramDataを復元し，ProgramEditorにセットする．
-                this.programData = this.programManager.Load(programManager.GetFileList()[selectedIndex]);
-                this.programEditor.ProgramData = this.programData;
+                    // なんかここでメモリ使用量が2MB近く増えるので明示的にGC
+                    System.GC.Collect();
 
-                // 各種データの更新
-                this.isNew = false;
-                this.isModified = false;
-                currentFileName = programManager.GetFileList()[selectedIndex];
+                    // 各種データを更新
+                    this.isNew = true;
+                    this.isModified = false;
+                    this.currentFileName = Properties.Resources.NewFileName;
 
-                // 編集画面に戻る
-                this.functionEdit();
-            };
-
-            this.deleteSelectBox.Location = new Point(0, 0);
-            this.deleteSelectBox.Dock = DockStyle.Fill;
-            this.deleteSelectBox.Font = Program.BaseFont;
-            this.mainPanel.Controls.Add(this.deleteSelectBox);
-            // 選択時のイベント設定
-            this.deleteSelectBox.ItemMouseClick += delegate(int selectedIndex)
-            {
-                // 選択されたファイルを削除する
-                this.programManager.Delete(programManager.GetFileList()[selectedIndex]);
-
-                if (currentFileName == null)
-                    this.loadForm();
-                else
+                    // 編集画面に戻る
                     this.functionEdit();
-            };
+                };
+
+                this.fileSelectBox.Location = new Point(0, 0);
+                this.fileSelectBox.Dock = DockStyle.Fill;
+                this.fileSelectBox.Font = Program.BaseFont;
+                this.mainPanel.Controls.Add(this.fileSelectBox);
+                // 選択時のイベント設定
+                this.fileSelectBox.ItemMouseClick += delegate(int selectedIndex)
+                {
+                    // プログラムが変更されている場合
+                    if (this.isModified)
+                    {
+                        // 保存するか破棄するか問い合わせる
+                        DialogResult result = MessageBox.Show("現在編集中のプログラムは変更されています．" + Environment.NewLine + "新しいプログラムを作る前に保存しますか？", "開く", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+                        if (result == DialogResult.Yes)
+                        {
+                            bool saved = saveOrSaveAs(isNew);
+                            if (!saved)
+                                return;
+                        }
+                        else if (result == DialogResult.Cancel)
+                        {
+                            // キャンセルする場合
+                            return;
+                        }
+                    }
+
+                    // 選択されたファイルからProgramDataを復元し，ProgramEditorにセットする．
+                    this.programData = this.programManager.Load(programManager.GetFileList()[selectedIndex]);
+                    this.programEditor.ProgramData = this.programData;
+
+                    // なんかここでメモリ使用量が2MB近く増えるので明示的にGC
+                    System.GC.Collect();
+
+                    // 各種データの更新
+                    this.isNew = false;
+                    this.isModified = false;
+                    currentFileName = programManager.GetFileList()[selectedIndex];
+
+                    // 編集画面に戻る
+                    this.functionEdit();
+                };
+
+                this.deleteSelectBox.Location = new Point(0, 0);
+                this.deleteSelectBox.Dock = DockStyle.Fill;
+                this.deleteSelectBox.Font = Program.BaseFont;
+                this.mainPanel.Controls.Add(this.deleteSelectBox);
+                // 選択時のイベント設定
+                this.deleteSelectBox.ItemMouseClick += delegate(int selectedIndex)
+                {
+                    // 選択されたファイルを削除する
+                    this.programManager.Delete(programManager.GetFileList()[selectedIndex]);
+
+                    if (currentFileName == null)
+                        this.loadForm();
+                    else
+                        this.functionEdit();
+                };
+
+                this.transmitDescription.Location = new Point(0, 0);
+                this.transmitDescription.Dock = DockStyle.Fill;
+                this.mainPanel.Controls.Add(this.transmitDescription);
+            }
+            #endregion
 
             // フォームの状態を更新
             this.updateFormState();
@@ -139,24 +183,6 @@ namespace tiny_robotic_wizard
 
             // 起動時のフォームの設定を反映
             this.loadForm();
-
-            /*
-            ProgramData programData = new ProgramData(programTemplate[3]);
-
-            ProgramManager programManager = new ProgramManager(this.savedProgramDirectory);
-            programManager.Save(programData, "hoge.tpx");
-
-            programData = programManager.Load("hoge.tpx");
-
-            ProgramEditor programEditor = new ProgramEditor(programData);
-            this.Controls.Add(programEditor);
-
-            ProgramGenerator programGenerator = new ProgramGenerator(programData);
-
-            WinAvrTranslator winAvrTranslator = new WinAvrTranslator();
-            MemoryStream hexStream = new MemoryStream();
-            winAvrTranslator.Translate(programGenerator.ProgramCode, hexStream);
-            */
         }
 
         /// <summary>
@@ -168,6 +194,7 @@ namespace tiny_robotic_wizard
             this.templateSelectBox.Visible = false;
             this.fileSelectBox.Visible = false;
             this.deleteSelectBox.Visible = false;
+            this.transmitDescription.Visible = false;
         }
 
         /// <summary>
@@ -176,9 +203,9 @@ namespace tiny_robotic_wizard
         /// </summary>
         private void updateFormState()
         {
-            this.new_.Enabled = true;
+            this.new_.Enabled = (true && !this.templateSelectBox.Visible);
             
-            this.open.Enabled = (this.programManager.GetFileList().Length != 0);
+            this.open.Enabled = (this.programManager.GetFileList().Length != 0 && !this.fileSelectBox.Visible);
 
             this.deleteSelectBox.Items.Clear();
             foreach (string fileName in this.programManager.GetFileList())
@@ -186,15 +213,15 @@ namespace tiny_robotic_wizard
                 if(fileName != currentFileName)
                 this.deleteSelectBox.Items.Add(fileName);
             }
-            this.delete.Enabled = (this.deleteSelectBox.Items.Count != 0);
+            this.delete.Enabled = (this.deleteSelectBox.Items.Count != 0 && !this.deleteSelectBox.Visible);
 
-            this.saveAs.Enabled = (this.programEditor.Visible);
+            this.saveAs.Enabled = (this.programEditor.Visible || this.transmitDescription.Visible);
             
             this.save.Enabled = (this.programEditor.Visible && !isNew && isModified);
 
-            this.edit.Enabled = (this.currentFileName != null);
+            this.edit.Enabled = (this.currentFileName != null && !this.programEditor.Visible);
             
-            this.transfer.Enabled = (this.programEditor.Visible);
+            this.transfer.Enabled = (this.programEditor.Visible || this.transmitDescription.Visible);
 
             if (currentFileName != null)
                 this.Text = this.applicationName + Properties.Resources.FormCaptionSplitter + this.currentFileName + (isModified ? "*" : "");
@@ -202,6 +229,7 @@ namespace tiny_robotic_wizard
                 this.Text = this.applicationName;
         }
 
+        // 上書き保存か名前を付けて保存
         private bool saveOrSaveAs(bool saveAs)
         {
             if (saveAs)
@@ -270,31 +298,10 @@ namespace tiny_robotic_wizard
         // [新規作成]がクリックされたとき
         private void new__MouseClick(object sender, MouseEventArgs e)
         {
-            functionNew();
+            this.functionNew();
         }
         private void functionNew()
         {
-
-            // プログラムが変更されている場合
-            if (this.isModified)
-            {
-                // 保存するか破棄するか問い合わせる
-                DialogResult result = MessageBox.Show("現在編集中のプログラムは変更されています．" + Environment.NewLine + "新しいプログラムを作る前に保存しますか？", "新規作成", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-
-                if (result == DialogResult.Yes)
-                {
-                    // 保存する場合
-                    bool saved = saveOrSaveAs(isNew);
-                    if (!saved)
-                        return;
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    // キャンセルする場合
-                    return;
-                }
-            }
-
             // テンプレートを選択するリストを作る
             this.templateSelectBox.Items.Clear();
             foreach (ProgramTemplate hoge in this.programTemplates)
@@ -306,6 +313,9 @@ namespace tiny_robotic_wizard
             this.hideAllControl();
             this.templateSelectBox.Visible = true;
 
+            // フォームの状態を更新
+            this.updateFormState();
+
             // ガイドテキストの設定
             this.guideText.Text = "テンプレートを選択してください";
         }
@@ -313,29 +323,10 @@ namespace tiny_robotic_wizard
         // [開く]がクリックされたとき
         private void open_MouseClick(object sender, MouseEventArgs e)
         {
-            functionOpen();
+            this.functionOpen();
         }
         private void functionOpen()
         {
-            // プログラムが変更されている場合
-            if (this.isModified)
-            {
-                // 保存するか破棄するか問い合わせる
-                DialogResult result = MessageBox.Show("現在編集中のプログラムは変更されています．" + Environment.NewLine + "新しいプログラムを作る前に保存しますか？", "開く", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-
-                if (result == DialogResult.Yes)
-                {
-                    bool saved = saveOrSaveAs(isNew);
-                    if (!saved)
-                        return;
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    // キャンセルする場合
-                    return;
-                }
-            }
-
             // ファイルを選択するリストを作る
             this.fileSelectBox.Items.Clear();
             foreach (string fileName in this.programManager.GetFileList())
@@ -347,6 +338,9 @@ namespace tiny_robotic_wizard
             this.hideAllControl();
             this.fileSelectBox.Visible = true;
 
+            // フォームの状態を更新
+            this.updateFormState();
+
             // ガイドテキストの設定
             this.guideText.Text = "開きたいプログラムを選択してください";
         }
@@ -354,7 +348,7 @@ namespace tiny_robotic_wizard
         // [削除]がクリックされたとき
         private void delete_MouseClick(object sender, MouseEventArgs e)
         {
-            functionDelete();
+            this.functionDelete();
         }
         private void functionDelete()
         {
@@ -380,19 +374,20 @@ namespace tiny_robotic_wizard
         // [名前を付けて保存]がクリックされたとき
         private void saveAs_MouseClick(object sender, MouseEventArgs e)
         {
-            saveOrSaveAs(true);
+            this.saveOrSaveAs(true);
         }
 
         // [保存]がクリックされたとき
         private void save_MouseClick(object sender, MouseEventArgs e)
         {
-            saveOrSaveAs(false);
+            this.saveOrSaveAs(false);
         }
 
         // [編集]がクリックされたとき
         private void edit_MouseClick(object sender, MouseEventArgs e)
         {
-            functionEdit();
+            // 編集画面を表示
+            this.functionEdit();
         }
         private void functionEdit()
         {
@@ -405,6 +400,47 @@ namespace tiny_robotic_wizard
 
             // ガイドテキストの設定
             this.guideText.Text = "プログラムを編集できます";
+        }
+
+        // [ロボットに転送]がクリックされたとき
+        private void transfer_MouseClick(object sender, MouseEventArgs e)
+        {
+            // 転送開始
+            this.functionTransfer();
+        }
+        private void functionTransfer()
+        {
+            // 各種GUIの表示設定
+            this.hideAllControl();
+            this.transmitDescription.Visible = true;
+
+            // フォームの状態を更新
+            this.updateFormState();
+
+            // ガイドテキストの設定
+            this.guideText.Text = "プログラムの転送を開始します";
+
+            // プログラムを転送する方法を表示する
+            this.transmitDescription.Mode = TransmitDescription.DescriptionMode.Ready;
+
+            // C言語のコードを生成
+            ProgramGenerator programGenerator = new ProgramGenerator(this.programData);
+
+            // C言語のコードをコンパイルし，転送する
+//            try
+//            {
+                ProgramTransmitter.Transmit(programGenerator.ProgramCode);
+                // 成功した場合は，ロボットを動かす方法を表示する
+                this.transmitDescription.Mode = TransmitDescription.DescriptionMode.Successed;
+
+                // ガイドテキストの設定
+                this.guideText.Text = "転送成功です";
+//            }
+//            catch (Exception)
+//            {
+                // ガイドテキストの設定
+//                this.guideText.Text = "転送失敗です";
+//            }
         }
     }
 }

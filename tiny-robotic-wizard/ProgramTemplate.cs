@@ -14,7 +14,7 @@ namespace tiny_robotic_wizard
     /// プログラムのテンプレートを表現するクラス
     /// </summary>
     [Serializable()]
-    class ProgramTemplate
+    class ProgramTemplate : IDisposable
     {
         /// <summary>
         /// ProgramTemplateの名前
@@ -349,18 +349,45 @@ namespace tiny_robotic_wizard
             // procedure要素のリストを配列化して返す
             return procedureList.ToArray();
         }
+
+        #region IDisposable メンバ
+
+        private bool disposed = false;
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    this.Context.Dispose();
+                    this.Actions.Dispose();
+                }
+                this.disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~ProgramTemplate()
+        {
+            this.Dispose(false);
+        }
+
+        #endregion
     }
 
     /// <summary>
     /// context要素を表現するクラス
     /// </summary>
     [Serializable()]
-    class Context
+    class Context : IDisposable
     {
         /// <summary>
         /// status要素の配列
         /// </summary>
-        public Status[] Status{get; private set;}
+        public Status[] Status { get; private set; }
 
         /// <summary>
         /// status要素の配列からContextのインスタンスを生成
@@ -370,34 +397,61 @@ namespace tiny_robotic_wizard
         {
             this.Status = status;
         }
+
+        #region IDisposable メンバ
+
+        private bool disposed = false;
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    foreach (Status status in this.Status)
+                        status.Dispose();
+                }
+                this.disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~Context()
+        {
+            this.Dispose(false);
+        }
+
+        #endregion
     }
 
     /// <summary>
     /// status要素を表現するクラス
     /// </summary>
     [Serializable()]
-    class Status
+    class Status : IDisposable
     {
         /// <summary>
         /// name属性
         /// </summary>
-        public string Name{get; private set;}
+        public string Name { get; private set; }
         /// <summary>
         /// caption属性
         /// </summary>
-        public string Caption{get; private set;}
+        public string Caption { get; private set; }
         /// <summary>
         /// image属性で指定された画像を分割した配列
         /// </summary>
-        public Image[] Image{get; private set;}
+        public Image[] Image { get; private set; }
         /// <summary>
         /// code属性で指定されたファイルの中身
         /// </summary>
-        public string Code{get; private set;}
+        public string Code { get; private set; }
         /// <summary>
         /// matter要素の配列
         /// </summary>
-        public Matter[] Matter{get; private set;}
+        public Matter[] Matter { get; private set; }
 
         /// <summary>
         /// status要素の属性とmatter要素の配列からStatusのインスタンスを生成
@@ -415,6 +469,33 @@ namespace tiny_robotic_wizard
             this.Code = code;
             this.Matter = matter;
         }
+
+        #region IDisposable メンバ
+
+        private bool disposed = false;
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    foreach (Image image in this.Image)
+                        image.Dispose();
+                }
+                this.disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~Status()
+        {
+            this.Dispose(false);
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -448,7 +529,7 @@ namespace tiny_robotic_wizard
     /// actions要素を表現するクラス
     /// </summary>
     [Serializable()]
-    class Actions
+    class Actions : IDisposable
     {
         /// <summary>
         /// action要素の配列
@@ -463,13 +544,40 @@ namespace tiny_robotic_wizard
         {
             this.Action = action;
         }
+
+        #region IDisposable メンバ
+
+        private bool disposed = false;
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    foreach (Action action in this.Action)
+                        action.Dispose();
+                }
+                this.disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~Actions()
+        {
+            this.Dispose(false);
+        }
+
+        #endregion
     }
 
     /// <summary>
     /// action要素を表現するクラス
     /// </summary>
     [Serializable()]
-    class Action
+    class Action : IDisposable
     {
         /// <summary>
         /// name属性
@@ -508,6 +616,33 @@ namespace tiny_robotic_wizard
             this.Code = code;
             this.Procedure = procedure;
         }
+
+        #region IDisposable メンバ
+
+        private bool disposed = false;
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    foreach (Image image in this.Image)
+                        image.Dispose();
+                }
+                this.disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~Action()
+        {
+            this.Dispose(false);
+        }
+
+        #endregion
     }
 
     /// <summary>

@@ -29,7 +29,7 @@ namespace tiny_robotic_wizard
         private void loadDefaultConfigurations()
         {
             this.config.Clear();
-            this.config["WinAvrPath"] = @"\WinAVR\bin";
+            this.config["WinAvrPath"] = @"WinAVR\bin";
             this.config["Frequency"] = "8000000UL";
             this.config["MCU"] = "atmega88";
             this.config["CFlags"] = "-Wall -gdwarf-2 -std=gnu99 -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -MD -MP ";
@@ -47,7 +47,7 @@ namespace tiny_robotic_wizard
         {
             // WinAVR\binのフルパス
             string winAvrPath = Path.Combine(Application.StartupPath, this.config["WinAvrPath"]);
-            
+
             // 作業用のディレクトリを作って，そこにCファイルを作る
             DirectoryInfo tempDirectory = Directory.CreateDirectory(Path.Combine(Application.StartupPath, "temp"));
             string tempPath = Path.Combine(tempDirectory.FullName, "program.c");
@@ -120,6 +120,8 @@ namespace tiny_robotic_wizard
                     }
                 }
             }
+            // ストリームのポインタを先頭に戻す．
+            output.Seek(0, SeekOrigin.Begin);
         }
 
         private int ExecuteExternal(string path, string workDir, string args, out string error)
