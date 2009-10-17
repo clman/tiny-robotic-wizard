@@ -5,14 +5,14 @@ using System.Text;
 namespace tiny_robotic_wizard
 {
     [Serializable()]
-    class ProgramData : IEnumerable<KeyValuePair<List<int>, List<int>>>
+    class ProgramData : IEnumerable<KeyValuePair<List<int>, List<int>>>, IDisposable
     {
         /// <summary>
         /// ProgramTemplate
         /// </summary>
         public ProgramTemplate ProgramTemplate{get; private set;}
         /// <summary>
-        /// プログラムデータを格納しておくクラス
+        /// プログラムデータを格納しておくDictionary
         /// </summary>
         private Dictionary<List<int>, List<int>>contextAndActions = new Dictionary<List<int>, List<int>>();
 
@@ -141,6 +141,31 @@ namespace tiny_robotic_wizard
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return contextAndActions.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IDisposable メンバ
+
+        private bool disposed = false;
+        private void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                }
+                this.disposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        ~ProgramData()
+        {
+            this.Dispose(false);
         }
 
         #endregion

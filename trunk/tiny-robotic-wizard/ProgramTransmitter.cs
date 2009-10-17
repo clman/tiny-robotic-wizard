@@ -20,24 +20,21 @@ namespace tiny_robotic_wizard
 
             // ブートローダを検索
             String[] targetDevices = HidBoot.Enumerate();
+/*          
             if (targetDevices.Length == 0)
             {
                 MessageBox.Show("HIDBootデバイスが見つかりませんでした．接続を確認してください．\nユーザーアプリケーションを実行中の場合はリセットボタンを押してください．");
                 return;
             }
+ */
 
             using (HidBoot hidBoot = new HidBoot(targetDevices[0]))
             {
-                // ここに転送中のメッセージを表示
-
                 // 転送開始
                 SparseImage spm = HexLoader.LoadIntel(hexStream);
                 hexStream.Close();
                 byte[] prog = spm.ToBlockImage();
-                hidBoot.WriteApplication(prog, spm.MinimumAddress, spm.MaximumAddress);
-                hidBoot.RunApplication();
-
-                // ここに転送完了のメッセージを表示
+                hidBoot.WriteApplication(prog, (int)spm.MinimumAddress, (int)spm.MaximumAddress);
             }
         }
     }

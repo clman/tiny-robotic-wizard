@@ -79,7 +79,7 @@ namespace tiny_robotic_wizard
                         }
                         ProgramCode += "[" + Convert.ToString(actionIndex) + "] = ";
                         
-                        ProgramCode += this.ProgramData.ProgramTemplate.Actions.Action[actionIndex].Name + "[" + Convert.ToString(contextAndActions.Value[action]) + "];\r\n";
+                        ProgramCode += this.ProgramData.ProgramTemplate.Actions.Action[actionIndex].Name + "[" + Convert.ToString(action) + "];\r\n";
 
                         actionIndex++;
                     }

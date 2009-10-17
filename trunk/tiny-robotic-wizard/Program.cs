@@ -17,6 +17,24 @@ namespace tiny_robotic_wizard
         [STAThread]
         static void Main()
         {
+            // 2重起動を監視
+            {
+                bool createdNew;
+                //Mutexクラスの作成
+                //"MyName"の部分を適当な文字列に変える
+                System.Threading.Mutex mutex =
+                    new System.Threading.Mutex(true, "MyName", out createdNew);
+                if (createdNew == false)
+                {
+                    //ミューテックスの初期所有権が付与されなかったときは
+                    //すでに起動していると判断して終了
+                    MessageBox.Show("多重起動はできません。");
+                    return;
+                }
+                //ミューテックスを解放する
+                mutex.ReleaseMutex();
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

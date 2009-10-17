@@ -123,6 +123,7 @@
             this.transfer.Name = "transfer";
             this.transfer.Size = new System.Drawing.Size(100, 100);
             this.transfer.TabIndex = 6;
+            this.transfer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.transfer_MouseClick);
             // 
             // save
             // 
