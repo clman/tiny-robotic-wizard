@@ -54,7 +54,7 @@
             this.container.Controls.Add(this.guideText);
             this.container.Location = new System.Drawing.Point(12, 118);
             this.container.Name = "container";
-            this.container.Size = new System.Drawing.Size(857, 462);
+            this.container.Size = new System.Drawing.Size(896, 511);
             this.container.TabIndex = 7;
             // 
             // mainPanel
@@ -63,7 +63,7 @@
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.Location = new System.Drawing.Point(0, 19);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(855, 441);
+            this.mainPanel.Size = new System.Drawing.Size(894, 490);
             this.mainPanel.TabIndex = 1;
             // 
             // guideText
@@ -73,7 +73,7 @@
             this.guideText.Location = new System.Drawing.Point(0, 0);
             this.guideText.Name = "guideText";
             this.guideText.ReadOnly = true;
-            this.guideText.Size = new System.Drawing.Size(855, 19);
+            this.guideText.Size = new System.Drawing.Size(894, 19);
             this.guideText.TabIndex = 0;
             // 
             // edit
@@ -170,7 +170,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(881, 592);
+            this.ClientSize = new System.Drawing.Size(920, 641);
             this.Controls.Add(this.edit);
             this.Controls.Add(this.delete);
             this.Controls.Add(this.saveAs);
