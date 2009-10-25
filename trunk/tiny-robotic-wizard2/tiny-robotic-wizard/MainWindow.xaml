@@ -1,0 +1,17 @@
+﻿<Window x:Class="tiny_robotic_wizard.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="tiny-robotic-wizard" Height="600" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Image Name="New" Height="50" Width="50" HorizontalAlignment="Left" Cursor="Hand" />
+            <Image Name="Open" Height="50" Width="50" HorizontalAlignment="Left"/>
+            <Image Name="Delete" Height="50" Width="50" HorizontalAlignment="Left"/>
+        </StackPanel>
+        <ScrollViewer Name="EditorPanel" Grid.Row="1"></ScrollViewer>
+    </Grid>
+</Window>
