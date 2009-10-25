@@ -1,0 +1,29 @@
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.pdb
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\MainWindow.baml
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\MainWindow.g.cs
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\App.g.cs
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard_MarkupCompile.cache
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.g.resources
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.Properties.Resources.resources
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.csproj.GenerateResource.Cache
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.exe
+C:\Users\Hideki SHIRO\AppData\Local\Temporary Projects\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.pdb
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.exe
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.pdb
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.pdb
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\MainWindow.baml
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\MainWindow.g.cs
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\App.g.cs
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard_MarkupCompile.cache
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.g.resources
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.Properties.Resources.resources
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.csproj.GenerateResource.Cache
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ProgramEditor\ProgramEditor.baml
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ProgramEditor\ProgramEditor.g.cs
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard_MarkupCompile.lref
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\Themes\Generic.baml
+C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\bin\Debug\ProgramTemplate.xsd
