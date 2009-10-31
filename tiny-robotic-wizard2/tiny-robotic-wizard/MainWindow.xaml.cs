@@ -37,7 +37,8 @@ namespace tiny_robotic_wizard
                 programTemplates[i] = new ProgramTemplate(programTemplatePath[i]);
             }
 
-            ProgramData programData = new ProgramData(programTemplates[0]);
+            ProgramData programData = new ProgramData(programTemplates[2]);
+            programData.NestLevel = 3;
 
             this.EditorPanel.Content = new ProgramEditor.ProgramEditor() { ProgramData = programData };
         }

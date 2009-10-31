@@ -7,8 +7,8 @@
 			<Option Name="far" Caption="遠い" />
 		</Device>
 		<Device Name="LineSensor" Caption="ラインセンサ" Image=".\LineSensor1.png" Code=".\LineSensor.c">
-			<Option Name="0" Caption="" />
-			<Option Name="1" Caption="" />
+			<Option Name="0" Caption="○" />
+			<Option Name="1" Caption="●" />
 		</Device>
 	</Input>
 	<Output>

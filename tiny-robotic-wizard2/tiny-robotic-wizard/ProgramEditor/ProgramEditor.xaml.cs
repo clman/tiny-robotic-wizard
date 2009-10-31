@@ -26,38 +26,22 @@ namespace tiny_robotic_wizard.ProgramEditor
             set
             {
                 this.programData = value;
-                ReDraw();
+                Reflesh();
             }
         }
-        public void ReDraw()
+        public void Reflesh()
         {
             if (this.ProgramData == null)
             {
                 this.MainPanel.Children.Clear();
                 return;
             }
-            foreach (KeyValuePair<Context, Output> ContextAndAction in this.ProgramData)
+            else
             {
-                StackPanel bar = new StackPanel() { Orientation = Orientation.Horizontal };
-                foreach (Input input in ContextAndAction.Key)
+                foreach (Context context in this.ProgramData.Keys)
                 {
-                    StackPanel inputView = new StackPanel();
-                    int deviceIndex = 0;
-                    foreach (int? optionValue in input.ToArray())
-                    {
-                        if (optionValue != null)
-                        {
-                            inputView.Children.Add(new Label() { Content = this.ProgramData.ProgramTemplate.Input.Device[deviceIndex].Caption[(int)optionValue] });
-                        }
-                        else
-                        {
-                            inputView.Children.Add(new Label() { Content = "*" });
-                        }
-                        deviceIndex++;
-                    }
-                    bar.Children.Add(inputView);
                 }
-                this.MainPanel.Children.Add(bar);
+                this.MainPanel.Children.Add(new ContextAdder(this.programData));
             }
         }
         public ProgramEditor()

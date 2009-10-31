@@ -4,14 +4,14 @@
 		<Device Name="DistanceSensor" Caption="測距センサ" Image=".\DistanceSensor3.png" Code=".\DistanceSensor.c">
 			<Option Name="missing" Caption="見あたらない" />
 			<Option Name="near" Caption="近い" />
-			<Option Name="middle" capiton="中間" />
+			<Option Name="middle" Caption="中間" />
 			<Option Name="far" Caption="遠い" />
 		</Device>
 		<Device Name="LineSensor" Caption="ラインセンサ" Image=".\LineSensor2.png" Code=".\LineSensor.c">
-			<Option Name="0" Caption="" />
-			<Option Name="1" Caption="" />
-			<Option Name="2" Caption="" />
-			<Option Name="3" Caption="" />
+			<Option Name="0" Caption="○○" />
+			<Option Name="1" Caption="○●" />
+			<Option Name="2" Caption="●○" />
+			<Option Name="3" Caption="●●" />
 		</Device>
 	</Input>
 	<Output>
