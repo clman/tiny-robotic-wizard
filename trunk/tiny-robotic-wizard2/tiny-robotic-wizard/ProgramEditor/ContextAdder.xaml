@@ -1,0 +1,9 @@
+﻿<UserControl x:Class="tiny_robotic_wizard.ProgramEditor.ContextAdder"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <StackPanel>
+        <StackPanel Name="EditPanel" Orientation="Horizontal"/>
+        <Button Name="AddContextButton" Click="AddContextButton_Click">+</Button>
+        <Button Name="FinishEditingButton" Click="FinishEditingButton_Click">OK</Button>
+    </StackPanel>
+</UserControl>

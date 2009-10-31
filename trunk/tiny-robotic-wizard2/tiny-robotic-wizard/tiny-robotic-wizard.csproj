@@ -69,6 +69,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="ProgramEditor\ContextAdder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProgramEditor\ContextAndAction.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProgramEditor\ProgramEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -84,6 +92,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ProgramData.cs" />
+    <Compile Include="ProgramEditor\ContextAdder.xaml.cs">
+      <DependentUpon>ContextAdder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ProgramEditor\ContextAndAction.xaml.cs">
+      <DependentUpon>ContextAndAction.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ProgramEditor\ProgramEditor.xaml.cs">
       <DependentUpon>ProgramEditor.xaml</DependentUpon>
     </Compile>

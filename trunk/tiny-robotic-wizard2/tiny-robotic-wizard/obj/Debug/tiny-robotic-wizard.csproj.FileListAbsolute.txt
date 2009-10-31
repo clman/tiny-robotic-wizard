@@ -27,3 +27,22 @@ C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2
 C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard_MarkupCompile.lref
 C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\Themes\Generic.baml
 C:\Users\Hideki SHIRO\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard2\tiny-robotic-wizard\bin\Debug\ProgramTemplate.xsd
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.exe
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.pdb
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\bin\Debug\ProgramTemplate.xsd
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.exe
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\bin\Debug\tiny-robotic-wizard.pdb
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\MainWindow.baml
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ProgramEditor\ContextAndAction.baml
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ProgramEditor\ProgramEditor.baml
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\MainWindow.g.cs
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ProgramEditor\ContextAndAction.g.cs
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ProgramEditor\ProgramEditor.g.cs
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\App.g.cs
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard_MarkupCompile.cache
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.g.resources
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny_robotic_wizard.Properties.Resources.resources
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\tiny-robotic-wizard.csproj.GenerateResource.Cache
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ProgramEditor\ContextAdder.baml
+C:\Users\vaio\Documents\Visual Studio 2008\Projects\tiny-robotic-wizard\tiny-robotic-wizard2\tiny-robotic-wizard\obj\Debug\ProgramEditor\ContextAdder.g.cs

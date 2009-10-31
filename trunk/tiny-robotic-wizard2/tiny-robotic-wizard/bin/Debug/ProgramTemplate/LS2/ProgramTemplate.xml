@@ -2,10 +2,10 @@
 <ProgramTemplate Name="LS2" Description="ラインセンサ:2つ" xmlns="http://tiny-robotic-wizard.googleCode.com/">
 	<Input>
 		<Device Name="LineSensor" Caption="ラインセンサ" Image=".\LineSensor2.png" Code=".\LineSensor.c">
-			<Option Name="0" Caption="" />
-			<Option Name="1" Caption="" />
-			<Option Name="2" Caption="" />
-			<Option Name="3" Caption="" />
+			<Option Name="0" Caption="○○" />
+			<Option Name="1" Caption="○●" />
+			<Option Name="2" Caption="●○" />
+			<Option Name="3" Caption="●●" />
 		</Device>
 	</Input>
 	<Output>
