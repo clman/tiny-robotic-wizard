@@ -37,10 +37,18 @@ namespace tiny_robotic_wizard
                 programTemplates[i] = new ProgramTemplate(programTemplatePath[i]);
             }
 
-            ProgramData programData = new ProgramData(programTemplates[2]);
-            programData.NestLevel = 3;
+            ProgramData programData = new ProgramData(programTemplates[2], 3);
 
             this.EditorPanel.Content = new ProgramEditor.ProgramEditor() { ProgramData = programData };
+
+            // Windowをじわっと表示する．
+            var wakeUpAnimation = new System.Windows.Media.Animation.DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                Duration = TimeSpan.FromMilliseconds(500)
+            };
+            this.BeginAnimation(Window.OpacityProperty, wakeUpAnimation);
         }
     }
 }

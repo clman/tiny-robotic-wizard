@@ -5,23 +5,47 @@ using System.Text;
 
 namespace tiny_robotic_wizard
 {
+    public delegate void ContextAdded(ProgramData sender, Context addedData);
     public class Input : List<int?> { }
     public class Output : List<int?> { }
     public class Context : List<Input> { }
     public class ProgramData : Dictionary<Context, Output>
     {
         /// <summary>
+        /// Contextが追加された時に発生するイベント
+        /// </summary>
+        public event ContextAdded ContextAdded;
+        /// <summary>
         /// ProgramTemplate
         /// </summary>
-        public ProgramTemplate ProgramTemplate { get; private set; }
+        public readonly ProgramTemplate ProgramTemplate;
         /// <summary>
         /// イベントの連鎖数
         /// </summary>
-        private int nestLevel = 3;
-        public int NestLevel { get; set; }
-        public ProgramData(ProgramTemplate programTemplate)
+        public readonly int NestLevel;
+        public new Output this[Context context]{
+            get { return base[context]; }
+            set
+            {
+                base[context] = value;
+                if (this.ContextAdded != null)
+                {
+                    this.ContextAdded(this, context);
+                }
+            }
+        }
+        public ProgramData(ProgramTemplate programTemplate, int nestLevel)
         {
             this.ProgramTemplate = programTemplate;
+            if (1 <= nestLevel)
+            {
+                this.NestLevel = nestLevel;
+            }
+            else
+            {
+                throw new ArgumentOutOfRangeException("NestLevel must be 1 and over.");
+            }
+            // とりあえず，何もしない(すべてワイルドカードの)データを追加しておく．
             Context context = new Context();
             Input input = new Input();
             Output output = new Output();
@@ -33,11 +57,11 @@ namespace tiny_robotic_wizard
             {
                 output.Add(null);
             }
-            for (int i = 1; i <= this.nestLevel; i++)
+            for (int i = 1; i <= this.NestLevel; i++)
             {
                 context.Add(input);
             }
-            this.Add(context, output);
+            this[context] = output;
         }
     }
 }

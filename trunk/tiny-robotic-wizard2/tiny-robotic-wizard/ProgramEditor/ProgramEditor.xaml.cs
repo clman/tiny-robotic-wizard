@@ -26,22 +26,27 @@ namespace tiny_robotic_wizard.ProgramEditor
             set
             {
                 this.programData = value;
-                Reflesh();
+                this.programData.ContextAdded += delegate(ProgramData sender, Context context)
+                {
+                    this.Reflesh();
+                };
+                this.Reflesh();
             }
         }
         public void Reflesh()
         {
+            this.MainPanel.Children.Clear();
             if (this.ProgramData == null)
             {
-                this.MainPanel.Children.Clear();
                 return;
             }
             else
             {
                 foreach (Context context in this.ProgramData.Keys)
                 {
+                    this.MainPanel.Children.Add(new ContextAndAction(context, this.ProgramData));
                 }
-                this.MainPanel.Children.Add(new ContextAdder(this.programData));
+                this.MainPanel.Children.Add(new ContextAdder(this.ProgramData));
             }
         }
         public ProgramEditor()

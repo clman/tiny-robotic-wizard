@@ -29,7 +29,7 @@ namespace tiny_robotic_wizard.ProgramEditor
             InitializeComponent();
             this.Context = context;
             this.ProgramData = programData;
-            // 削除パネルの追加
+            // 削除ボタンの追加
             deleteButton = new Button() { Content = "x" };
             deleteButton.Click += delegate(object sender, RoutedEventArgs e)
             {
@@ -84,7 +84,7 @@ namespace tiny_robotic_wizard.ProgramEditor
                 StackPanel outputView = new StackPanel();
                 // セレクトボックスの生成
                 outputOptionSelector = new ComboBox[this.ProgramData.ProgramTemplate.Output.Device.Length];
-                for (int i = 0; i <= this.ProgramData.ProgramTemplate.Output.Device.Length - 1; i++)
+                for (int i = 0; i < this.ProgramData.ProgramTemplate.Output.Device.Length; i++)
                 {
                     outputOptionSelector[i] = new ComboBox();
                     outputOptionSelector[i].Items.Add("*");
