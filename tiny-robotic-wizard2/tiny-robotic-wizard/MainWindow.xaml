@@ -1,7 +1,7 @@
 ﻿<Window x:Class="tiny_robotic_wizard.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="tiny-robotic-wizard" Height="600" Width="800">
+    Title="tiny-robotic-wizard" Height="600" Width="800" Opacity="0">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
