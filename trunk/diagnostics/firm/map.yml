@@ -1,0 +1,51 @@
+gpio:
+  # 全体の設定
+  output_prefix: PORT
+  input_prefix: PIN
+  direction_prefix: DDR
+  
+  ports:
+    portb:
+      name: B
+      bits:
+        5:
+          alternative_names:
+            - LED_GREEN
+        4:
+          alternative_names:
+            - LED_BLUE
+        2:
+          alternative_names:
+            - LED_RED
+        0:
+          alternative_names:
+            - MOTOR_R_IN1
+      
+    portd:
+      name: D
+      bits:
+        0:
+          alternative_names:
+            - BOOTMODE
+        7:
+          alternative_names:
+            - MOTOR_R_IN2
+        5:
+          alternative_names:
+            - MOTOR_L_IN1
+        6:
+          alternative_names:
+            - MOTOR_L_IN2
+    portc:
+      name: C
+      bits:
+        0:
+          alternative_names:
+            - DISTANCE
+        4:
+          alternative_names:
+            - LINE_L
+        5:
+          alternative_names:
+            - LINE_R
+    

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="LTControl">
+</Property><Property Name="ソリューション ファイル" Value="D:\wk\trw\diagnostics\LTControl.sln">
+</Property><Property Name="Date" Value="2009年11月11日">
+</Property><Property Name="Time" Value="19:37">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="LTControl.sln" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl.sln としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\LTControl.csproj" Description="プロジェクト ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\LTControl.csproj としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\DevEnum.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\DevEnum.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\DeviceIO.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\DeviceIO.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Form1.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Form1.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Form1.Designer.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Form1.Designer.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\LineTracer.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\LineTracer.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\HidLib.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\HidLib.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Messages.Designer.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Messages.Designer.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Program.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Program.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Properties\AssemblyInfo.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Properties\AssemblyInfo.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Properties\Resources.Designer.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Properties\Resources.Designer.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Properties\Settings.Designer.cs" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Properties\Settings.Designer.cs としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Properties\Settings.settings" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Properties\Settings.settings としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Form1.resx" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Form1.resx としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Messages.ja-JP.resx" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Messages.ja-JP.resx としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Messages.resx" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Messages.resx としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\Properties\Resources.resx" Description="ファイルは正常に D:\wk\trw\diagnostics\Backup\LTControl\Properties\Resources.resx としてバックアップされました。">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\LTControl.csproj" Description="プロジェクトは正常に変換されました。">
+</Event><Event ErrorLevel="3" Project="LTControl" Source="LTControl\LTControl.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="LTControl.sln" Description="ソリューションは正常に変換されました">
+</Event><Event ErrorLevel="3" Project="" Source="LTControl.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="LTControl" Source="LTControl\LTControl.csproj" Description="スキャンが完了しました: プロジェクト ファイルにアップグレードは必要ありません。">
+</Event></UpgradeLog>
