@@ -5,6 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
+
+using AvrLib.Image;
+using HidBootLib;
 
 namespace LTControl
 {
@@ -17,9 +21,13 @@ namespace LTControl
             Connected,
         }
 
+        private State state;
+
         public MainForm()
         {
             InitializeComponent();
+
+            this.SetState(State.NotConnected);
         }
 
         private void SetState(State state)
@@ -28,39 +36,77 @@ namespace LTControl
             {
                 case State.NotConnected:
                     this.connectButton.Enabled = true;
+                    this.connectButton.Text = "接続";
+                    this.writeButton.Enabled = true;
+                    this.ledGroup.Enabled = false;
+                    this.sensorGroup.Enabled = false;
+                    this.leftWheelGroup.Enabled = false;
+                    this.rightWheelGroup.Enabled = false;
+
                     this.Text = "ライントレーサ コントロール [未接続]";
                     this.statusTimer.Stop();
                     break;
                 case State.Connecting:
                     this.connectButton.Enabled = false;
+                    this.connectButton.Text = "接続";
+                    this.writeButton.Enabled = false;
+                    this.ledGroup.Enabled = false;
+                    this.sensorGroup.Enabled = false;
+                    this.leftWheelGroup.Enabled = false;
+                    this.rightWheelGroup.Enabled = false;
+
                     this.Text = "ライントレーサ コントロール [接続中...]";
                     break;
                 case State.Connected:
-                    this.connectButton.Enabled = false;
+                    this.connectButton.Enabled = true;
+                    this.connectButton.Text = "切断";
+                    this.writeButton.Enabled = false;
+                    this.ledGroup.Enabled = true;
+                    this.sensorGroup.Enabled = true;
+                    this.leftWheelGroup.Enabled = true;
+                    this.rightWheelGroup.Enabled = true;
+
                     this.Text = "ライントレーサ コントロール [接続]";
                     this.statusTimer.Start();
                     break;
             }
+
+            this.state = state;
         }
         private LineTracer lineTracer;
         private void connectButton_Click(object sender, EventArgs e)
         {
-            String[] devices = LineTracer.Enumerate();
-            if (devices.Length == 0)
+            if (this.state == State.NotConnected)
             {
-                MessageBox.Show("ライントレーサが接続されていません．接続を確認してください．");
-                return;
+                String[] devices = LineTracer.Enumerate();
+                if (devices.Length == 0)
+                {
+                    MessageBox.Show("ライントレーサが接続されていません．接続を確認してください．");
+                    return;
+                }
+                this.SetState(State.Connecting);
+                try
+                {
+                    this.lineTracer = new LineTracer(devices[0]);
+                    this.SetState(State.Connected);
+                }
+                catch (Exception)
+                {
+                    if (this.lineTracer != null)
+                        this.lineTracer.Dispose();
+                    this.lineTracer = null;
+                    this.SetState(State.NotConnected);
+                }
             }
-            this.SetState(State.Connecting);
-            try
+            else if (this.state == State.Connected)
             {
-                this.lineTracer = new LineTracer(devices[0]);
-                this.SetState(State.Connected);
-            }
-            catch (Exception)
-            {
-                if (this.lineTracer != null)
+                try
+                {
                     this.lineTracer.Dispose();
+                }
+                catch (Exception)
+                {
+                }
                 this.lineTracer = null;
                 this.SetState(State.NotConnected);
             }
@@ -113,6 +159,32 @@ namespace LTControl
             this.lineLCheck.Checked = this.lineTracer.LineL;
             this.lineRCheck.Checked = this.lineTracer.LineR;
             this.distanceText.Text = this.lineTracer.Distance.ToString();
+        }
+
+        private void writeButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SparseImage image;
+                using (FileStream stream = new FileStream("firmware.hex", FileMode.Open))
+                {
+                    image = HexLoader.Load(stream);
+                }
+                byte[] block = image.ToBlockImage();
+                string[] devicePaths = HidBoot.Enumerate();
+                if (devicePaths.Length == 0)
+                {
+                    throw new Exception("ブートローダが見つかりません．");
+                }
+                HidBoot device = new HidBoot(devicePaths[0]);
+                device.WriteApplication(block, (int)image.MinimumAddress, (int)image.MaximumAddress);
+                device.RunApplication();
+                MessageBox.Show("書き込み完了", "ファームウェア書き込み", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
         
