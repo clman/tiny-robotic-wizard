@@ -35,7 +35,7 @@
             this.backwardLButton = new System.Windows.Forms.Button();
             this.forwardLButton = new System.Windows.Forms.Button();
             this.stopLButton = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rightWheelGroup = new System.Windows.Forms.GroupBox();
             this.brakeRButton = new System.Windows.Forms.Button();
             this.backwardRButton = new System.Windows.Forms.Button();
             this.forwardRButton = new System.Windows.Forms.Button();
@@ -50,8 +50,9 @@
             this.lineRCheck = new System.Windows.Forms.CheckBox();
             this.lineLCheck = new System.Windows.Forms.CheckBox();
             this.statusTimer = new System.Windows.Forms.Timer(this.components);
+            this.writeButton = new System.Windows.Forms.Button();
             this.leftWheelGroup.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.rightWheelGroup.SuspendLayout();
             this.ledGroup.SuspendLayout();
             this.sensorGroup.SuspendLayout();
             this.SuspendLayout();
@@ -119,18 +120,18 @@
             this.stopLButton.UseVisualStyleBackColor = true;
             this.stopLButton.Click += new System.EventHandler(this.ChangeMotorModeButton_Click);
             // 
-            // groupBox1
+            // rightWheelGroup
             // 
-            this.groupBox1.Controls.Add(this.brakeRButton);
-            this.groupBox1.Controls.Add(this.backwardRButton);
-            this.groupBox1.Controls.Add(this.forwardRButton);
-            this.groupBox1.Controls.Add(this.stopRButton);
-            this.groupBox1.Location = new System.Drawing.Point(12, 173);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(288, 57);
-            this.groupBox1.TabIndex = 9;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "右車輪";
+            this.rightWheelGroup.Controls.Add(this.brakeRButton);
+            this.rightWheelGroup.Controls.Add(this.backwardRButton);
+            this.rightWheelGroup.Controls.Add(this.forwardRButton);
+            this.rightWheelGroup.Controls.Add(this.stopRButton);
+            this.rightWheelGroup.Location = new System.Drawing.Point(12, 173);
+            this.rightWheelGroup.Name = "rightWheelGroup";
+            this.rightWheelGroup.Size = new System.Drawing.Size(288, 57);
+            this.rightWheelGroup.TabIndex = 9;
+            this.rightWheelGroup.TabStop = false;
+            this.rightWheelGroup.Text = "右車輪";
             // 
             // brakeRButton
             // 
@@ -274,14 +275,25 @@
             this.statusTimer.Interval = 200;
             this.statusTimer.Tick += new System.EventHandler(this.statusTimer_Tick);
             // 
+            // writeButton
+            // 
+            this.writeButton.Location = new System.Drawing.Point(78, 12);
+            this.writeButton.Name = "writeButton";
+            this.writeButton.Size = new System.Drawing.Size(64, 23);
+            this.writeButton.TabIndex = 12;
+            this.writeButton.Text = "書き込み";
+            this.writeButton.UseVisualStyleBackColor = true;
+            this.writeButton.Click += new System.EventHandler(this.writeButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(304, 233);
+            this.Controls.Add(this.writeButton);
             this.Controls.Add(this.sensorGroup);
             this.Controls.Add(this.ledGroup);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.rightWheelGroup);
             this.Controls.Add(this.leftWheelGroup);
             this.Controls.Add(this.connectButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -290,7 +302,7 @@
             this.Text = "ライントレーサコントロール";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.leftWheelGroup.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
+            this.rightWheelGroup.ResumeLayout(false);
             this.ledGroup.ResumeLayout(false);
             this.ledGroup.PerformLayout();
             this.sensorGroup.ResumeLayout(false);
@@ -307,7 +319,7 @@
         private System.Windows.Forms.Button backwardLButton;
         private System.Windows.Forms.Button forwardLButton;
         private System.Windows.Forms.Button stopLButton;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox rightWheelGroup;
         private System.Windows.Forms.Button brakeRButton;
         private System.Windows.Forms.Button backwardRButton;
         private System.Windows.Forms.Button forwardRButton;
@@ -322,6 +334,7 @@
         private System.Windows.Forms.TextBox distanceText;
         private System.Windows.Forms.Label distanceLabel;
         private System.Windows.Forms.Timer statusTimer;
+        private System.Windows.Forms.Button writeButton;
     }
 }
 

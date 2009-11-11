@@ -50,11 +50,19 @@
   <ItemGroup>
     <Reference Include="DeviceIO, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\dev\src\Library\DeviceIO\Hid\bin\Release\DeviceIO.dll</HintPath>
+      <HintPath>.\DeviceIO.dll</HintPath>
+    </Reference>
+    <Reference Include="HidBoot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\HidBoot.dll</HintPath>
     </Reference>
     <Reference Include="HidLib, Version=0.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>E:\dev\src\Library\DeviceIO\Hid\bin\Release\HidLib.dll</HintPath>
+      <HintPath>.\HidLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Image, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Image.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -94,6 +102,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="firmware.hex">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
 [assembly: AssemblyTitle("LTControl")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("2009ものづくり2回目 機体検査ツール")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("LTControl")]
-[assembly: AssemblyCopyright("Copyright (C)  2008")]
+[assembly: AssemblyCopyright("Copyright (C)  2009 DRP")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
