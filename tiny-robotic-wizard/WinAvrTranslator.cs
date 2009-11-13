@@ -31,7 +31,7 @@ namespace tiny_robotic_wizard
             this.config.Clear();
             this.config["WinAvrPath"] = @"WinAVR\bin";
             this.config["Frequency"] = "8000000UL";
-            this.config["MCU"] = "atmega88";
+            this.config["MCU"] = "atmega168";
             this.config["CFlags"] = "-Wall -gdwarf-2 -std=gnu99 -Os -funsigned-char -funsigned-bitfields -fpack-struct -fshort-enums -MD -MP ";
             this.config["FlashFlags"] = "-O ihex -R .eeprom";
             this.config["EepFlags"] = "-O ihex -j .eeprom --set-section-flags=.eeprom=\"alloc,load\" --change-section-lma .eeprom=0 --no-change-warnings";

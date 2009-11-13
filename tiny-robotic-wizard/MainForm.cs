@@ -427,20 +427,20 @@ namespace tiny_robotic_wizard
             ProgramGenerator programGenerator = new ProgramGenerator(this.programData);
 
             // C言語のコードをコンパイルし，転送する
-            try
-            {
+//            try
+//            {
                 ProgramTransmitter.Transmit(programGenerator.ProgramCode);
                 // 成功した場合は，ロボットを動かす方法を表示する
                 this.transmitDescription.Mode = TransmitDescription.DescriptionMode.Successed;
 
                 // ガイドテキストの設定
                 this.guideText.Text = "転送成功です";
-            }
-            catch (Exception)
-            {
-                // ガイドテキストの設定
-                this.guideText.Text = "転送失敗です";
-            }
+//            }
+//            catch (Exception)
+//            {
+//                // ガイドテキストの設定
+//                this.guideText.Text = "転送失敗です";
+//            }
         }
     }
 }
