@@ -33,6 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DeviceIO, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\DeviceIO.dll</HintPath>
+    </Reference>
+    <Reference Include="HidLib, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\HidLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Image, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Image.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -91,6 +103,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HidBoot.cs" />
     <Compile Include="ProgramData.cs" />
     <Compile Include="ProgramEditor\ContextAdder.xaml.cs">
       <DependentUpon>ContextAdder.xaml</DependentUpon>
@@ -101,7 +114,9 @@
     <Compile Include="ProgramEditor\ProgramEditor.xaml.cs">
       <DependentUpon>ProgramEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProgramGenerator.cs" />
     <Compile Include="ProgramTemplate.cs" />
+    <Compile Include="ProgramTransmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -115,6 +130,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="WinAvrTranslator.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

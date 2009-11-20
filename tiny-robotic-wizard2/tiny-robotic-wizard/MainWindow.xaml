@@ -4,13 +4,13 @@
     Title="tiny-robotic-wizard" Height="600" Width="800" Opacity="0">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Image Name="New" Height="50" Width="50" HorizontalAlignment="Left" Cursor="Hand" />
-            <Image Name="Open" Height="50" Width="50" HorizontalAlignment="Left"/>
-            <Image Name="Delete" Height="50" Width="50" HorizontalAlignment="Left"/>
+            <Image Name="New" Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand"/>
+            <Image Name="Open" Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand"/>
+            <Image Name="Delete" Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand"/>
         </StackPanel>
         <ScrollViewer Name="EditorPanel" Grid.Row="1"></ScrollViewer>
     </Grid>
