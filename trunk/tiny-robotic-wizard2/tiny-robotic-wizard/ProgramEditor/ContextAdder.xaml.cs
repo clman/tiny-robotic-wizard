@@ -50,7 +50,7 @@ namespace tiny_robotic_wizard.ProgramEditor
                         var beMaximum = new System.Windows.Media.Animation.DoubleAnimation()
                         {
                             From = 0,
-                            To = 200,
+                            To = 50,
                             Duration = TimeSpan.FromMilliseconds(200)
                         };
                         beMaximum.Completed += delegate
@@ -123,6 +123,7 @@ namespace tiny_robotic_wizard.ProgramEditor
                     }
                     outputView.Children.Add(this.outputOptionSelector[deviceIndex]);
                 }
+                this.EditPanel.Children.Add(outputView);
             }
             // 選択項目の初期化
             foreach (ComboBox inputOptionSelector in this.inputOptionSelector)

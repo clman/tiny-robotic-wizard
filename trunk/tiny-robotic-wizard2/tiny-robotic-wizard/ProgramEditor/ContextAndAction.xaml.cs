@@ -46,13 +46,11 @@ namespace tiny_robotic_wizard.ProgramEditor
                     To = 0,
                     Duration = TimeSpan.FromMilliseconds(200)
                 };
-                // アニメーション終了時のイベントがわからないので，高さが0になったときにコントロールを非表示にする．
-                this.SizeChanged += delegate(object sender2, SizeChangedEventArgs e2)
+                // アニメーション終了時にコントロールとデータを削除する．
+                beTransParent.Completed += delegate
                 {
-                    if (this.RenderSize.Height == 0)
-                    {
-                        ((StackPanel)this.Parent).Children.Remove(this);
-                    }
+                    ((StackPanel)this.Parent).Children.Remove(this);
+                    this.ProgramData.Remove(context);
                 };
                 this.BeginAnimation(StackPanel.HeightProperty, beMinimum);
                 this.BeginAnimation(StackPanel.OpacityProperty, beTransParent);
