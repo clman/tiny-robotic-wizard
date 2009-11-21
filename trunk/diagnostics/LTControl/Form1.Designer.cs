@@ -41,14 +41,14 @@
             this.forwardRButton = new System.Windows.Forms.Button();
             this.stopRButton = new System.Windows.Forms.Button();
             this.ledGroup = new System.Windows.Forms.GroupBox();
-            this.redCheck = new System.Windows.Forms.CheckBox();
-            this.greenCheck = new System.Windows.Forms.CheckBox();
             this.blueCheck = new System.Windows.Forms.CheckBox();
+            this.greenCheck = new System.Windows.Forms.CheckBox();
+            this.redCheck = new System.Windows.Forms.CheckBox();
             this.sensorGroup = new System.Windows.Forms.GroupBox();
-            this.distanceLabel = new System.Windows.Forms.Label();
-            this.distanceText = new System.Windows.Forms.TextBox();
             this.lineRCheck = new System.Windows.Forms.CheckBox();
             this.lineLCheck = new System.Windows.Forms.CheckBox();
+            this.distanceText = new System.Windows.Forms.TextBox();
+            this.distanceLabel = new System.Windows.Forms.Label();
             this.statusTimer = new System.Windows.Forms.Timer(this.components);
             this.writeButton = new System.Windows.Forms.Button();
             this.leftWheelGroup.SuspendLayout();
@@ -185,16 +185,16 @@
             this.ledGroup.TabStop = false;
             this.ledGroup.Text = "LED";
             // 
-            // redCheck
+            // blueCheck
             // 
-            this.redCheck.AutoSize = true;
-            this.redCheck.Location = new System.Drawing.Point(6, 18);
-            this.redCheck.Name = "redCheck";
-            this.redCheck.Size = new System.Drawing.Size(36, 16);
-            this.redCheck.TabIndex = 12;
-            this.redCheck.Text = "赤";
-            this.redCheck.UseVisualStyleBackColor = true;
-            this.redCheck.CheckedChanged += new System.EventHandler(this.redCheck_CheckedChanged);
+            this.blueCheck.AutoSize = true;
+            this.blueCheck.Location = new System.Drawing.Point(90, 18);
+            this.blueCheck.Name = "blueCheck";
+            this.blueCheck.Size = new System.Drawing.Size(36, 16);
+            this.blueCheck.TabIndex = 14;
+            this.blueCheck.Text = "青";
+            this.blueCheck.UseVisualStyleBackColor = true;
+            this.blueCheck.CheckedChanged += new System.EventHandler(this.blueCheck_CheckedChanged);
             // 
             // greenCheck
             // 
@@ -207,16 +207,16 @@
             this.greenCheck.UseVisualStyleBackColor = true;
             this.greenCheck.CheckedChanged += new System.EventHandler(this.greenCheck_CheckedChanged);
             // 
-            // blueCheck
+            // redCheck
             // 
-            this.blueCheck.AutoSize = true;
-            this.blueCheck.Location = new System.Drawing.Point(90, 18);
-            this.blueCheck.Name = "blueCheck";
-            this.blueCheck.Size = new System.Drawing.Size(36, 16);
-            this.blueCheck.TabIndex = 14;
-            this.blueCheck.Text = "青";
-            this.blueCheck.UseVisualStyleBackColor = true;
-            this.blueCheck.CheckedChanged += new System.EventHandler(this.blueCheck_CheckedChanged);
+            this.redCheck.AutoSize = true;
+            this.redCheck.Location = new System.Drawing.Point(6, 18);
+            this.redCheck.Name = "redCheck";
+            this.redCheck.Size = new System.Drawing.Size(36, 16);
+            this.redCheck.TabIndex = 12;
+            this.redCheck.Text = "赤";
+            this.redCheck.UseVisualStyleBackColor = true;
+            this.redCheck.CheckedChanged += new System.EventHandler(this.redCheck_CheckedChanged);
             // 
             // sensorGroup
             // 
@@ -230,23 +230,6 @@
             this.sensorGroup.TabIndex = 11;
             this.sensorGroup.TabStop = false;
             this.sensorGroup.Text = "センサ";
-            // 
-            // distanceLabel
-            // 
-            this.distanceLabel.AutoSize = true;
-            this.distanceLabel.Location = new System.Drawing.Point(6, 50);
-            this.distanceLabel.Name = "distanceLabel";
-            this.distanceLabel.Size = new System.Drawing.Size(29, 12);
-            this.distanceLabel.TabIndex = 0;
-            this.distanceLabel.Text = "距離";
-            // 
-            // distanceText
-            // 
-            this.distanceText.Location = new System.Drawing.Point(41, 47);
-            this.distanceText.Name = "distanceText";
-            this.distanceText.ReadOnly = true;
-            this.distanceText.Size = new System.Drawing.Size(64, 19);
-            this.distanceText.TabIndex = 1;
             // 
             // lineRCheck
             // 
@@ -269,6 +252,23 @@
             this.lineLCheck.TabIndex = 14;
             this.lineLCheck.Text = "ライン左";
             this.lineLCheck.UseVisualStyleBackColor = true;
+            // 
+            // distanceText
+            // 
+            this.distanceText.Location = new System.Drawing.Point(41, 47);
+            this.distanceText.Name = "distanceText";
+            this.distanceText.ReadOnly = true;
+            this.distanceText.Size = new System.Drawing.Size(64, 19);
+            this.distanceText.TabIndex = 1;
+            // 
+            // distanceLabel
+            // 
+            this.distanceLabel.AutoSize = true;
+            this.distanceLabel.Location = new System.Drawing.Point(6, 50);
+            this.distanceLabel.Name = "distanceLabel";
+            this.distanceLabel.Size = new System.Drawing.Size(29, 12);
+            this.distanceLabel.TabIndex = 0;
+            this.distanceLabel.Text = "距離";
             // 
             // statusTimer
             // 
@@ -297,10 +297,12 @@
             this.Controls.Add(this.leftWheelGroup);
             this.Controls.Add(this.connectButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "ライントレーサコントロール";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.leftWheelGroup.ResumeLayout(false);
             this.rightWheelGroup.ResumeLayout(false);
             this.ledGroup.ResumeLayout(false);

@@ -186,6 +186,38 @@ namespace LTControl
                 MessageBox.Show(ex.Message, "ÉGÉâÅ[", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (this.state == State.Connected)
+            {
+                if (e.KeyCode == Keys.Left)
+                {
+                    this.lineTracer.MotorL = LineTracer.MotorMode.Backward;
+                    this.lineTracer.MotorR = LineTracer.MotorMode.Forward;
+                }
+                else if (e.KeyCode == Keys.Right)
+                {
+                    this.lineTracer.MotorL = LineTracer.MotorMode.Forward;
+                    this.lineTracer.MotorR = LineTracer.MotorMode.Backward;
+                }
+                else if (e.KeyCode == Keys.Up)
+                {
+                    this.lineTracer.MotorL = LineTracer.MotorMode.Forward;
+                    this.lineTracer.MotorR = LineTracer.MotorMode.Forward;
+                }
+                else if (e.KeyCode == Keys.Down)
+                {
+                    this.lineTracer.MotorL = LineTracer.MotorMode.Backward;
+                    this.lineTracer.MotorR = LineTracer.MotorMode.Backward;
+                }
+                else if (e.KeyCode == Keys.Space)
+                {
+                    this.lineTracer.MotorL = LineTracer.MotorMode.Brake;
+                    this.lineTracer.MotorR = LineTracer.MotorMode.Brake;
+                }
+            }
+        }
     }
         
 }
