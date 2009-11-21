@@ -1,0 +1,13 @@
+gpio:
+  # 全体の設定
+  output_prefix: PORT
+  input_prefix: PIN
+  direction_prefix: DDR
+  
+  ports:
+    portd:
+      name: D
+      bits:
+        0:
+          alternative_names:
+            - BOOTMODE
