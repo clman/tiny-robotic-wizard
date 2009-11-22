@@ -7,43 +7,45 @@ namespace tiny_robotic_wizard
 {
     class ProgramGenerator
     {
-        ProgramData ProgramData { get; set; }
-        public void Generate()
+        public static void Generate(ProgramData programData)
         {
-            if (this.ProgramData == null)
+            if (programData == null)
             {
-                throw new NullReferenceException("ProgramData is null.");
+                throw new ArgumentNullException("ProgramData is null.");
             }
-            // Programを解析してProgramTreeのインスタンスを生成する．
-            // root node is InputDevice 1 of NestDepth 3.
-            SwitchNode ProgramTree = new SwitchNode(this.ProgramData.ProgramTemplate.Input.Device.Length);
+            // Programを解析してツリー構造に変換．
+            // ルートノードはNestDepth2のInput.Device[0]
+            Node ProgramTree = new SwitchNode(1);
+            ProgramTree = ((SwitchNode)ProgramTree).ChildNodes[0];
             {
-                int switchNestDepth = 1;
-                // 
-                foreach (Device device in this.ProgramData.ProgramTemplate.Input.Device)
+                // すべてのコンテキストを探る
+                foreach (Context context in programData.Keys)
                 {
-                    switchNestDepth *= (device.Option.Length + 1);
-                }
-                for (int i = 0; i < switchNestDepth; i++)
-                {
-                }
-            }
-        }
-        // ProgramTreeを作るための再帰関数
-        int makeProgramTree(SwitchNode node, int depth, int i)
-        {
-            if (i < depth)
-            {
-                foreach (Node childNode in node.ChildNodes)
-                {
-
+                    // CurrentNodeをリセット
+                    Node current = ProgramTree;
+                    for (int nestDepth = programData.NestDepth - 1; 0 <= nestDepth; nestDepth--)
+                    {
+                        for (int deviceIndex = 0; deviceIndex < programData.ProgramTemplate.Input.Device.Length; deviceIndex++)
+                        {
+                            // Inputの値がnullならInputの最大値+1にする．(ワイルドーカードnullをcase defaultに対応づける．)
+                            int caseExpression = (context[nestDepth][deviceIndex] != null) ? (int)context[nestDepth][deviceIndex] : programData.ProgramTemplate.Input.Device[deviceIndex].Option.Length;
+                            // CurrentNodeがnullならSwitchNodeを入れる．
+                            if (current == null)
+                            {
+                                current = new SwitchNode(programData.ProgramTemplate.Input.Device[deviceIndex].Option.Length +1);
+                            }
+                            // CurrentNodeを移動
+                            current = ((SwitchNode)current).ChildNodes[caseExpression];
+                        }
+                    }
+                    // ツリーの末端にOutputNodeを追加
+                    current = new OutputNode() { Output = programData[context] };
                 }
             }
         }
     }
     class SwitchNode : Node
     {
-        public readonly NodeType NodeType = NodeType.SwitchNode;
         public Node[] ChildNodes;
         public SwitchNode(int nodeCount):base(NodeType.SwitchNode)
         {
@@ -59,7 +61,6 @@ namespace tiny_robotic_wizard
     }
     class OutputNode : Node
     {
-        public readonly NodeType NodeType = NodeType.OutputNode;
         public Output Output { get; set; }
         public OutputNode() : base(NodeType.OutputNode) { }
     }
