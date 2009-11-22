@@ -87,10 +87,10 @@ namespace tiny_robotic_wizard.ProgramEditor
             this.EditPanel.Children.Add(canselButton);
             // Inputパネルの追加
             {
-                this.inputOptionSelector = new ComboBox[this.ProgramData.NestLevel, this.ProgramData.ProgramTemplate.Input.Device.Length];
+                this.inputOptionSelector = new ComboBox[this.ProgramData.NestDepth, this.ProgramData.ProgramTemplate.Input.Device.Length];
                 // ネストの数だけInputViewを作る．
-                StackPanel[] inputView = new StackPanel[this.ProgramData.NestLevel];
-                for (int nestIndex = 0; nestIndex < this.ProgramData.NestLevel; nestIndex++)
+                StackPanel[] inputView = new StackPanel[this.ProgramData.NestDepth];
+                for (int nestIndex = 0; nestIndex < this.ProgramData.NestDepth; nestIndex++)
                 {
                     inputView[nestIndex] = new StackPanel();
                     for (int deviceIndex = 0; deviceIndex < this.ProgramData.ProgramTemplate.Input.Device.Length; deviceIndex++)
@@ -158,10 +158,10 @@ namespace tiny_robotic_wizard.ProgramEditor
             this.State = ContextAdderState.Addable;
             // セレクトボックスの選択値からContextとOutputのペアを生成．
             // Contextを生成
-            Input[] input = new Input[this.ProgramData.NestLevel];
+            Input[] input = new Input[this.ProgramData.NestDepth];
             Context context = new Context();
             context.Clear();
-            for (int nestIndex = 0; nestIndex < this.ProgramData.NestLevel; nestIndex++)
+            for (int nestIndex = 0; nestIndex < this.ProgramData.NestDepth; nestIndex++)
             {
                 input[nestIndex] = new Input();
                 input[nestIndex].Clear();

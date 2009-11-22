@@ -22,7 +22,7 @@ namespace tiny_robotic_wizard
         /// <summary>
         /// イベントの連鎖数
         /// </summary>
-        public readonly int NestLevel;
+        public readonly int NestDepth;
         public new Output this[Context context]{
             get { return base[context]; }
             set
@@ -39,7 +39,7 @@ namespace tiny_robotic_wizard
             this.ProgramTemplate = programTemplate;
             if (1 <= nestLevel)
             {
-                this.NestLevel = nestLevel;
+                this.NestDepth = nestLevel;
             }
             else
             {
@@ -57,7 +57,7 @@ namespace tiny_robotic_wizard
             {
                 output.Add(null);
             }
-            for (int i = 1; i <= this.NestLevel; i++)
+            for (int i = 1; i <= this.NestDepth; i++)
             {
                 context.Add(input);
             }

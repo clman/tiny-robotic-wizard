@@ -21,6 +21,8 @@ namespace tiny_robotic_wizard
     {
         // プログラムテンプレート
         private ProgramTemplate[] programTemplates;
+        // プログラムデータ
+        private ProgramData programData;
 
         public MainWindow()
         {
@@ -37,18 +39,25 @@ namespace tiny_robotic_wizard
                 programTemplates[i] = new ProgramTemplate(programTemplatePath[i]);
             }
 
-            ProgramData programData = new ProgramData(programTemplates[2], 3);
+            this.programData = new ProgramData(programTemplates[2], 3);
 
-            this.EditorPanel.Content = new ProgramEditor.ProgramEditor() { ProgramData = programData };
+            this.EditorPanel.Content = new ProgramEditor.ProgramEditor() { ProgramData = this.programData };
 
             // Windowをじわっと表示する．
-            var wakeUpAnimation = new System.Windows.Media.Animation.DoubleAnimation
             {
-                From = 0,
-                To = 1,
-                Duration = TimeSpan.FromMilliseconds(500)
-            };
-            this.BeginAnimation(Window.OpacityProperty, wakeUpAnimation);
+                var wakeUpAnimation = new System.Windows.Media.Animation.DoubleAnimation
+                {
+                    From = 0,
+                    To = 1,
+                    Duration = TimeSpan.FromMilliseconds(500)
+                };
+                this.BeginAnimation(Window.OpacityProperty, wakeUpAnimation);
+            }
+        }
+
+        private void Execute_Click(object sender, RoutedEventArgs e)
+        {
+            ProgramGenerator.Generate(this.programData);
         }
     }
 }

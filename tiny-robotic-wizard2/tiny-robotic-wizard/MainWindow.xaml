@@ -8,9 +8,21 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Image Name="New" Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand"/>
-            <Image Name="Open" Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand"/>
-            <Image Name="Delete" Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand"/>
+            <Button Name="New">
+                <Image Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand" Source="icon/new.png" ToolTip="新規作成" />
+            </Button>
+            <Button Name="Open">
+                <Image Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand" Source="icon/open.png" ToolTip="開く"/>
+            </Button>
+            <Button Name="SaveAs">
+                <Image Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand" Source="icon/saveAs.png" ToolTip="名前を付けて保存"/>
+            </Button>
+            <Button Name="Save">
+                <Image Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand" Source="icon/save.png" ToolTip="保存"/>
+            </Button>
+            <Button Name="Execute" Click="Execute_Click">
+                <Image Height="32" Width="32" HorizontalAlignment="Left" Cursor="Hand" Source="icon/execute.png" ToolTip="実行"/>
+            </Button>
         </StackPanel>
         <ScrollViewer Name="EditorPanel" Grid.Row="1"></ScrollViewer>
     </Grid>
