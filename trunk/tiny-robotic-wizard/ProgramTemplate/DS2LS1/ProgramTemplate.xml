@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ProgramTemplate name="DS2LS1" description="距離センサ:2段階, ラインセンサ:1つ" xmlns="http://tiny-robotic-wizard.googlecode.com/">
+<ProgramTemplate name="DS2LS1" description="距離センサ:2段階, ラインセンサ:1つ" xmlns="http://tiny-robotic-wizard.googlecode.com/trw1">
 	<context>
 		<status name="DistanceSensor" caption="測距センサ" image=".\DistanceSensor2.png" code=".\DistanceSensor.c">
 			<matter name="missing" caption="見あたらない" />
@@ -13,7 +13,7 @@
 	</context>
 	<actions>
 		<action name="LED" caption="LED" image=".\LED.png" code=".\LED.c">
-			<procedure name="black" caption="非点灯" />
+			<procedure name="black" caption="消灯" />
 			<procedure name="blue" caption="青" />
 			<procedure name="green" caption="緑" />
 			<procedure name="cyan" caption="シアン" />

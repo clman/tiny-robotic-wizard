@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ProgramTemplate name="LS1" description="ラインセンサ:1つ" xmlns="http://tiny-robotic-wizard.googlecode.com/">
+<ProgramTemplate name="LS1" description="ラインセンサ:1つ" xmlns="http://tiny-robotic-wizard.googlecode.com/trw1">
 	<context>
 		<status name="LineSensor" caption="ラインセンサ" image=".\LineSensor1.png" code=".\LineSensor.c">
 			<matter name="0" caption="" />
@@ -8,7 +8,7 @@
 	</context>
 	<actions>
 		<action name="LED" caption="LED" image=".\LED.png" code=".\LED.c">
-			<procedure name="black" caption="非点灯" />
+			<procedure name="black" caption="消灯" />
 			<procedure name="blue" caption="青" />
 			<procedure name="green" caption="緑" />
 			<procedure name="cyan" caption="シアン" />
