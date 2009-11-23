@@ -160,6 +160,14 @@ namespace tiny_robotic_wizard
                 // 選択時のイベント設定
                 this.deleteSelectBox.ItemMouseClick += delegate(int selectedIndex)
                 {
+
+                    // 本当に削除するか確認する
+                    DialogResult result = MessageBox.Show("本当に削除しますか？", "削除", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+                    if (result == DialogResult.No)
+                    {
+                        // 削除しない場合
+                        return;
+                    }
                     // 選択されたファイルを削除する
                     this.programManager.Delete(programManager.GetFileList()[selectedIndex]);
 
@@ -427,20 +435,49 @@ namespace tiny_robotic_wizard
             ProgramGenerator programGenerator = new ProgramGenerator(this.programData);
 
             // C言語のコードをコンパイルし，転送する
-//            try
-//            {
+            try
+            {
                 ProgramTransmitter.Transmit(programGenerator.ProgramCode);
                 // 成功した場合は，ロボットを動かす方法を表示する
                 this.transmitDescription.Mode = TransmitDescription.DescriptionMode.Successed;
 
                 // ガイドテキストの設定
                 this.guideText.Text = "転送成功です";
-//            }
-//            catch (Exception)
-//            {
-//                // ガイドテキストの設定
-//                this.guideText.Text = "転送失敗です";
-//            }
+            }
+            catch (Exception)
+            {
+                // ガイドテキストの設定
+                this.guideText.Text = "転送失敗です";
+            }
+        }
+
+        // Formが閉じられるとき
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // プログラムが変更されている場合
+            if (this.isModified)
+            {
+                // 保存するか破棄するか問い合わせる
+                DialogResult result = MessageBox.Show("現在編集中のプログラムは変更されています．" + Environment.NewLine + "終了する前に前に保存しますか？", "終了", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+                if (result == DialogResult.Yes)
+                {
+                    // 保存する場合
+                    bool saved = saveOrSaveAs(isNew);
+                    if (!saved)
+                        return;
+                }
+                else if (result == DialogResult.No)
+                {
+                    // 保存しない場合
+                    return;
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    // キャンセルする場合
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }

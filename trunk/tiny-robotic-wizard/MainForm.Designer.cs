@@ -104,7 +104,7 @@
             // 
             this.saveAs.BackColor = System.Drawing.Color.Transparent;
             this.saveAs.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.saveAs.Hint = "名前付けて保存";
+            this.saveAs.Hint = "名前を付けて保存";
             this.saveAs.Image = ((System.Drawing.Image)(resources.GetObject("saveAs.Image")));
             this.saveAs.Location = new System.Drawing.Point(330, 12);
             this.saveAs.Name = "saveAs";
@@ -181,6 +181,7 @@
             this.Controls.Add(this.new_);
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.container.ResumeLayout(false);
             this.container.PerformLayout();
             this.ResumeLayout(false);
