@@ -184,7 +184,23 @@ namespace tiny_robotic_wizard
                         return;
                     }
                     // 選択されたファイルを削除する
-                    this.programManager.Delete(programManager.GetFileList()[selectedIndex]);
+                    if (programManager.GetFileList()[selectedIndex] != currentFileName)
+                    {
+                        // 選択されたファイルが現在編集中じゃない場合
+                        this.programManager.Delete(programManager.GetFileList()[selectedIndex]);
+                    }
+                    else
+                    {
+                        // 選択されたファイルを現在編集中の場合
+                        this.programManager.Delete(programManager.GetFileList()[selectedIndex]);
+
+                        // 各種データの更新
+                        this.isNew = false;
+                        this.isModified = false;
+                        currentFileName = null;
+
+                        loadForm();
+                    }
 
                     if (currentFileName == null)
                         this.loadForm();
@@ -233,7 +249,7 @@ namespace tiny_robotic_wizard
             this.deleteSelectBox.Items.Clear();
             foreach (string fileName in this.programManager.GetFileList())
             {
-                if (Path.GetExtension(fileName) == ".epd" && fileName != currentFileName)
+                if (Path.GetExtension(fileName) == ".epd")
                 {
                     this.deleteSelectBox.Items.Add(Path.GetFileNameWithoutExtension(fileName));
                 }
@@ -261,6 +277,9 @@ namespace tiny_robotic_wizard
             {
             retry:
                 string inputText = Microsoft.VisualBasic.Interaction.InputBox("保存するプログラムに付ける名前を入力してください", "名前を付けて保存", "", -1, -1);
+                // ファイル名に使えない文字を取り除いて，拡張子を変更する
+                inputText = FileNameValidator.ValidFileName(inputText);
+                inputText = Path.ChangeExtension(inputText, Properties.Resources.Extension);
                 if (Path.GetFileNameWithoutExtension(inputText) == "")
                 {
                     MessageBox.Show("ファイル名を入力してください．", "ファイル名が入力されていません．", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
@@ -268,10 +287,6 @@ namespace tiny_robotic_wizard
                 }
                 else
                 {
-                    // ファイル名に使えない文字を取り除いて，拡張子を変更する
-                    inputText = FileNameValidator.ValidFileName(inputText);
-                    inputText = Path.ChangeExtension(inputText, Properties.Resources.Extension);
-
                     // すでに同じ名前のファイルがあった場合
                     if (!programManager.IsUnique(inputText))
                     {
@@ -387,7 +402,7 @@ namespace tiny_robotic_wizard
             this.deleteSelectBox.Items.Clear();
             foreach (string fileName in this.programManager.GetFileList())
             {
-                if (Path.GetExtension(fileName) == ".epd" && fileName != currentFileName)
+                if (Path.GetExtension(fileName) == ".epd")
                 {
                     this.deleteSelectBox.Items.Add(Path.GetFileNameWithoutExtension(fileName));
                 }
