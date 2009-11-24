@@ -95,9 +95,17 @@ namespace tiny_robotic_wizard
                     }
 
                     // 選択されたProgramTemplateでProgramDataを作り，ProgramEditorにセットする．
-                    this.programTemplate = this.programTemplates[selectedIndex];
-                    this.programData = new ProgramData(programTemplates[selectedIndex]);
-                    this.programEditor.ProgramData = this.programData;
+                    try
+                    {
+                        this.programTemplate = this.programTemplates[selectedIndex];
+                        this.programData = new ProgramData(programTemplates[selectedIndex]);
+                        this.programEditor.ProgramData = this.programData;
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        MessageBox.Show("そのテンプレートは存在しません．");
+                        this.functionNew();
+                    }
 
                     // なんかここでメモリ使用量が2MB近く増えるので明示的にGC
                     System.GC.Collect();
@@ -138,8 +146,16 @@ namespace tiny_robotic_wizard
                     }
 
                     // 選択されたファイルからProgramDataを復元し，ProgramEditorにセットする．
-                    this.programData = this.programManager.Load(programManager.GetFileList()[selectedIndex]);
-                    this.programEditor.ProgramData = this.programData;
+                    try
+                    {
+                        this.programData = this.programManager.Load(programManager.GetFileList()[selectedIndex]);
+                        this.programEditor.ProgramData = this.programData;
+                    }
+                    catch (FileNotFoundException)
+                    {
+                        MessageBox.Show("そのファイルは存在しません．");
+                        this.functionOpen();
+                    }
 
                     // なんかここでメモリ使用量が2MB近く増えるので明示的にGC
                     System.GC.Collect();
@@ -160,7 +176,6 @@ namespace tiny_robotic_wizard
                 // 選択時のイベント設定
                 this.deleteSelectBox.ItemMouseClick += delegate(int selectedIndex)
                 {
-
                     // 本当に削除するか確認する
                     DialogResult result = MessageBox.Show("本当に削除しますか？", "削除", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
                     if (result == DialogResult.No)
@@ -218,8 +233,10 @@ namespace tiny_robotic_wizard
             this.deleteSelectBox.Items.Clear();
             foreach (string fileName in this.programManager.GetFileList())
             {
-                if(fileName != currentFileName)
-                this.deleteSelectBox.Items.Add(fileName);
+                if (Path.GetExtension(fileName) == ".epd" && fileName != currentFileName)
+                {
+                    this.deleteSelectBox.Items.Add(Path.GetFileNameWithoutExtension(fileName));
+                }
             }
             this.delete.Enabled = (this.deleteSelectBox.Items.Count != 0 && !this.deleteSelectBox.Visible);
 
@@ -232,7 +249,7 @@ namespace tiny_robotic_wizard
             this.transfer.Enabled = (this.programEditor.Visible || this.transmitDescription.Visible);
 
             if (currentFileName != null)
-                this.Text = this.applicationName + Properties.Resources.FormCaptionSplitter + this.currentFileName + (isModified ? "*" : "");
+                this.Text = this.applicationName + Properties.Resources.FormCaptionSplitter + Path.GetFileNameWithoutExtension(this.currentFileName) + (isModified ? "*" : "");
             else
                 this.Text = this.applicationName;
         }
@@ -244,7 +261,12 @@ namespace tiny_robotic_wizard
             {
             retry:
                 string inputText = Microsoft.VisualBasic.Interaction.InputBox("保存するプログラムに付ける名前を入力してください", "名前を付けて保存", "", -1, -1);
-                if (inputText != "")
+                if (Path.GetFileNameWithoutExtension(inputText) == "")
+                {
+                    MessageBox.Show("ファイル名を入力してください．", "ファイル名が入力されていません．", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                    return false;
+                }
+                else
                 {
                     // ファイル名に使えない文字を取り除いて，拡張子を変更する
                     inputText = FileNameValidator.ValidFileName(inputText);
@@ -272,8 +294,6 @@ namespace tiny_robotic_wizard
 
                     return true;
                 }
-                else
-                    return false;
             }
             else
             {
@@ -339,7 +359,10 @@ namespace tiny_robotic_wizard
             this.fileSelectBox.Items.Clear();
             foreach (string fileName in this.programManager.GetFileList())
             {
-                this.fileSelectBox.Items.Add(fileName);
+                if (Path.GetExtension(fileName) == ".epd")
+                {
+                    this.fileSelectBox.Items.Add(Path.GetFileNameWithoutExtension(fileName));
+                }
             }
 
             // 各種GUIの表示設定
@@ -364,8 +387,10 @@ namespace tiny_robotic_wizard
             this.deleteSelectBox.Items.Clear();
             foreach (string fileName in this.programManager.GetFileList())
             {
-                if (fileName != currentFileName)
-                    this.deleteSelectBox.Items.Add(fileName);
+                if (Path.GetExtension(fileName) == ".epd" && fileName != currentFileName)
+                {
+                    this.deleteSelectBox.Items.Add(Path.GetFileNameWithoutExtension(fileName));
+                }
             }
 
             // 各種GUIの表示設定
